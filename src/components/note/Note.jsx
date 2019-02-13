@@ -7,7 +7,7 @@ class Note extends Component {
 
     return (
       <li>
-        <p id="value">
+        <p id="header">
           Value:
           <input
             type="text"
