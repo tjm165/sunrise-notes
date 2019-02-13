@@ -17,6 +17,7 @@ class DeskHeader extends Component {
             <option value={boardIndex++}>{b.title}</option>
           ))}
         </select>
+        <hr />
       </div>
     );
   }
