@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import Header from "./Header";
+import Tags from "./Tags";
 
 class Note extends Component {
   render() {
@@ -7,38 +9,13 @@ class Note extends Component {
 
     return (
       <li>
-        <p id="value">
-          Value:
-          <input
-            type="text"
-            value={functions.noteGetValue(index)}
-            onChange={functions.noteSetValue}
-            index={index}
-          />
-        </p>
-
-        <p id="tags">
-          tags:
-          {note.tagIndices.map(t => (
-            <span key={t / index}> {t}</span>
-          ))}
-        </p>
-
-        <p id="toggleTag">
-          Toggle Tag:
-          <select
-            index={index}
-            value={functions.noteGetToggleTag(index)}
-            onChange={functions.noteSetToggleTag}
-          >
-            {tags.map(t => (
-              <option value={tagIndex++}>{t.value}</option>
-            ))}
-          </select>
-          <button onClick={() => functions.noteToggleTag(index)}>
-            Toggle this tag
-          </button>
-        </p>
+        <Header functions={functions} index={index} />
+        <Tags
+          tagIndices={note.tagIndices}
+          index={index}
+          functions={functions}
+          tags={tags}
+        />
       </li>
     );
   }
