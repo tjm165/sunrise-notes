@@ -4,9 +4,9 @@ import NoteObject from "../../objects/NoteObject";
 
 /**
  * Next steps:
- * 2. Refactor. Make this thing readable, and easy to modify. Use constructors, setters and getters.
- * 3. Make it feel like something you can draw.
- * 4. Figure out storage - Just want to store the state
+ * 1. Refactor. Make this thing readable, and easy to modify.
+ *  tags needs a getValue
+ * 2. Figure out storage - Just want to store the state
  */
 class Desk extends Component {
   constructor() {
