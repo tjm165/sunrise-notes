@@ -21,14 +21,13 @@ class Desk extends Component {
       boards: [new Board("Vehicles"), new Board("ANIMALS")],
       selectedBoard: 0,
       notes: [
-        new Note("car 1 i = 0", [0, 1]),
-        new Note("car 1 i = 0", [0, 1]),
-        new Note("car 2 i = 1", []),
-        new Note("truck 1 i = 2", []),
-        new Note("truck 2 i = 3", []),
-        new Note("truck-car 1 i = 4", []),
-        new Note("dog 0 i = 5", []),
-        new Note("cat 0 i = 6", [])
+        new Note("Car 1 i = 0", [0, 1]),
+        new Note("Car 2 i = 1", [0, 1]),
+        new Note("Truck 1 i = 2", [0, 2]),
+        new Note("Truck 2 i = 3", [0, 2]),
+        new Note("Truck-Car 1 i = 4", [0, 1, 2]),
+        new Note("Dog 0 i = 5", [5]),
+        new Note("Cat 0 i = 6", [6])
       ],
       tags: [
         new Tag("All", [0, 1, 2, 3, 4, 5, 6]),
