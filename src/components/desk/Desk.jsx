@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import DeskDisplay from "./DeskDisplay";
-import NoteObject from "../../objects/NoteObject";
+import Note from "../../objects/Note";
+import Board from "../../objects/Board";
+import Tag from "../../objects/Tag";
+//import Tag from "./Tag";
 
 /**
  * Next steps:
+ * ToggleTag doesn't update the state of the Tag. It does update the state of the Note
  * 1. Refactor. Make this thing readable, and easy to modify.
  *  tags needs a getValue
- * 2. Figure out storage - Just want to store the state
+ * 2. Figure out storage - Just want to store the state.. which is now more complicated because of Objects...
  */
 class Desk extends Component {
   constructor() {
@@ -14,26 +18,26 @@ class Desk extends Component {
 
     //maybe getters is a nice idea?
     this.state = {
-      boards: [{ title: "vehicles", tags: [] }, { title: "uh", tags: [] }],
+      boards: [new Board("Vehicles"), new Board("ANIMALS")],
       selectedBoard: 0,
       notes: [
-        new NoteObject("hello world", [1, 2, 3]),
-        { value: "car 1 i = 0", tagIndices: [0, 1], noteToggleTag: 3 },
-        { value: "car 2 i = 1", tagIndices: [], noteToggleTag: 1 },
-        { value: "truck 1 i = 2", tagIndices: [], noteToggleTag: 0 },
-        { value: "truck 2 i = 3", tagIndices: [], noteToggleTag: 0 },
-        { value: "truck-car 1 i = 4", tagIndices: [], noteToggleTag: 0 },
-        { value: "dog 0 i = 5", tagIndices: [], noteToggleTag: 0 },
-        { value: "cat 0 i = 6", tagIndices: [], noteToggleTag: 0 }
+        new Note("car 1 i = 0", [0, 1]),
+        new Note("car 1 i = 0", [0, 1]),
+        new Note("car 2 i = 1", []),
+        new Note("truck 1 i = 2", []),
+        new Note("truck 2 i = 3", []),
+        new Note("truck-car 1 i = 4", []),
+        new Note("dog 0 i = 5", []),
+        new Note("cat 0 i = 6", [])
       ],
       tags: [
-        { value: "all", noteIndices: [0, 1, 2, 3, 4, 5, 6] },
-        { value: "car", noteIndices: [0, 1, 4] },
-        { value: "truck", noteIndices: [2, 3, 4] },
-        { value: "dogs", noteIndices: [5] },
-        { value: "cats", noteIndices: [6] }
+        new Tag("All", [0, 1, 2, 3, 4, 5, 6]),
+        new Tag("Car", [0, 1, 4]),
+        new Tag("Truck", [2, 3, 4]),
+        new Tag("Dog", [5]),
+        new Tag("Cat", [6])
       ],
-      newTag: { value: "woop", noteIndices: [] },
+
       noteToggleTag: 0
     };
 
@@ -101,7 +105,7 @@ class Desk extends Component {
     alert(noteIndex);
     var tags = this.state.tags;
     var notesOfAllTag = tags[0].noteIndices;
-    notes.push(new NoteObject("new note", [0]));
+    notes.push(new Note("new note", [0]));
     notesOfAllTag.push(noteIndex);
     this.setState({ notes: notes, tags: tags });
   }
@@ -121,10 +125,10 @@ class Desk extends Component {
   //good
   deskAddNewTag() {
     var tags = this.state.tags;
-    const newTag = this.state.newTag;
+    const newTag = new Tag("new tag", []);
     const newNewTag = { value: "woop", noteIndices: [] };
     tags.push(newTag);
-    this.setState({ tags: tags, newTag: newNewTag });
+    this.setState({ tags: tags });
   }
 
   //good
