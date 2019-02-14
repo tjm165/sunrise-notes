@@ -1,6 +1,6 @@
 function Board(title) {
-  this.title = title;
   this.tags = [];
+  this.title = title;
 }
 
 export default Board;
