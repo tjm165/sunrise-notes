@@ -7,16 +7,16 @@ import Tag from "../../objects/Tag";
 
 /**
  * Next steps:
- * ToggleTag doesn't update the state of the Tag. It does update the state of the Note
- * 1. Refactor. Make this thing readable, and easy to modify.
- *  tags needs a getValue
- * 2. Figure out storage - Just want to store the state.. which is now more complicated because of Objects...
+ * 1. Remove any getters
+ * 2. Make sure every function works Put a //works comment
+ * 3. Figure out storage - Just want to store the state.. which is now more complicated because of Objects...
+ * 4. CSS
+ * 5. More functionality
  */
 class Desk extends Component {
   constructor() {
     super();
 
-    //maybe getters is a nice idea?
     this.state = {
       boards: [new Board("Vehicles"), new Board("ANIMALS")],
       selectedBoard: 0,
