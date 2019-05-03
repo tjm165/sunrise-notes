@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Note from "./Note";
+import Example from "./dd";
 
 class DeskItems extends Component {
   render() {
@@ -14,6 +15,7 @@ class DeskItems extends Component {
         {notesToRender.map(note => (
           <Note index_o={i++} state={state} functions={functions} />
         ))}
+        <Example />
       </div>
     );
   }
