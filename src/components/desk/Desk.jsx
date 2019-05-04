@@ -5,7 +5,7 @@ import Note from "../../objects/Note";
 
 class Desk extends Component {
   constructor() {
-    super();
+    super(); //
 
     this.state = {
       currentContext: 0,
