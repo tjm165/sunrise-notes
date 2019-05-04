@@ -9,41 +9,66 @@ class Desk extends Component {
 
     this.state = {
       currentContext: 0,
-      contexts: [{ tags: [0, 1] }], //eventually context will be a set of tags
+      contexts: [{ tags: [] }], //eventually context will be a set of tags
       tagObjects: [
-        new Tag("tag1", [1, 2]),
-        new Tag("tag2", [2, 3, 4]),
-        new Tag("tag3", [4])
+        new Tag("cars", [0, 1]),
+        new Tag("planes", [2, 3]),
+        new Tag("vehicles", [0, 1, 2, 3]),
+        new Tag("cats", [4])
       ],
       noteObjects: [
-        new Note("note1"),
-        new Note("note2"),
-        new Note("note3"),
-        new Note("note4")
+        new Note("Ford"),
+        new Note("Honda"),
+        new Note("Boeing"),
+        new Note("Airbus"),
+        new Note("Garfield")
       ]
     };
 
     this.functions = {
-      removeTagFromContext: this.removeTagFromContext.bind(this),
-      setContextTags: this.setContextTags.bind(this)
+      setContextTags: this.setContextTags.bind(this),
+      getContextNotes: this.getContextNotes.bind(this)
     };
   }
 
   setContextTags(e, { value }) {
     const tags = value;
-    var context = this.state.contexts;
-    var currentContext = context[this.state.currentContext];
+    const context = this.state.contexts;
+    const currentContext = context[this.state.currentContext];
     currentContext.tags = tags;
     this.setState({ context: context });
   }
 
-  //rename as well
-  //kind of works. Will fix when I do sets
-  removeTagFromContext(tagIndex) {
-    var context = this.state.contexts;
-    var currentContext = context[this.state.currentContext];
-    currentContext.tags.splice(tagIndex, 1);
-    this.setState({ context: context });
+  //renaming and make it consise
+  //perhaps we can save the contextNotes to the state so it's faster
+  getContextNotes() {
+    //it would be cool to make a getCurrentContext helper
+    const context = this.state.contexts;
+    const currentContext = context[this.state.currentContext];
+    const tagArray = currentContext.tags;
+    var noteSet = new Set();
+
+    //for each tag in tagArray
+    //for each note in the tag
+    //noteSet.add(tag.noteIndices)
+
+    var i;
+    var j;
+    var tag;
+    var noteArray;
+    for (i = 0; i < tagArray.length; i++) {
+      //for each tag in tagArray
+      tag = this.state.tagObjects[tagArray[i]];
+      noteArray = tag.noteIndices;
+      for (j = 0; j < noteArray.length; j++) {
+        //for each note in noteArray
+        noteSet.add(noteArray[j]);
+        console.log("just added note: " + this.state.noteObjects[j].value);
+      }
+      console.log("just added all the notes from tag " + i);
+    }
+
+    return noteSet;
   }
 
   render() {

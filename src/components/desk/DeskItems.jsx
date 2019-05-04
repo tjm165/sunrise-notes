@@ -5,14 +5,17 @@ class DeskItems extends Component {
   render() {
     const { state, functions } = this.props;
     const tagsInCurrentContext = state.contexts[state.currentContext].tags;
-    const notesToRender = [1, 2, 3];
+    const gotti = Array.from(functions.getContextNotes());
+    const notesToRender = [2, 1, 3];
+
+    console.log(gotti);
 
     var i = 0;
     return (
       <div>
         Desk Items:
-        {notesToRender.map(note => (
-          <Note index_o={i++} state={state} functions={functions} />
+        {gotti.map(note => (
+          <Note index_o={note} state={state} functions={functions} />
         ))}
       </div>
     );
