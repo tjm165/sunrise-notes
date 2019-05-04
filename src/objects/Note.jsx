@@ -1,7 +1,5 @@
-function Note(value, tagIndices) {
+function Note(value) {
   this.value = value;
-  this.tagIndices = tagIndices;
-  this.toggleTag = 4;
 }
 
 export default Note;
