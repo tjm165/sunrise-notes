@@ -13,7 +13,6 @@ class DeskDisplay extends Component {
       <div>
         <DeskHeader />
         <DeskSearch state={state} functions={functions} />
-        <DeskContext state={state} functions={functions} />
         <DeskItems state={state} functions={functions} />
       </div>
     );

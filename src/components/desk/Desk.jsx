@@ -24,16 +24,16 @@ class Desk extends Component {
     };
 
     this.functions = {
-      addTagToContext: this.addTagToContext.bind(this),
-      removeTagFromContext: this.removeTagFromContext.bind(this)
+      removeTagFromContext: this.removeTagFromContext.bind(this),
+      setContextTags: this.setContextTags.bind(this)
     };
   }
 
-  //rename toCurrentContext or give it 2 parameters
-  addTagToContext(tagIndex) {
+  setContextTags(e, { value }) {
+    const tags = value;
     var context = this.state.contexts;
     var currentContext = context[this.state.currentContext];
-    currentContext.tags.push(tagIndex);
+    currentContext.tags = tags;
     this.setState({ context: context });
   }
 
