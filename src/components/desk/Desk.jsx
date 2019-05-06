@@ -27,9 +27,28 @@ class Desk extends Component {
 
     this.functions = {
       setContextTags: this.setContextTags.bind(this),
-      getContextNotes: this.getContextNotes.bind(this)
+      getContextNotes: this.getContextNotes.bind(this),
+      getAWSData: this.getAWSData.bind(this)
     };
   }
+
+  getAWSData = async e => {
+    console.log("got to here");
+
+    e.preventDefault();
+    //const city = e.target.elements.city.value;
+    console.log("here2");
+
+    const ask =
+      "https://jeebrshgt6.execute-api.us-east-2.amazonaws.com/production/userdata?userId=0";
+
+    const api_call = await fetch(ask);
+    console.log("here3");
+    const data = await api_call.json();
+
+    console.log(ask);
+    console.log(data);
+  };
 
   setContextTags(e, { value }) {
     const tags = value;
@@ -74,7 +93,12 @@ class Desk extends Component {
   render() {
     const functions = this.functions;
 
-    return <DeskDisplay state={this.state} functions={functions} />;
+    return (
+      <div>
+        <DeskDisplay state={this.state} functions={functions} />
+        <button onClick={this.getAWSData}>AWS</button>
+      </div>
+    );
   }
 }
 
