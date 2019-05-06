@@ -40,7 +40,7 @@ class Desk extends Component {
     console.log("here2");
 
     const ask =
-      "https://jeebrshgt6.execute-api.us-east-2.amazonaws.com/production/userdata?userId=0";
+      "https://jeebrshgt6.execute-api.us-east-2.amazonaws.com/production/userdata?userId=1";
 
     const api_call = await fetch(ask);
     console.log("here3");
