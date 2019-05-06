@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Note from "./Note";
+import { Card } from "../../../node_modules/semantic-ui-react";
 
 class DeskItems extends Component {
   render() {
@@ -14,9 +15,11 @@ class DeskItems extends Component {
     return (
       <div>
         Desk Items:
-        {gotti.map(note => (
-          <Note index_o={note} state={state} functions={functions} />
-        ))}
+        <Card.Group>
+          {gotti.map(note => (
+            <Note index_o={note} state={state} functions={functions} />
+          ))}
+        </Card.Group>
       </div>
     );
   }
