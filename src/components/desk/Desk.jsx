@@ -9,6 +9,7 @@ class Desk extends Component {
 
     this.state = {
       currentContext: 0,
+      awsdata: null,
       contexts: [{ tags: [] }], //eventually context will be a set of tags
       tagObjects: [
         new Tag("cars", [0, 1]),
@@ -33,21 +34,21 @@ class Desk extends Component {
   }
 
   getAWSData = async e => {
-    console.log("got to here");
-
     e.preventDefault();
-    //const city = e.target.elements.city.value;
-    console.log("here2");
 
     const ask =
       "https://jeebrshgt6.execute-api.us-east-2.amazonaws.com/production/userdata?userId=1";
 
     const api_call = await fetch(ask);
-    console.log("here3");
     const data = await api_call.json();
 
-    console.log(ask);
-    console.log(data);
+    var tagObjects = [];
+
+    for (var i = 0; i < data.length; i++) {
+      tagObjects[i] = new Tag(data[i]["value"], data[i]["noteIndexes"]);
+    }
+
+    this.setState({ tagObjects: tagObjects });
   };
 
   setContextTags(e, { value }) {
