@@ -9,7 +9,6 @@ class Desk extends Component {
 
     this.state = {
       currentContext: 0,
-      awsdata: null,
       focusedNote: -1,
       contexts: [{ tags: [] }], //eventually context will be a set of tags
       tagObjects: [
@@ -30,29 +29,10 @@ class Desk extends Component {
     this.functions = {
       setContextTags: this.setContextTags.bind(this),
       getContextNotes: this.getContextNotes.bind(this),
-      getAWSData: this.getAWSData.bind(this)
       setNoteValue: this.setNoteValue.bind(this),
       setFocusedNote: this.setFocusedNote.bind(this)
     };
   }
-
-  getAWSData = async e => {
-    e.preventDefault();
-
-    const ask =
-      "https://jeebrshgt6.execute-api.us-east-2.amazonaws.com/production/userdata?userId=1";
-
-    const api_call = await fetch(ask);
-    const data = await api_call.json();
-
-    var tagObjects = [];
-
-    for (var i = 0; i < data.length; i++) {
-      tagObjects[i] = new Tag(data[i]["value"], data[i]["noteIndexes"]);
-    }
-
-    this.setState({ tagObjects: tagObjects });
-  };
 
   setContextTags(e, { value }) {
     const tags = value;
@@ -109,12 +89,7 @@ class Desk extends Component {
   render() {
     const functions = this.functions;
 
-    return (
-      <div>
-        <DeskDisplay state={this.state} functions={functions} />
-        <button onClick={this.getAWSData}>AWS</button>
-      </div>
-    );
+    return <DeskDisplay state={this.state} functions={functions} />;
   }
 }
 
