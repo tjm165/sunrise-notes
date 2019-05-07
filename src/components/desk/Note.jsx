@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Card, Form, TextArea } from "../../../node_modules/semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 class Note extends Component {
   render() {
@@ -18,13 +19,13 @@ class Note extends Component {
       );
     } else {
       component = (
-        <Card text onClick={i => functions.setFocusedNote(index_o)}>
+        <Container text onClick={i => functions.setFocusedNote(index_o)}>
           {value}
-        </Card>
+        </Container>
       );
     }
 
-    return <div>{component}</div>;
+    return <Card>{component}</Card>;
   }
 }
 

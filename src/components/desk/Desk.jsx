@@ -109,12 +109,7 @@ class Desk extends Component {
   render() {
     const functions = this.functions;
 
-    return (
-      <div>
-        <DeskDisplay state={this.state} functions={functions} />
-        <button onClick={this.getAWSData}>AWS</button>
-      </div>
-    );
+    return <DeskDisplay state={this.state} functions={functions} />;
   }
 }
 

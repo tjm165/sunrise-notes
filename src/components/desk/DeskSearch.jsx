@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Dropdown } from "../../../node_modules/semantic-ui-react";
+import { Container } from "semantic-ui-react";
 
 class DeskSearch extends Component {
   render() {
@@ -7,8 +8,7 @@ class DeskSearch extends Component {
     var i = 0;
 
     return (
-      <div>
-        DeskSearch
+      <Container>
         <Dropdown
           placeholder="Select Tag"
           fluid
@@ -22,7 +22,7 @@ class DeskSearch extends Component {
             text: tag.value
           }))}
         />
-      </div>
+      </Container>
     );
   }
 }
