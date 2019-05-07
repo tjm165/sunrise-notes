@@ -10,6 +10,7 @@ class Desk extends Component {
     this.state = {
       currentContext: 0,
       awsdata: null,
+      focusedNote: -1,
       contexts: [{ tags: [] }], //eventually context will be a set of tags
       tagObjects: [
         new Tag("cars", [0, 1]),
@@ -30,6 +31,8 @@ class Desk extends Component {
       setContextTags: this.setContextTags.bind(this),
       getContextNotes: this.getContextNotes.bind(this),
       getAWSData: this.getAWSData.bind(this)
+      setNoteValue: this.setNoteValue.bind(this),
+      setFocusedNote: this.setFocusedNote.bind(this)
     };
   }
 
@@ -57,6 +60,18 @@ class Desk extends Component {
     const currentContext = context[this.state.currentContext];
     currentContext.tags = tags;
     this.setState({ context: context });
+  }
+
+  setFocusedNote(i_o) {
+    this.setState({ focusedNote: i_o });
+  }
+
+  setNoteValue(i_o, e) {
+    var noteObjects = this.state.noteObjects;
+    const noteObject = noteObjects[i_o];
+    const newValue = e.value;
+    noteObject.value = newValue;
+    this.setState({ NoteObjects: noteObjects });
   }
 
   //renaming and make it consise
