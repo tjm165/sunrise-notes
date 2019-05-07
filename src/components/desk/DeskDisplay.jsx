@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import DeskHeader from "./DeskHeader";
-import DeskSearch from "./DeskSearch";
+import TagSearch from "./TagSearch";
 import DeskNotes from "./DeskNotes";
 import { Container } from "semantic-ui-react";
 
@@ -12,7 +12,10 @@ class DeskDisplay extends Component {
     return (
       <Container>
         <DeskHeader state={state} functions={functions} />
-        <DeskSearch state={state} functions={functions} />
+        <TagSearch
+          tagObjects={state.tagObjects}
+          onChange={functions.setContextTags}
+        />
         <DeskNotes state={state} functions={functions} />
       </Container>
     );
