@@ -13,6 +13,7 @@ class Note extends Component {
         <Form>
           <TextArea
             placeholder={value}
+            value={value}
             onChange={(i, e) => functions.setNoteValue(index_o, e)}
           />
         </Form>
@@ -25,7 +26,11 @@ class Note extends Component {
       );
     }
 
-    return <Card>{component}</Card>;
+    return (
+      <Card style={{ height: 100 }} link>
+        {component}
+      </Card>
+    );
   }
 }
 
