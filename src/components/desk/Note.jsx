@@ -1,27 +1,40 @@
 import React, { Component } from "react";
 import { Card, Form, TextArea } from "../../../node_modules/semantic-ui-react";
 import { Container } from "semantic-ui-react";
-import NoteView from "./NoteView";
-import NoteEdit from "./NoteEdit";
+import TagSearch from "./TagSearch";
 
 class Note extends Component {
   render() {
     const { index_o, state, functions } = this.props;
     const value = state.noteObjects[index_o].value;
-    var component;
 
-    if (index_o === state.focusedNote) {
-      component = (
-        <NoteEdit index_o={index_o} state={state} functions={functions} />
-      );
-    } else {
-      component = (
-        <NoteView index_o={index_o} state={state} functions={functions} />
-      );
-    }
+    var inFocus = index_o === state.focusedNote;
 
     return (
-      <Card onClick={i => functions.setFocusedNote(index_o)}>{component}</Card>
+      <Card>
+        <Card.Content>
+          <Form>
+            <TextArea
+              onFocus={() => functions.setFocusedNote(index_o)}
+              onBlur={() => functions.setFocusedNote(-1)}
+              placeholder={value}
+              value={value}
+              onChange={(i, e) => functions.setNoteValue(index_o, e)}
+            />
+          </Form>
+        </Card.Content>
+
+        {inFocus ? (
+          <Card.Content extra>
+            <TagSearch
+              tagObjects={state.tagObjects}
+              onChange={functions.setFocusedNoteTags}
+            />
+          </Card.Content>
+        ) : (
+          ""
+        )}
+      </Card>
     );
   }
 }
