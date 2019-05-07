@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Card, Form, TextArea } from "../../../node_modules/semantic-ui-react";
 import { Container } from "semantic-ui-react";
+import NoteView from "./NoteView";
+import NoteEdit from "./NoteEdit";
 
 class Note extends Component {
   render() {
@@ -10,28 +12,17 @@ class Note extends Component {
 
     if (index_o === state.focusedNote) {
       component = (
-        <Form>
-          <TextArea
-            placeholder={value}
-            value={value}
-            onChange={(i, e) => functions.setNoteValue(index_o, e)}
-          />
-        </Form>
+        <NoteEdit index_o={index_o} state={state} functions={functions} />
       );
     } else {
       component = (
-        <Container text onClick={i => functions.setFocusedNote(index_o)}>
-          {value}
-        </Container>
+        <NoteView index_o={index_o} state={state} functions={functions} />
       );
     }
 
     return (
-      <Card style={{ height: 100 }} link>
-        {component}
-      </Card>
+      <Card onClick={i => functions.setFocusedNote(index_o)}>{component}</Card>
     );
   }
 }
-
 export default Note;
