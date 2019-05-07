@@ -32,7 +32,8 @@ class Desk extends Component {
       getContextNotes: this.getContextNotes.bind(this),
       getAWSData: this.getAWSData.bind(this),
       setNoteValue: this.setNoteValue.bind(this),
-      setFocusedNote: this.setFocusedNote.bind(this)
+      setFocusedNote: this.setFocusedNote.bind(this),
+      setFocusedNoteTags: this.setFocusedNoteTags.bind(this)
     };
   }
 
@@ -60,6 +61,10 @@ class Desk extends Component {
     const currentContext = context[this.state.currentContext];
     currentContext.tags = tags;
     this.setState({ context: context });
+  }
+
+  setFocusedNoteTags(e, { value }) {
+    alert("hello");
   }
 
   setFocusedNote(i_o) {

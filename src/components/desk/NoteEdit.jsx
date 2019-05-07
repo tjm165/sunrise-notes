@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Card, Form, TextArea } from "../../../node_modules/semantic-ui-react";
 import { Container } from "semantic-ui-react";
+import TagSearch from "./TagSearch";
 
 class NoteEdit extends Component {
   render() {
@@ -16,8 +17,11 @@ class NoteEdit extends Component {
             value={value}
             onChange={(i, e) => functions.setNoteValue(index_o, e)}
           />
-          <TextArea placeholder="tags" value="tags" />
         </Form>
+        <TagSearch
+          tagObjects={state.tagObjects}
+          onChange={functions.setFocusedNoteTags}
+        />
       </Card.Content>
     );
   }
