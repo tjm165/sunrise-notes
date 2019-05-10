@@ -12,7 +12,7 @@ class Note extends Component {
   render() {
     const { index_o, state, functions } = this.props;
     const noteObject = state.noteObjects[index_o];
-    const value = noteObject.value;
+    const value = noteObject.getValue();
     const editing = noteObject.editing;
 
     return (
@@ -20,7 +20,7 @@ class Note extends Component {
         <Card.Content>
           <Form>
             <TextArea
-              onFocus={() => functions.editNote(index_o, true)}
+              onFocus={() => functions.editNote(index_o)}
               placeholder={value}
               value={value}
               onChange={(i, e) => functions.setNoteValue(index_o, e)}
@@ -34,8 +34,8 @@ class Note extends Component {
               tagObjects={state.tagObjects}
               onChange={functions.setFocusedNoteTags}
             />
-            <Button>Save</Button>
-            <Button onClick={() => functions.editNote(index_o, false)}>
+            <Button onClick={() => functions.saveNote(index_o)}>Save</Button>
+            <Button onClick={() => functions.cancelNote(index_o)}>
               Cancel
             </Button>
           </Card.Content>

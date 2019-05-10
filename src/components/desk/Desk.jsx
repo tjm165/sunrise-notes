@@ -31,10 +31,10 @@ class Desk extends Component {
       setContextTags: this.setContextTags.bind(this),
       getContextNotes: this.getContextNotes.bind(this),
       getAWSData: this.getAWSData.bind(this),
-      setNoteValue: this.setNoteValue.bind(this),
-      setFocusedNote: this.setFocusedNote.bind(this),
       setFocusedNoteTags: this.setFocusedNoteTags.bind(this),
-      editNote: this.editNote.bind(this)
+      editNote: this.editNote.bind(this),
+      cancelNote: this.cancelNote.bind(this),
+      saveNote: this.saveNote.bind(this)
     };
   }
 
@@ -72,21 +72,13 @@ class Desk extends Component {
     this.setState({ focusedNote: i_o });
   }
 
-  editNote(i_o, editing) {
-    const noteObjects = this.state.noteObjects;
-    var noteObject = noteObjects[i_o];
-    noteObject.editing = editing;
+  editNote(i_o) {}
 
-    this.setState({ noteObjects: noteObjects });
-  }
+  cancelNote(i_o) {}
 
-  setNoteValue(i_o, e) {
-    var noteObjects = this.state.noteObjects;
-    const noteObject = noteObjects[i_o];
-    const newValue = e.value;
-    noteObject.value = newValue;
-    this.setState({ NoteObjects: noteObjects });
-  }
+  saveNote(i_o) {}
+
+  setNoteValue(i_o) {}
 
   //renaming and make it consise
   //perhaps we can save the contextNotes to the state so it's faster
