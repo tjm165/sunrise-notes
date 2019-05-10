@@ -23,7 +23,7 @@ class Note extends Component {
               onFocus={() => functions.editNote(index_o)}
               placeholder={value}
               value={value}
-              onChange={(i, e) => functions.setNoteValue(index_o, e)}
+              onChange={(i, e) => functions.setNoteEditValue(index_o, e)}
             />
           </Form>
         </Card.Content>

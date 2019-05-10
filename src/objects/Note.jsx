@@ -9,14 +9,14 @@ function Note(value) {
       return this.value;
     }
   };
-}
 
-function applyEdits() {
-  this.editing = true;
-}
+  this.applyEdits = function() {
+    this.value = this.editValue;
+  };
 
-function resetEdits() {
-  this.editing = false;
+  this.resetEdits = function() {
+    this.editValue = this.value;
+  };
 }
 
 export default Note;

@@ -34,7 +34,8 @@ class Desk extends Component {
       setFocusedNoteTags: this.setFocusedNoteTags.bind(this),
       editNote: this.editNote.bind(this),
       cancelNote: this.cancelNote.bind(this),
-      saveNote: this.saveNote.bind(this)
+      saveNote: this.saveNote.bind(this),
+      setNoteEditValue: this.setNoteEditValue.bind(this)
     };
   }
 
@@ -72,13 +73,43 @@ class Desk extends Component {
     this.setState({ focusedNote: i_o });
   }
 
-  editNote(i_o) {}
+  //A
+  editNote(i_o) {
+    const noteObjects = this.state.noteObjects;
+    const noteObject = noteObjects[i_o];
+    noteObject.editing = true;
 
-  cancelNote(i_o) {}
+    this.setState({ noteObjects: noteObjects });
+  }
 
-  saveNote(i_o) {}
+  //A
+  cancelNote(i_o) {
+    const noteObjects = this.state.noteObjects;
+    const noteObject = noteObjects[i_o];
+    noteObject.editing = false;
+    noteObject.resetEdits();
 
-  setNoteValue(i_o) {}
+    this.setState({ noteObjects: noteObjects });
+  }
+
+  //A
+  saveNote(i_o) {
+    const noteObjects = this.state.noteObjects;
+    const noteObject = noteObjects[i_o];
+    noteObject.editing = false;
+    noteObject.applyEdits();
+
+    this.setState({ noteObjects: noteObjects });
+  }
+
+  //A
+  setNoteEditValue(i_o, e) {
+    const noteObjects = this.state.noteObjects;
+    const noteObject = noteObjects[i_o];
+
+    noteObject.editValue = e.value;
+    this.setState({ noteObjects: noteObjects });
+  }
 
   //renaming and make it consise
   //perhaps we can save the contextNotes to the state so it's faster
