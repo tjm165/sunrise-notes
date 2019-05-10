@@ -31,9 +31,11 @@ class Desk extends Component {
       setContextTags: this.setContextTags.bind(this),
       getContextNotes: this.getContextNotes.bind(this),
       getAWSData: this.getAWSData.bind(this),
-      setNoteValue: this.setNoteValue.bind(this),
-      setFocusedNote: this.setFocusedNote.bind(this),
-      setFocusedNoteTags: this.setFocusedNoteTags.bind(this)
+      setFocusedNoteTags: this.setFocusedNoteTags.bind(this),
+      editNote: this.editNote.bind(this),
+      cancelNote: this.cancelNote.bind(this),
+      saveNote: this.saveNote.bind(this),
+      setNoteEditValue: this.setNoteEditValue.bind(this)
     };
   }
 
@@ -71,12 +73,42 @@ class Desk extends Component {
     this.setState({ focusedNote: i_o });
   }
 
-  setNoteValue(i_o, e) {
-    var noteObjects = this.state.noteObjects;
+  //A
+  editNote(i_o) {
+    const noteObjects = this.state.noteObjects;
     const noteObject = noteObjects[i_o];
-    const newValue = e.value;
-    noteObject.value = newValue;
-    this.setState({ NoteObjects: noteObjects });
+    noteObject.editing = true;
+
+    this.setState({ noteObjects: noteObjects });
+  }
+
+  //A
+  cancelNote(i_o) {
+    const noteObjects = this.state.noteObjects;
+    const noteObject = noteObjects[i_o];
+    noteObject.editing = false;
+    noteObject.resetEdits();
+
+    this.setState({ noteObjects: noteObjects });
+  }
+
+  //A
+  saveNote(i_o) {
+    const noteObjects = this.state.noteObjects;
+    const noteObject = noteObjects[i_o];
+    noteObject.editing = false;
+    noteObject.applyEdits();
+
+    this.setState({ noteObjects: noteObjects });
+  }
+
+  //A
+  setNoteEditValue(i_o, e) {
+    const noteObjects = this.state.noteObjects;
+    const noteObject = noteObjects[i_o];
+
+    noteObject.editValue = e.value;
+    this.setState({ noteObjects: noteObjects });
   }
 
   //renaming and make it consise
