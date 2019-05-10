@@ -33,7 +33,8 @@ class Desk extends Component {
       getAWSData: this.getAWSData.bind(this),
       setNoteValue: this.setNoteValue.bind(this),
       setFocusedNote: this.setFocusedNote.bind(this),
-      setFocusedNoteTags: this.setFocusedNoteTags.bind(this)
+      setFocusedNoteTags: this.setFocusedNoteTags.bind(this),
+      editNote: this.editNote.bind(this)
     };
   }
 
@@ -69,6 +70,14 @@ class Desk extends Component {
 
   setFocusedNote(i_o) {
     this.setState({ focusedNote: i_o });
+  }
+
+  editNote(i_o, editing) {
+    const noteObjects = this.state.noteObjects;
+    var noteObject = noteObjects[i_o];
+    noteObject.editing = editing;
+
+    this.setState({ noteObjects: noteObjects });
   }
 
   setNoteValue(i_o, e) {
