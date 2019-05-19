@@ -10,7 +10,6 @@ class Desk extends Component {
     this.state = {
       currentContext: 0,
       awsdata: null,
-      focusedNote: -1,
       contexts: [{ tags: [] }], //eventually context will be a set of tags
       tagObjects: [
         new Tag("cars", [0, 1]),
@@ -28,15 +27,20 @@ class Desk extends Component {
     };
 
     this.functions = {
-      setContextTags: this.setContextTags.bind(this),
-      getContextNotes: this.getContextNotes.bind(this),
-      getAWSData: this.getAWSData.bind(this),
-      setFocusedNoteTags: this.setFocusedNoteTags.bind(this),
-      editNote: this.editNote.bind(this),
-      cancelNote: this.cancelNote.bind(this),
-      saveNote: this.saveNote.bind(this),
-      setNoteEditValue: this.setNoteEditValue.bind(this)
+      setContextTags: this.setContextTags.bind(this), //used by DeskDisplay
+      getContextNotes: this.getContextNotes.bind(this), //used by DeskNotes
+      getAWSData: this.getAWSData.bind(this), //used by DeskHeader
+      editNote: this.editNote.bind(this), //used by Note
+      setNoteEditValue: this.setNoteEditValue.bind(this), //used by Note
+      setNoteEditTags: this.setNoteEditTags.bind(this),
+      finishNoteEdit: this.finishNoteEdit.bind(this) //used by Note
     };
+
+    this.test = this.test.bind(this);
+  }
+
+  test() {
+    console.log("test");
   }
 
   getAWSData = async e => {
@@ -65,50 +69,48 @@ class Desk extends Component {
     this.setState({ context: context });
   }
 
-  setFocusedNoteTags(e, { value }) {
-    alert("hello");
-  }
-
-  setFocusedNote(i_o) {
-    this.setState({ focusedNote: i_o });
+  //HELP
+  setNoteEditTags(i_o, add, e) {
+    alert("a");
+    alert(i_o);
+    alert(add);
+    alert(e);
   }
 
   //A
   editNote(i_o) {
-    const noteObjects = this.state.noteObjects;
-    const noteObject = noteObjects[i_o];
-    noteObject.editing = true;
+    const noteObjects = this.state.noteObjects; //get
+    const noteObject = noteObjects[i_o]; //get
+    noteObject.editing = true; //editing
+    //unique
 
-    this.setState({ noteObjects: noteObjects });
-  }
-
-  //A
-  cancelNote(i_o) {
-    const noteObjects = this.state.noteObjects;
-    const noteObject = noteObjects[i_o];
-    noteObject.editing = false;
-    noteObject.resetEdits();
-
-    this.setState({ noteObjects: noteObjects });
-  }
-
-  //A
-  saveNote(i_o) {
-    const noteObjects = this.state.noteObjects;
-    const noteObject = noteObjects[i_o];
-    noteObject.editing = false;
-    noteObject.applyEdits();
-
-    this.setState({ noteObjects: noteObjects });
+    this.setState({ noteObjects: noteObjects }); //save
   }
 
   //A
   setNoteEditValue(i_o, e) {
-    const noteObjects = this.state.noteObjects;
-    const noteObject = noteObjects[i_o];
+    const noteObjects = this.state.noteObjects; //get
+    const noteObject = noteObjects[i_o]; //get
 
-    noteObject.editValue = e.value;
-    this.setState({ noteObjects: noteObjects });
+    noteObject.editValue = e.value; //unique
+    this.setState({ noteObjects: noteObjects }); //save
+  }
+
+  finishNoteEdit(i_o, save) {
+    const noteObjects = this.state.noteObjects; //get
+    const noteObject = noteObjects[i_o]; //get
+    noteObject.editing = false; //editing
+    if (save) {
+      noteObject.applyEdits(); //unique
+    } else {
+      noteObject.resetEdits(); //unique
+    }
+
+    this.setState({ noteObjects: noteObjects }); //save
+  }
+
+  toggleNoteInContext(context_i, note_i, insert) {
+    //int, int, bool
   }
 
   //renaming and make it consise

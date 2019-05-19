@@ -32,10 +32,14 @@ class Note extends Component {
           <Card.Content extra>
             <TagSearch
               tagObjects={state.tagObjects}
-              onChange={functions.setFocusedNoteTags}
+              onChange={(i, b, e) =>
+                functions.setNoteEditTags(index_o, true, e)
+              }
             />
-            <Button onClick={() => functions.saveNote(index_o)}>Save</Button>
-            <Button onClick={() => functions.cancelNote(index_o)}>
+            <Button onClick={() => functions.finishNoteEdit(index_o, true)}>
+              Save
+            </Button>
+            <Button onClick={() => functions.finishNoteEdit(index_o, false)}>
               Cancel
             </Button>
           </Card.Content>
