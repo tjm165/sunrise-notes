@@ -33,7 +33,8 @@ class Desk extends Component {
       editNote: this.editNote.bind(this), //used by Note
       setNoteEditValue: this.setNoteEditValue.bind(this), //used by Note
       setNoteEditTags: this.setNoteEditTags.bind(this),
-      finishNoteEdit: this.finishNoteEdit.bind(this) //used by Note
+      finishNoteEdit: this.finishNoteEdit.bind(this), //used by Note
+      getTagsForNote: this.getTagsForNote.bind(this) //used by NoteGroup
     };
 
     this.test = this.test.bind(this);
@@ -61,6 +62,7 @@ class Desk extends Component {
     this.setState({ tagObjects: tagObjects });
   };
 
+  //if the tag didn't exist before then you should add it
   setContextTags(e, { value }) {
     const tags = value;
     const context = this.state.contexts;
@@ -69,12 +71,37 @@ class Desk extends Component {
     this.setState({ context: context });
   }
 
-  //HELP
-  setNoteEditTags(i_o, add, e) {
-    alert("a");
-    alert(i_o);
-    alert(add);
-    alert(e);
+  //Right now it just sets the note tags. Not the note edit tags
+  setNoteEditTags(i_o, e) {
+    console.log("value " + e.value);
+
+    const tags = e.value;
+    const tagObjects = this.state.tagObjects;
+
+    for (var i = 0; i < tags.length; i++) {
+      tagObjects[tags[i]].noteIndices = [
+        ...tagObjects[tags[i]].noteIndices,
+        i_o
+      ];
+    }
+
+    this.setState({ tagObjects: tagObjects });
+  }
+
+  getTagsForNote(i_o) {
+    //search through every note in every tag to see if note == i_o and then put that tag in an aray and return the array
+    const tags = this.state.tagObjects;
+    var noteTags = [];
+
+    for (var i = 0; i < tags.length; i++) {
+      for (var j = 0; j < tags[i].noteIndices.length; j++) {
+        if (tags[i].noteIndices[j] === i_o) {
+          noteTags = [...noteTags, i];
+        }
+      }
+    }
+
+    return noteTags;
   }
 
   //A

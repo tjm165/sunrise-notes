@@ -4,17 +4,19 @@ import { Container } from "semantic-ui-react";
 
 class DeskSearch extends Component {
   render() {
-    const { onChange, tagObjects } = this.props;
+    const { onChange, tagObjects, defaultValue } = this.props;
     var i = 0;
 
     return (
       <Container>
         <Dropdown
           placeholder="Select Tag"
+          defaultValue={defaultValue}
           fluid
           search
           multiple
           selection
+          allowAdditions
           onChange={onChange}
           options={tagObjects.map(tag => ({
             key: i,

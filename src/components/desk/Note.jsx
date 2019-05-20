@@ -10,7 +10,7 @@ import TagSearch from "./TagSearch";
 
 class Note extends Component {
   render() {
-    const { index_o, state, functions } = this.props;
+    const { index_o, state, functions, selectedTags } = this.props;
     const noteObject = state.noteObjects[index_o];
     const value = noteObject.getValue();
     const editing = noteObject.editing;
@@ -32,9 +32,8 @@ class Note extends Component {
           <Card.Content extra>
             <TagSearch
               tagObjects={state.tagObjects}
-              onChange={(i, b, e) =>
-                functions.setNoteEditTags(index_o, true, e)
-              }
+              onChange={(i, e) => functions.setNoteEditTags(index_o, e)}
+              defaultValue={selectedTags}
             />
             <Button onClick={() => functions.finishNoteEdit(index_o, true)}>
               Save
