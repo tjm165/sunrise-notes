@@ -10,7 +10,12 @@ class NoteGroup extends Component {
     return (
       <Card.Group itemsPerRow={itemsPerRow}>
         {notes.map(note => (
-          <Note index_o={note} state={state} functions={functions} />
+          <Note
+            index_o={note}
+            state={state}
+            functions={functions}
+            selectedTags={functions.getTagsForNote(note)}
+          />
         ))}
       </Card.Group>
     );
