@@ -17,7 +17,7 @@ class DeskSearch extends Component {
           multiple
           selection
           allowAdditions
-          onChange={onChange}
+          onChange={(e, DropdownProps) => onChange(DropdownProps.value)}
           options={tagObjects.map(tag => ({
             key: i,
             value: i++,

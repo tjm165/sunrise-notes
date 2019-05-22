@@ -41,7 +41,7 @@ class Desk extends Component {
   }
 
   //if the tag didn't exist before then you should add it
-  setContextTags(e, { value }) {
+  setContextTags(value) {
     this.setState({ contextTags: value });
   }
 
@@ -95,8 +95,8 @@ class Desk extends Component {
   }
 
   //Right now it just sets the note tags. Not the note edit tags
-  changeNoteTags(i_o, e) {
-    const tags = e.value;
+  changeNoteTags(i_o, value) {
+    const tags = value;
     const tagObjects = this.state.tagObjects;
 
     for (var i = 0; i < tags.length; i++) {
@@ -110,11 +110,11 @@ class Desk extends Component {
   }
 
   //A
-  changeNoteValue(i_o, e) {
+  changeNoteValue(i_o, value) {
     const noteObjects = this.state.noteObjects; //get
     const noteObject = noteObjects[i_o]; //get
 
-    noteObject.editValue = e.value; //unique
+    noteObject.editValue = value; //unique
     this.setState({ noteObjects: noteObjects }); //save
   }
 
