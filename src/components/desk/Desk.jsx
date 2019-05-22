@@ -8,9 +8,8 @@ class Desk extends Component {
     super();
 
     this.state = {
-      currentContext: 0,
       awsdata: null,
-      contexts: [{ tags: [] }], //eventually context will be a set of tags
+      contextTags: [], //eventually context will be a set of tags
       tagObjects: [
         new Tag("cars", [0, 1]),
         new Tag("planes", [2, 3]),
@@ -29,19 +28,42 @@ class Desk extends Component {
     this.functions = {
       setContextTags: this.setContextTags.bind(this), //used by DeskDisplay
       getContextNotes: this.getContextNotes.bind(this), //used by DeskNotes
-      getAWSData: this.getAWSData.bind(this), //used by DeskHeader
-      editNote: this.editNote.bind(this), //used by Note
-      setNoteEditValue: this.setNoteEditValue.bind(this), //used by Note
-      setNoteEditTags: this.setNoteEditTags.bind(this),
-      finishNoteEdit: this.finishNoteEdit.bind(this), //used by Note
-      getTagsForNote: this.getTagsForNote.bind(this) //used by NoteGroup
-    };
 
-    this.test = this.test.bind(this);
+      getAWSData: this.getAWSData.bind(this), //used by DeskHeader
+
+      editNote: this.editNote.bind(this), //used by Note
+      changeNoteTags: this.changeNoteTags.bind(this),
+      changeNoteValue: this.changeNoteValue.bind(this), //used by Note
+      getNoteTags: this.getNoteTags.bind(this), //used by NoteGroup
+
+      saveNote: this.saveNote.bind(this) //used by Note
+    };
   }
 
-  test() {
-    console.log("test");
+  //if the tag didn't exist before then you should add it
+  setContextTags(e, { value }) {
+    this.setState({ contextTags: value });
+  }
+
+  getContextNotes() {
+    const contextTags = this.state.contextTags;
+    var noteSet = new Set();
+
+    var i;
+    var j;
+    var tag;
+    var noteArray;
+    for (i = 0; i < contextTags.length; i++) {
+      //for each tag in contextTags
+      tag = this.state.tagObjects[contextTags[i]];
+      noteArray = tag.noteIndices;
+      for (j = 0; j < noteArray.length; j++) {
+        //for each note in noteArray
+        noteSet.add(noteArray[j]);
+      }
+    }
+
+    return noteSet;
   }
 
   getAWSData = async e => {
@@ -62,19 +84,18 @@ class Desk extends Component {
     this.setState({ tagObjects: tagObjects });
   };
 
-  //if the tag didn't exist before then you should add it
-  setContextTags(e, { value }) {
-    const tags = value;
-    const context = this.state.contexts;
-    const currentContext = context[this.state.currentContext];
-    currentContext.tags = tags;
-    this.setState({ context: context });
+  //A
+  editNote(i_o) {
+    const noteObjects = this.state.noteObjects; //get
+    const noteObject = noteObjects[i_o]; //get
+    noteObject.editing = true; //editing
+    //unique
+
+    this.setState({ noteObjects: noteObjects }); //save
   }
 
   //Right now it just sets the note tags. Not the note edit tags
-  setNoteEditTags(i_o, e) {
-    console.log("value " + e.value);
-
+  changeNoteTags(i_o, e) {
     const tags = e.value;
     const tagObjects = this.state.tagObjects;
 
@@ -88,7 +109,16 @@ class Desk extends Component {
     this.setState({ tagObjects: tagObjects });
   }
 
-  getTagsForNote(i_o) {
+  //A
+  changeNoteValue(i_o, e) {
+    const noteObjects = this.state.noteObjects; //get
+    const noteObject = noteObjects[i_o]; //get
+
+    noteObject.editValue = e.value; //unique
+    this.setState({ noteObjects: noteObjects }); //save
+  }
+
+  getNoteTags(i_o) {
     //search through every note in every tag to see if note == i_o and then put that tag in an aray and return the array
     const tags = this.state.tagObjects;
     var noteTags = [];
@@ -104,26 +134,7 @@ class Desk extends Component {
     return noteTags;
   }
 
-  //A
-  editNote(i_o) {
-    const noteObjects = this.state.noteObjects; //get
-    const noteObject = noteObjects[i_o]; //get
-    noteObject.editing = true; //editing
-    //unique
-
-    this.setState({ noteObjects: noteObjects }); //save
-  }
-
-  //A
-  setNoteEditValue(i_o, e) {
-    const noteObjects = this.state.noteObjects; //get
-    const noteObject = noteObjects[i_o]; //get
-
-    noteObject.editValue = e.value; //unique
-    this.setState({ noteObjects: noteObjects }); //save
-  }
-
-  finishNoteEdit(i_o, save) {
+  saveNote(i_o, save) {
     const noteObjects = this.state.noteObjects; //get
     const noteObject = noteObjects[i_o]; //get
     noteObject.editing = false; //editing
@@ -134,42 +145,6 @@ class Desk extends Component {
     }
 
     this.setState({ noteObjects: noteObjects }); //save
-  }
-
-  toggleNoteInContext(context_i, note_i, insert) {
-    //int, int, bool
-  }
-
-  //renaming and make it consise
-  //perhaps we can save the contextNotes to the state so it's faster
-  getContextNotes() {
-    //it would be cool to make a getCurrentContext helper
-    const context = this.state.contexts;
-    const currentContext = context[this.state.currentContext];
-    const tagArray = currentContext.tags;
-    var noteSet = new Set();
-
-    //for each tag in tagArray
-    //for each note in the tag
-    //noteSet.add(tag.noteIndices)
-
-    var i;
-    var j;
-    var tag;
-    var noteArray;
-    for (i = 0; i < tagArray.length; i++) {
-      //for each tag in tagArray
-      tag = this.state.tagObjects[tagArray[i]];
-      noteArray = tag.noteIndices;
-      for (j = 0; j < noteArray.length; j++) {
-        //for each note in noteArray
-        noteSet.add(noteArray[j]);
-        console.log("just added note: " + this.state.noteObjects[j].value);
-      }
-      console.log("just added all the notes from tag " + i);
-    }
-
-    return noteSet;
   }
 
   render() {

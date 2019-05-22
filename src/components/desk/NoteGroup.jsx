@@ -14,7 +14,7 @@ class NoteGroup extends Component {
             index_o={note}
             state={state}
             functions={functions}
-            selectedTags={functions.getTagsForNote(note)}
+            selectedTags={functions.getNoteTags(note)}
           />
         ))}
       </Card.Group>

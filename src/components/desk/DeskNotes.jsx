@@ -5,7 +5,6 @@ import NoteGroup from "./NoteGroup";
 class DeskNotes extends Component {
   render() {
     const { state, functions } = this.props;
-    const tagsInCurrentContext = state.contexts[state.currentContext].tags;
     const notes = Array.from(functions.getContextNotes());
     const size = notes.length;
     const top3 = notes.slice(0, 3);
