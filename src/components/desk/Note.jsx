@@ -23,7 +23,7 @@ class Note extends Component {
               onFocus={() => functions.editNote(index_o)}
               placeholder={value}
               value={value}
-              onChange={(i, e) => functions.changeNoteValue(index_o, e)}
+              onChange={(i, e) => functions.changeNoteValue(index_o, e.value)}
             />
           </Form>
         </Card.Content>
@@ -32,7 +32,7 @@ class Note extends Component {
           <Card.Content extra>
             <TagSearch
               tagObjects={state.tagObjects}
-              onChange={(i, e) => functions.changeNoteTags(index_o, e)}
+              onChange={e => functions.changeNoteTags(index_o, e)}
               defaultValue={selectedTags}
             />
             <Button onClick={() => functions.saveNote(index_o, true)}>
