@@ -17,13 +17,13 @@ class Desk extends Component {
         [33, new Tag("cats", [4])]
       ]),
       noteMap: new Map([
+        [-1, new Note("new note")],
         [20, new Note("Ford")],
         [21, new Note("Honda")],
         [22, new Note("Boeing")],
         [23, new Note("Airbus")],
         [24, new Note("Garfield")]
-      ]),
-      newNote: new Note("new note")
+      ])
     };
 
     this.functions = {
@@ -38,7 +38,7 @@ class Desk extends Component {
       getNoteTags: this.getNoteTags.bind(this), //used by NoteGroup
 
       saveNote: this.saveNote.bind(this), //used by Note
-      editNewNote: this.editNewNote.bind(this),
+      deleteNote: this.deleteNote.bind(this),
       saveNewNote: this.saveNewNote.bind(this)
     };
   }
@@ -148,6 +148,20 @@ class Desk extends Component {
     }
 
     this.setState({ noteMap: noteMap }); //save
+  }
+
+  deleteNote(key) {
+    const noteMap = this.state.noteMap; //get
+    const tagMap = this.state.tagMap;
+    noteMap.delete(key);
+
+    this.getNoteTags(key).forEach(tagKey => {
+      tagMap.get(tagKey).noteIndices.filter(function(value, index, arr) {
+        return value !== key;
+      });
+    });
+
+    this.setState({ noteMap: noteMap, tagMap: tagMap });
   }
 
   editNewNote() {

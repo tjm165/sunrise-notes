@@ -10,7 +10,7 @@ import TagSearch from "./TagSearch";
 class Note extends Component {
   render() {
     const {
-      state,
+      tagMap,
       value,
       editing,
       saveNote,
@@ -18,7 +18,8 @@ class Note extends Component {
       editNote,
       changeNoteValue,
       selectedTags,
-      changeNoteTags
+      changeNoteTags,
+      deleteNote
     } = this.props;
 
     return (
@@ -37,12 +38,14 @@ class Note extends Component {
         {editing ? (
           <Card.Content extra>
             <TagSearch
-              tagMap={state.tagMap}
+              tagMap={tagMap}
               onChange={changeNoteTags}
               defaultValue={selectedTags}
             />
             <Button onClick={saveNote}>Save</Button>
             <Button onClick={cancelNote}>Cancel</Button>
+
+            {deleteNote ? <Button onClick={deleteNote}>Delete</Button> : ""}
           </Card.Content>
         ) : (
           ""

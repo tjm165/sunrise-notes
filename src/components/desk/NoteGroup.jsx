@@ -10,7 +10,7 @@ class NoteGroup extends Component {
       <Card.Group itemsPerRow={itemsPerRow}>
         {notes.map(note => (
           <Note
-            state={state}
+            tagMap={state.tagMap}
             value={state.noteMap.get(note).getValue()}
             editing={state.noteMap.get(note).editing}
             editNote={() => functions.editNote(note)}
@@ -18,7 +18,8 @@ class NoteGroup extends Component {
             changeNoteTags={e => functions.changeNoteTags(note, e)}
             saveNote={() => functions.saveNote(note, true)}
             cancelNote={() => functions.saveNote(note, false)}
-            selectedTags={functions.getNoteTags(note)}
+            selectedTags={() => functions.getNoteTags(note)}
+            deleteNote={() => functions.deleteNote(note)}
           />
         ))}
       </Card.Group>
