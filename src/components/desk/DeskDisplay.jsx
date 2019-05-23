@@ -13,7 +13,7 @@ class DeskDisplay extends Component {
       <Container>
         <DeskHeader state={state} functions={functions} />
         <TagSearch
-          tagObjects={state.tagObjects}
+          tagMap={state.tagMap}
           onChange={e => functions.setContextTags(e)}
         />
         <DeskNotes state={state} functions={functions} />

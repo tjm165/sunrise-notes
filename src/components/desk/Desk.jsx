@@ -10,19 +10,19 @@ class Desk extends Component {
     this.state = {
       awsdata: null,
       contextTags: [], //eventually context will be a set of tags
-      tagObjects: [
-        new Tag("cars", [0, 1]),
-        new Tag("planes", [2, 3]),
-        new Tag("vehicles", [0, 1, 2, 3]),
-        new Tag("cats", [4])
-      ],
-      noteObjects: [
-        new Note("Ford"),
-        new Note("Honda"),
-        new Note("Boeing"),
-        new Note("Airbus"),
-        new Note("Garfield")
-      ]
+      tagMap: new Map([
+        [30, new Tag("cars", [20, 21])],
+        [31, new Tag("planes", [22, 23])],
+        [32, new Tag("vehicles", [20, 21, 22, 23])],
+        [33, new Tag("cats", [4])]
+      ]), //maybe rename to tagMap
+      noteMap: new Map([
+        [20, new Note("Ford")],
+        [21, new Note("Honda")],
+        [22, new Note("Boeing")],
+        [23, new Note("Airbus")],
+        [24, new Note("Garfield")]
+      ]) //maybe rename to noteMap
     };
 
     this.functions = {
@@ -47,21 +47,15 @@ class Desk extends Component {
 
   getContextNotes() {
     const contextTags = this.state.contextTags;
+    const tagMap = this.state.tagMap;
     var noteSet = new Set();
 
-    var i;
-    var j;
-    var tag;
-    var noteArray;
-    for (i = 0; i < contextTags.length; i++) {
-      //for each tag in contextTags
-      tag = this.state.tagObjects[contextTags[i]];
-      noteArray = tag.noteIndices;
-      for (j = 0; j < noteArray.length; j++) {
-        //for each note in noteArray
-        noteSet.add(noteArray[j]);
-      }
-    }
+    contextTags.forEach(tagKey => {
+      var noteKeys = tagMap.get(tagKey).noteIndices;
+      noteKeys.forEach(noteKey => {
+        noteSet.add(noteKey);
+      });
+    });
 
     return noteSet;
   }
@@ -75,68 +69,64 @@ class Desk extends Component {
     const api_call = await fetch(ask);
     const data = await api_call.json();
 
-    var tagObjects = [];
+    var tagMap = [];
 
     for (var i = 0; i < data.length; i++) {
-      tagObjects[i] = new Tag(data[i]["value"], data[i]["noteIndexes"]);
+      tagMap[i] = new Tag(data[i]["value"], data[i]["noteIndexes"]);
     }
 
-    this.setState({ tagObjects: tagObjects });
+    this.setState({ tagMap: tagMap });
   };
 
   //A
-  editNote(i_o) {
-    const noteObjects = this.state.noteObjects; //get
-    const noteObject = noteObjects[i_o]; //get
+  editNote(key) {
+    const noteMap = this.state.noteMap; //get
+    const noteObject = noteMap.get(key); //get
     noteObject.editing = true; //editing
     //unique
 
-    this.setState({ noteObjects: noteObjects }); //save
+    this.setState({ noteMap }); //save
   }
 
   //Right now it just sets the note tags. Not the note edit tags
-  changeNoteTags(i_o, value) {
-    const tags = value;
-    const tagObjects = this.state.tagObjects;
+  changeNoteTags(noteKey, newTagKeys) {
+    const tagMap = this.state.tagMap;
 
-    for (var i = 0; i < tags.length; i++) {
-      tagObjects[tags[i]].noteIndices = [
-        ...tagObjects[tags[i]].noteIndices,
-        i_o
-      ];
-    }
+    newTagKeys.forEach(tagKey => {
+      var noteKeys = tagMap.get(tagKey).noteIndices;
+      noteKeys = [...noteKeys, noteKey];
+    });
 
-    this.setState({ tagObjects: tagObjects });
+    this.setState({ tagMap: tagMap });
   }
 
   //A
-  changeNoteValue(i_o, value) {
-    const noteObjects = this.state.noteObjects; //get
-    const noteObject = noteObjects[i_o]; //get
+  changeNoteValue(noteKey, value) {
+    const noteMap = this.state.noteMap; //get
+    const noteObject = noteMap.get(noteKey); //get
 
     noteObject.editValue = value; //unique
-    this.setState({ noteObjects: noteObjects }); //save
+    this.setState({ noteMap }); //save
   }
 
-  getNoteTags(i_o) {
-    //search through every note in every tag to see if note == i_o and then put that tag in an aray and return the array
-    const tags = this.state.tagObjects;
+  getNoteTags(key) {
+    const tags = this.state.tagMap;
     var noteTags = [];
 
-    for (var i = 0; i < tags.length; i++) {
-      for (var j = 0; j < tags[i].noteIndices.length; j++) {
-        if (tags[i].noteIndices[j] === i_o) {
-          noteTags = [...noteTags, i];
-        }
-      }
-    }
+    //brute force
+    [...tags.keys()].forEach(tagKey => {
+      var noteKeys = tags.get(tagKey).noteIndices;
+      noteKeys.forEach(noteKey => {
+        if (noteKey === key) noteTags = [...noteTags, tagKey];
+      });
+    });
 
     return noteTags;
   }
 
-  saveNote(i_o, save) {
-    const noteObjects = this.state.noteObjects; //get
-    const noteObject = noteObjects[i_o]; //get
+  saveNote(key, save) {
+    const noteMap = this.state.noteMap; //get
+    const noteObject = noteMap.get(key); //get
     noteObject.editing = false; //editing
     if (save) {
       noteObject.applyEdits(); //unique
@@ -144,7 +134,7 @@ class Desk extends Component {
       noteObject.resetEdits(); //unique
     }
 
-    this.setState({ noteObjects: noteObjects }); //save
+    this.setState({ noteMap: noteMap }); //save
   }
 
   render() {

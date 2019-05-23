@@ -11,7 +11,7 @@ import TagSearch from "./TagSearch";
 class Note extends Component {
   render() {
     const { index_o, state, functions, selectedTags } = this.props;
-    const noteObject = state.noteObjects[index_o];
+    const noteObject = state.noteMap.get(index_o);
     const value = noteObject.getValue();
     const editing = noteObject.editing;
 
@@ -31,7 +31,7 @@ class Note extends Component {
         {editing ? (
           <Card.Content extra>
             <TagSearch
-              tagObjects={state.tagObjects}
+              tagMap={state.tagMap}
               onChange={e => functions.changeNoteTags(index_o, e)}
               defaultValue={selectedTags}
             />
