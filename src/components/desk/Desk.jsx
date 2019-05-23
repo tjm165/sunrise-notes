@@ -151,23 +151,14 @@ class Desk extends Component {
   }
 
   deleteNote(key) {
-    const noteMap = this.state.noteMap; //get
-    const tagMap = this.state.tagMap;
-    noteMap.delete(key);
-
-    this.getNoteTags(key).forEach(tagKey => {
-      tagMap.get(tagKey).noteIndices.filter(function(value, index, arr) {
-        return value !== key;
-      });
-    });
-
-    this.setState({ noteMap: noteMap, tagMap: tagMap });
+    alert("delete");
   }
 
   editNewNote() {
     alert("edit new note");
   }
 
+  //rename to createNote
   saveNewNote() {
     alert("save new note");
   }
