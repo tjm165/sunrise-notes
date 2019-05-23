@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Container } from "semantic-ui-react";
 import NoteGroup from "./NoteGroup";
+import Note from "./Note";
 
 class DeskNotes extends Component {
   render() {
@@ -13,6 +14,8 @@ class DeskNotes extends Component {
 
     return (
       <Container>
+        {/* <Note index_o={1} state={state} functions={functions} /> */}
+
         <NoteGroup
           notes={top3}
           itemsPerRow={3}

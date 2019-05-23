@@ -5,25 +5,31 @@ import {
   Form,
   TextArea
 } from "../../../node_modules/semantic-ui-react";
-import { Container } from "semantic-ui-react";
 import TagSearch from "./TagSearch";
 
 class Note extends Component {
   render() {
-    const { index_o, state, functions, selectedTags } = this.props;
-    const noteObject = state.noteMap.get(index_o);
-    const value = noteObject.getValue();
-    const editing = noteObject.editing;
+    const {
+      state,
+      value,
+      editing,
+      saveNote,
+      cancelNote,
+      editNote,
+      changeNoteValue,
+      selectedTags,
+      changeNoteTags
+    } = this.props;
 
     return (
       <Card>
         <Card.Content>
           <Form>
             <TextArea
-              onFocus={() => functions.editNote(index_o)}
+              onFocus={editNote}
               placeholder={value}
               value={value}
-              onChange={(i, e) => functions.changeNoteValue(index_o, e.value)}
+              onChange={changeNoteValue}
             />
           </Form>
         </Card.Content>
@@ -32,15 +38,11 @@ class Note extends Component {
           <Card.Content extra>
             <TagSearch
               tagMap={state.tagMap}
-              onChange={e => functions.changeNoteTags(index_o, e)}
+              onChange={changeNoteTags}
               defaultValue={selectedTags}
             />
-            <Button onClick={() => functions.saveNote(index_o, true)}>
-              Save
-            </Button>
-            <Button onClick={() => functions.saveNote(index_o, false)}>
-              Cancel
-            </Button>
+            <Button onClick={saveNote}>Save</Button>
+            <Button onClick={cancelNote}>Cancel</Button>
           </Card.Content>
         ) : (
           ""
