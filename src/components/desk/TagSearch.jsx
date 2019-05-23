@@ -4,7 +4,7 @@ import { Container } from "semantic-ui-react";
 
 class DeskSearch extends Component {
   render() {
-    const { onChange, tagObjects, defaultValue } = this.props;
+    const { onChange, tagMap, defaultValue } = this.props;
     var i = 0;
 
     return (
@@ -18,10 +18,10 @@ class DeskSearch extends Component {
           selection
           allowAdditions
           onChange={(e, DropdownProps) => onChange(DropdownProps.value)}
-          options={tagObjects.map(tag => ({
-            key: i,
-            value: i++,
-            text: tag.value
+          options={[...tagMap.keys()].map(key => ({
+            key: key,
+            value: key,
+            text: tagMap.get(key).value
           }))}
         />
       </Container>
