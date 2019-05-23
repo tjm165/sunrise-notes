@@ -15,14 +15,15 @@ class Desk extends Component {
         [31, new Tag("planes", [22, 23])],
         [32, new Tag("vehicles", [20, 21, 22, 23])],
         [33, new Tag("cats", [4])]
-      ]), //maybe rename to tagMap
+      ]),
       noteMap: new Map([
+        [-1, new Note("new note")],
         [20, new Note("Ford")],
         [21, new Note("Honda")],
         [22, new Note("Boeing")],
         [23, new Note("Airbus")],
         [24, new Note("Garfield")]
-      ]) //maybe rename to noteMap
+      ])
     };
 
     this.functions = {
@@ -36,7 +37,9 @@ class Desk extends Component {
       changeNoteValue: this.changeNoteValue.bind(this), //used by Note
       getNoteTags: this.getNoteTags.bind(this), //used by NoteGroup
 
-      saveNote: this.saveNote.bind(this) //used by Note
+      saveNote: this.saveNote.bind(this), //used by Note
+      deleteNote: this.deleteNote.bind(this),
+      saveNewNote: this.saveNewNote.bind(this)
     };
   }
 
@@ -78,8 +81,18 @@ class Desk extends Component {
     this.setState({ tagMap: tagMap });
   };
 
-  //A
+  //A //B
   editNote(key) {
+    const noteMap = this.state.noteMap; //get
+    const noteObject = noteMap.get(key); //get
+    noteObject.editing = true; //editing
+    //unique
+
+    this.setState({ noteMap }); //save
+  }
+
+  //A //B
+  editNewNote(key) {
     const noteMap = this.state.noteMap; //get
     const noteObject = noteMap.get(key); //get
     noteObject.editing = true; //editing
@@ -135,6 +148,19 @@ class Desk extends Component {
     }
 
     this.setState({ noteMap: noteMap }); //save
+  }
+
+  deleteNote(key) {
+    alert("delete");
+  }
+
+  editNewNote() {
+    alert("edit new note");
+  }
+
+  //rename to createNote
+  saveNewNote() {
+    alert("save new note");
   }
 
   render() {
