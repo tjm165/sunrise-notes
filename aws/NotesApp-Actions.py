@@ -6,9 +6,9 @@ import uuid
 from boto3.dynamodb.conditions import Key, Attr
 
 class Actions():
-    def get_tag(event):
+    def get_tag(input):
         table = Helper.get_tags_table();
-        UUID = event['UUID']
+        UUID = input['UUID']
         try:
             response = table.get_item(
                 Key={
@@ -21,23 +21,27 @@ class Actions():
             item = response['Item']
             return json.dumps(item, indent=4, cls=DecimalEncoder)
     
-    def put_tag(event):
+    def put_tag(body):
         table = Helper.get_tags_table();
-    
-        if hasattr(event, 'UUID'):
-            UUID = event['UUID'];
+        
+        if hasattr(body, 'UUID'):
+            UUID = body['UUID'];
         else:
             UUID = Helper.newUUID();
             
-        value=event['value'];
-        noteIndexes=event['noteIndexes'];
-        userId=event['userId'];
+        if hasattr(body, 'noteIndexes'):
+            noteIndexes=body['noteIndexes'];
+        else:
+            noteIndexes= None;
+
+        value=body['value'];
+        userUUID=body['userUUID'];
         
         response = table.put_item(Item={
             'value':value,
             'UUID' : UUID,
             'noteIndexes' :noteIndexes,
-            'userId' : userId
+            'userUUID' : userUUID
             }
         )
         return UUID
@@ -67,13 +71,13 @@ class Actions():
             
         value=event['value'];
         tagIndexes=event['tagIndexes'];
-        userId=event['userId'];
+        userUUID=event['userUUID'];
         
         response = table.put_item(Item={
             'value':value,
             'UUID' : UUID,
             'tagIndexes' :tagIndexes,
-            'userId' : userId
+            'userUUID' : userUUID
             }
         )
         return UUID
@@ -108,18 +112,19 @@ class UUIDEncoder(json.JSONEncoder):
 
 #decides what action to call
 def lambda_handler(event, context):
+
     action = event['action'];
-    
-    #return Helper.newUUID();
+    body = event['body-json'];
+    querystring = event['params']['querystring'];
     
     if (action == "get_tag"):
-        return Actions.get_tag(event)
+        return Actions.get_tag(querystring)
     if (action == "put_tag"):
-        return Actions.put_tag(event)
+        return Actions.put_tag(body)
     if (action == "get_note"):
-        return Actions.get_note(event)
+        return Actions.get_note(querystring)
     if (action == "put_note"):
-        return Actions.put_note(event)
+        return Actions.put_note(body)
 
         
     return "action not supported"
