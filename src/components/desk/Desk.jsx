@@ -30,7 +30,7 @@ class Desk extends Component {
       setContextTags: this.setContextTags.bind(this), //used by DeskDisplay
       getContextNotes: this.getContextNotes.bind(this), //used by DeskNotes
 
-      getAWSData: this.getAWSData.bind(this), //used by DeskHeader
+      AWS_signIn: this.AWS_signIn.bind(this), //used by DeskHeader
 
       editNote: this.editNote.bind(this), //used by Note
       changeNoteTags: this.changeNoteTags.bind(this),
@@ -63,22 +63,33 @@ class Desk extends Component {
     return noteSet;
   }
 
-  getAWSData = async e => {
+  AWS_signIn = async e => {
     e.preventDefault();
 
+    const UUID = "4ece6ae1f9584a7c897d3b0faa15076c";
+
     const ask =
-      "https://jeebrshgt6.execute-api.us-east-2.amazonaws.com/production/userdata?userId=1";
+      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=4ece6ae1f9584a7c897d3b0faa15076c";
 
-    const api_call = await fetch(ask);
-    const data = await api_call.json();
+    fetch(ask)
+      .then(function(response) {
+        return response.json();
+      })
+      .then(function(myJson) {
+        var tagMap = new Map();
+        tagMap[UUID] = new Tag(myJson["value"], myJson["noteIndexes"]);
 
-    var tagMap = [];
+        //this.setState({ tagMap: tagMap });
+      });
 
-    for (var i = 0; i < data.length; i++) {
-      tagMap[i] = new Tag(data[i]["value"], data[i]["noteIndexes"]);
-    }
+    //   const api_call = await fetch(ask);
+    // const data = await api_call.json();
 
-    this.setState({ tagMap: tagMap });
+    // var tagMap = [];
+
+    // tagMap[UUID] = new Tag(data["value"], data["noteIndexes"]);
+
+    // this.setState({ tagMap: tagMap });
   };
 
   //A //B

@@ -11,7 +11,7 @@ class DeskDisplay extends Component {
 
     return (
       <Container>
-        <DeskHeader state={state} functions={functions} />
+        <DeskHeader signIn={functions.AWS_signIn} />
         <TagSearch
           tagMap={state.tagMap}
           onChange={e => functions.setContextTags(e)}
