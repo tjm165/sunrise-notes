@@ -10,12 +10,7 @@ class Desk extends Component {
     this.state = {
       awsdata: null,
       contextTags: [], //eventually context will be a set of tags
-      tagMap: new Map([
-        [30, new Tag("cars", [20, 21])],
-        [31, new Tag("planes", [22, 23])],
-        [32, new Tag("vehicles", [20, 21, 22, 23])],
-        [33, new Tag("cats", [4])]
-      ]),
+      tagMap: new Map(),
       noteMap: new Map([
         [-1, new Note("new note")],
         [20, new Note("Ford")],
@@ -65,31 +60,18 @@ class Desk extends Component {
 
   AWS_signIn = async e => {
     e.preventDefault();
-
     const UUID = "4ece6ae1f9584a7c897d3b0faa15076c";
-
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=4ece6ae1f9584a7c897d3b0faa15076c";
 
     fetch(ask)
-      .then(function(response) {
-        return response.json();
-      })
-      .then(function(myJson) {
+      .then(response => response.json())
+      .then(myJson => {
         var tagMap = new Map();
-        tagMap[UUID] = new Tag(myJson["value"], myJson["noteIndexes"]);
+        tagMap.set(UUID, new Tag(myJson["value"], myJson["noteIndexes"]));
 
-        //this.setState({ tagMap: tagMap });
+        this.setState({ tagMap: tagMap });
       });
-
-    //   const api_call = await fetch(ask);
-    // const data = await api_call.json();
-
-    // var tagMap = [];
-
-    // tagMap[UUID] = new Tag(data["value"], data["noteIndexes"]);
-
-    // this.setState({ tagMap: tagMap });
   };
 
   //A //B
@@ -134,18 +116,16 @@ class Desk extends Component {
   }
 
   getNoteTags(key) {
-    const tags = this.state.tagMap;
-    var noteTags = [];
-
-    //brute force
-    [...tags.keys()].forEach(tagKey => {
-      var noteKeys = tags.get(tagKey).noteIndices;
-      noteKeys.forEach(noteKey => {
-        if (noteKey === key) noteTags = [...noteTags, tagKey];
-      });
-    });
-
-    return noteTags;
+    // const tags = this.state.tagMap;
+    // var noteTags = [];
+    // //brute force
+    // [...tags.keys()].forEach(tagKey => {
+    //   var noteKeys = tags.get(tagKey).noteIndices;
+    //   noteKeys.forEach(noteKey => {
+    //     if (noteKey === key) noteTags = [...noteTags, tagKey];
+    //   });
+    // });
+    // return noteTags;
   }
 
   saveNote(key, save) {
