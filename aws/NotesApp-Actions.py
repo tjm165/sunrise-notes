@@ -117,6 +117,9 @@ class UUIDEncoder(json.JSONEncoder):
             return obj.hex
         return json.JSONEncoder.default(self, obj)
 
+def test(action):
+    return action
+
 #decides what action to call
 def lambda_handler(event, context):
 
@@ -132,6 +135,8 @@ def lambda_handler(event, context):
         return Actions.get_note(querystring)
     if (action == "put_note"):
         return Actions.put_note(body)
+    if (action == "test"):
+        return test(action)
 
         
     return "action not supported: " + action
