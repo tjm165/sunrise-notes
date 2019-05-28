@@ -24,6 +24,8 @@ class Actions():
             for UUID in tagUUIDs:
                 tags.append(Helper.get_tag(UUID))
         return tags
+        
+    #get notes
     
     def put_tag(body):
         table = Helper.get_tags_table()
@@ -49,21 +51,6 @@ class Actions():
             }
         )
         return UUID
-    
-    def get_note(event):
-        table = Helper.get_notes_table()
-        UUID = event['UUID']
-        try:
-            response = table.get_item(
-                Key={
-                    'UUID': '1'
-                }
-            )
-        except ClientError as e:
-            return e.response['Error']['Message']
-        else:
-            item = response['Item']
-            return json.dumps(item, indent=4, cls=DecimalEncoder)
             
     def put_note(event):
         table = Helper.get_notes_table()
@@ -141,7 +128,7 @@ def lambda_handler(event, context):
         return Actions.get_tags(querystring)
     if (action == "put_tag"):
         return Actions.put_tag(body)
-    if (action == "get_note"):
+    if (action == "get_notes"):
         return Actions.get_note(querystring)
     if (action == "put_note"):
         return Actions.put_note(body)
