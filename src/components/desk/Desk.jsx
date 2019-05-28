@@ -25,7 +25,7 @@ class Desk extends Component {
       setContextTags: this.setContextTags.bind(this), //used by DeskDisplay
       getContextNotes: this.getContextNotes.bind(this), //used by DeskNotes
 
-      AWS_signIn: this.AWS_signIn.bind(this), //used by DeskHeader
+      AWS_getUser: this.AWS_getUser.bind(this), //used by DeskHeader
 
       editNote: this.editNote.bind(this), //used by Note
       changeNoteTags: this.changeNoteTags.bind(this),
@@ -49,26 +49,34 @@ class Desk extends Component {
     var noteSet = new Set();
 
     contextTags.forEach(tagKey => {
-      var noteKeys = tagMap.get(tagKey).noteIndices;
-      noteKeys.forEach(noteKey => {
-        noteSet.add(noteKey);
-      });
+      if (tagKey.noteIndexes != null) {
+        //If there are actually notes
+        var noteKeys = tagMap.get(tagKey).noteIndices;
+        noteKeys.forEach(noteKey => {
+          noteSet.add(noteKey);
+        });
+      }
     });
 
     return noteSet;
   }
 
-  AWS_signIn = async e => {
+  AWS_getUser = async e => {
     e.preventDefault();
     const UUID = "4ece6ae1f9584a7c897d3b0faa15076c";
     const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=4ece6ae1f9584a7c897d3b0faa15076c";
+      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
 
+    //expected response
+    //[{"noteIndexes": [100.0, 101.0], "value": "heyyy2", "UUID": "9", "userId": 0.0}]
     fetch(ask)
       .then(response => response.json())
-      .then(myJson => {
+      .then(json => {
         var tagMap = new Map();
-        tagMap.set(UUID, new Tag(myJson["value"], myJson["noteIndexes"]));
+
+        json.forEach(json => {
+          tagMap.set(json["UUID"], new Tag(json["value"], json["noteIndexes"]));
+        });
 
         this.setState({ tagMap: tagMap });
       });
