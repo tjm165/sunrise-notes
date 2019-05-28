@@ -4,12 +4,12 @@ import { Button } from "semantic-ui-react";
 
 class DeskHeader extends Component {
   render() {
-    const { state, functions } = this.props;
+    const { getUser } = this.props;
 
     return (
       <Container>
         Desk Header
-        <Button onClick={functions.getAWSData}>AWS</Button>
+        <Button onClick={getUser}>AWS</Button>
       </Container>
     );
   }

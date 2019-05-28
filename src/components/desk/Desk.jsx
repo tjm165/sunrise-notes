@@ -10,12 +10,7 @@ class Desk extends Component {
     this.state = {
       awsdata: null,
       contextTags: [], //eventually context will be a set of tags
-      tagMap: new Map([
-        [30, new Tag("cars", [20, 21])],
-        [31, new Tag("planes", [22, 23])],
-        [32, new Tag("vehicles", [20, 21, 22, 23])],
-        [33, new Tag("cats", [4])]
-      ]),
+      tagMap: new Map(),
       noteMap: new Map([
         [-1, new Note("new note")],
         [20, new Note("Ford")],
@@ -30,7 +25,7 @@ class Desk extends Component {
       setContextTags: this.setContextTags.bind(this), //used by DeskDisplay
       getContextNotes: this.getContextNotes.bind(this), //used by DeskNotes
 
-      getAWSData: this.getAWSData.bind(this), //used by DeskHeader
+      AWS_getUser: this.AWS_getUser.bind(this), //used by DeskHeader
 
       editNote: this.editNote.bind(this), //used by Note
       changeNoteTags: this.changeNoteTags.bind(this),
@@ -54,31 +49,37 @@ class Desk extends Component {
     var noteSet = new Set();
 
     contextTags.forEach(tagKey => {
-      var noteKeys = tagMap.get(tagKey).noteIndices;
-      noteKeys.forEach(noteKey => {
-        noteSet.add(noteKey);
-      });
+      if (tagKey.noteIndexes != null) {
+        //If there are actually notes
+        var noteKeys = tagMap.get(tagKey).noteIndices;
+        noteKeys.forEach(noteKey => {
+          noteSet.add(noteKey);
+        });
+      }
     });
 
     return noteSet;
   }
 
-  getAWSData = async e => {
+  AWS_getUser = async e => {
     e.preventDefault();
-
+    const UUID = "4ece6ae1f9584a7c897d3b0faa15076c";
     const ask =
-      "https://jeebrshgt6.execute-api.us-east-2.amazonaws.com/production/userdata?userId=1";
+      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
 
-    const api_call = await fetch(ask);
-    const data = await api_call.json();
+    //expected response
+    //[{"noteIndexes": [100.0, 101.0], "value": "heyyy2", "UUID": "9", "userId": 0.0}]
+    fetch(ask)
+      .then(response => response.json())
+      .then(json => {
+        var tagMap = new Map();
 
-    var tagMap = [];
+        json.forEach(json => {
+          tagMap.set(json["UUID"], new Tag(json["value"], json["noteIndexes"]));
+        });
 
-    for (var i = 0; i < data.length; i++) {
-      tagMap[i] = new Tag(data[i]["value"], data[i]["noteIndexes"]);
-    }
-
-    this.setState({ tagMap: tagMap });
+        this.setState({ tagMap: tagMap });
+      });
   };
 
   //A //B
@@ -123,18 +124,16 @@ class Desk extends Component {
   }
 
   getNoteTags(key) {
-    const tags = this.state.tagMap;
-    var noteTags = [];
-
-    //brute force
-    [...tags.keys()].forEach(tagKey => {
-      var noteKeys = tags.get(tagKey).noteIndices;
-      noteKeys.forEach(noteKey => {
-        if (noteKey === key) noteTags = [...noteTags, tagKey];
-      });
-    });
-
-    return noteTags;
+    // const tags = this.state.tagMap;
+    // var noteTags = [];
+    // //brute force
+    // [...tags.keys()].forEach(tagKey => {
+    //   var noteKeys = tags.get(tagKey).noteIndices;
+    //   noteKeys.forEach(noteKey => {
+    //     if (noteKey === key) noteTags = [...noteTags, tagKey];
+    //   });
+    // });
+    // return noteTags;
   }
 
   saveNote(key, save) {
