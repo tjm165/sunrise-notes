@@ -10,7 +10,7 @@ class Desk extends Component {
     this.state = {
       awsdata: null,
       contextTags: [], //eventually context will be a set of tags
-      tagMap: new Map(),
+      tagMap: new Map(), //perhaps these are all the users tags?
       noteMap: new Map([
         [-1, new Note("new note")],
         [20, new Note("Ford")],
@@ -18,7 +18,7 @@ class Desk extends Component {
         [22, new Note("Boeing")],
         [23, new Note("Airbus")],
         [24, new Note("Garfield")]
-      ])
+      ]) //these are the notes that are in context
     };
 
     this.functions = {
@@ -31,6 +31,8 @@ class Desk extends Component {
       changeNoteTags: this.changeNoteTags.bind(this),
       changeNoteValue: this.changeNoteValue.bind(this), //used by Note
       getNoteTags: this.getNoteTags.bind(this), //used by NoteGroup
+
+      AWS_getNoteSet: this.AWS_getNoteSet.bind(this), //used by TagSearch
 
       saveNote: this.saveNote.bind(this), //used by Note
       deleteNote: this.deleteNote.bind(this),
@@ -61,9 +63,9 @@ class Desk extends Component {
     return noteSet;
   }
 
+  //really get user tags or just get tags
   AWS_getUser = async e => {
     e.preventDefault();
-    const UUID = "4ece6ae1f9584a7c897d3b0faa15076c";
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
 
@@ -79,6 +81,18 @@ class Desk extends Component {
         });
 
         this.setState({ tagMap: tagMap });
+      });
+  };
+
+  AWS_getNoteSet = async e => {
+    e.preventDefault();
+    const ask =
+      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes?UUIDs=21,22";
+
+    fetch(ask)
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
       });
   };
 

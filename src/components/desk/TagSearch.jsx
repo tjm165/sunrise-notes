@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Dropdown } from "semantic-ui-react";
 import { Container } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 class DeskSearch extends Component {
   render() {
-    const { onChange, tagMap, defaultValue } = this.props;
+    const { onChange, tagMap, defaultValue, submit } = this.props;
     var i = 0;
 
     return (
@@ -24,6 +25,7 @@ class DeskSearch extends Component {
             text: tagMap.get(key).value
           }))}
         />
+        <Button onClick={submit}>Submit Search</Button>
       </Container>
     );
   }

@@ -15,6 +15,7 @@ class DeskDisplay extends Component {
         <TagSearch
           tagMap={state.tagMap}
           onChange={e => functions.setContextTags(e)}
+          submit={e => functions.AWS_getNoteSet(e)}
         />
         <DeskNotes state={state} functions={functions} />
       </Container>
