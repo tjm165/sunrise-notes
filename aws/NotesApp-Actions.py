@@ -25,7 +25,30 @@ class Actions():
                 tags.append(Helper.get_tag(UUID))
         return tags
         
-    #get notes
+    def get_notes(input):
+        tagUUIDs = input.split(",")
+        noteUUIDset = set()
+        
+        tagTable=Helper.get_tags_table()
+        for tagUUID in tagUUIDs:
+            tags = tagTable.get_item(
+                Key={
+                    'UUID': tagUUID
+                }
+            )['Item']['noteUUIDs']
+            noteUUIDset.update(tags)
+            
+        notes = []
+        noteTable=Helper.get_notes_table()
+        for noteUUID in noteUUIDset:
+            note = noteTable.get_item(
+                Key={
+                    'UUID':noteUUID
+                }
+            )['Item']
+            notes.append(note)
+        
+        return notes
     
     def put_tag(body):
         table = Helper.get_tags_table()
@@ -117,8 +140,10 @@ class UUIDEncoder(json.JSONEncoder):
             return obj.hex
         return json.JSONEncoder.default(self, obj)
 
-def test(action):
-    return action
+def test(args):
+    #return args["array"]
+    #return json.loads(args["array"])
+    return args
 
 #decides what action to call
 def lambda_handler(event, context):
@@ -126,17 +151,18 @@ def lambda_handler(event, context):
     action = event['action']
     body = event['body-json']
     querystring = event['params']['querystring']
-    
+    header = event['params']['header']
+
     if (action == "get_tags"):
         return Actions.get_tags(querystring)
     if (action == "put_tag"):
         return Actions.put_tag(body)
     if (action == "get_notes"):
-        return Actions.get_note(querystring)
+        return Actions.get_notes(header)
     if (action == "put_note"):
         return Actions.put_note(body)
     if (action == "test"):
-        return test(action)
+        return test(querystring)
 
         
     return "action not supported: " + action
