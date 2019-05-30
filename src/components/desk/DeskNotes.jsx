@@ -6,7 +6,7 @@ import Note from "./Note";
 class DeskNotes extends Component {
   render() {
     const { state, functions } = this.props;
-    const notes = Array.from(functions.getContextNotes());
+    const notes = Array.from(state.contextNoteSet);
     const size = notes.length;
     const top3 = notes.slice(0, 3);
     const next4 = notes.slice(2, 7);

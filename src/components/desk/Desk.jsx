@@ -8,7 +8,7 @@ class Desk extends Component {
     super();
 
     this.state = {
-      awsdata: null,
+      contextNoteSet: new Set(),
       contextTags: [], //eventually context will be a set of tags
       tagMap: new Map(), //perhaps these are all the users tags?
       noteMap: new Map([
@@ -41,10 +41,27 @@ class Desk extends Component {
   }
 
   //if the tag didn't exist before then you should add it
+  //really this sets context now.. and update notemap
   setContextTags(value) {
+    //set the context of the tags.. TODO: make this a seperate function
     this.setState({ contextTags: value });
+
+    //set the context of the noteSet.. TODO: make this a seperate function
+    var noteSet = new Set();
+
+    value.forEach(tag => {
+      this.state.tagMap.get(tag).noteIndices.forEach(note => {
+        noteSet.add(note);
+      });
+    });
+    /////////////////////update noteMap
+
+    /////////////////
+
+    this.setState({ contextNoteSet: noteSet });
   }
 
+  //TODO: I think I can delete
   getContextNotes() {
     const contextTags = this.state.contextTags;
     const tagMap = this.state.tagMap;
@@ -70,29 +87,53 @@ class Desk extends Component {
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
 
     //expected response
-    //[{"noteIndexes": [100.0, 101.0], "value": "heyyy2", "UUID": "9", "userId": 0.0}]
+    // [{"noteIndexes": [100.0, 101.0], "value": "heyyy2", "UUID": "9", "userId": 0.0}]
     fetch(ask)
       .then(response => response.json())
       .then(json => {
         var tagMap = new Map();
 
         json.forEach(json => {
-          tagMap.set(json["UUID"], new Tag(json["value"], json["noteIndexes"]));
+          tagMap.set(json["UUID"], new Tag(json["value"], json["noteUUIDs"]));
         });
 
         this.setState({ tagMap: tagMap });
       });
   };
 
+  //I think rename this to fetchNotes() or fetchNotesByUUIDs()
   AWS_getNoteSet = async e => {
     e.preventDefault();
+
+    //TODO: eventually make this just the notes that aren't already loaded to the state.noteMap
+    //TODO: eventually just make the state hold the context note string instead of generating it everytime
+    var contextNoteString = "31,32,33";
+
+    // this.state.contextNoteSet.forEach(note => {
+    //   contextNoteString += note + ",";
+    // });
+    // contextNoteString = contextNoteString.slice(
+    //   0,
+    //   contextNoteString.length - 1
+    // );
+    // alert(contextNoteString);
+
     const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes?UUIDs=21,22";
+      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes?UUIDs=" +
+      contextNoteString;
+
+    //expected response
+    // [{"value": "integrals", "UUID": "31", "tagUUIDs": ["21", "22"]}]
+
+    var noteMap = this.state.noteMap;
 
     fetch(ask)
       .then(response => response.json())
-      .then(json => {
-        console.log(json);
+      .then(notes => {
+        notes.forEach(note => {
+          noteMap.set(note["UUID"], new Note(note["value"]));
+        });
+        this.setState({ noteMap: noteMap });
       });
   };
 
