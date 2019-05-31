@@ -1,8 +1,11 @@
-function Note(value) {
-  this.editing = false;
-  this.value = value;
-  this.editValue = value;
-  this.getValue = function() {
+export default class Note {
+  constructor(value, tagUUIDs) {
+    this.editing = false;
+    this.value = value;
+    this.tagUUIDs = tagUUIDs;
+  }
+
+  getValue = function() {
     if (this.editing) {
       return this.editValue;
     } else {
@@ -10,13 +13,15 @@ function Note(value) {
     }
   };
 
-  this.applyEdits = function() {
+  applyEdits = function() {
     this.value = this.editValue;
   };
 
-  this.resetEdits = function() {
+  resetEdits = function() {
     this.editValue = this.value;
   };
-}
 
-export default Note;
+  static deserialize(json) {
+    return new Note(json["value"], json["tagUUIDs"]);
+  }
+}

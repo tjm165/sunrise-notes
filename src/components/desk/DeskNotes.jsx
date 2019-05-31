@@ -8,7 +8,7 @@ class DeskNotes extends Component {
     const { notes, tagMap, noteMap, functions } = this.props;
     const size = notes.length;
     const top3 = notes.slice(0, 3);
-    const next4 = notes.slice(2, 7);
+    const next4 = notes.slice(3, 7);
     const rest = notes.slice(6, size - 6);
 
     return (

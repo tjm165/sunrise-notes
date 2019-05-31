@@ -51,12 +51,8 @@ class Desk extends Component {
   };
 
   megamethod(tags) {
-    //update the context
     const context = this.computeContextByTags(tags);
     this.fetchNotes(context.notes.params);
-    //update the notemap
-    //  requst the notes from aws
-    //  save those notes to the state
   }
 
   computeContextByTags(tags) {
@@ -80,7 +76,7 @@ class Desk extends Component {
     return setA;
   }
 
-  fetchNotes(params) {
+  fetchNotes = async params => {
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes?UUIDs=" +
       params;
@@ -91,11 +87,11 @@ class Desk extends Component {
       .then(response => response.json())
       .then(notes => {
         notes.forEach(note => {
-          noteMap.set(note["UUID"], new Note(note["value"]));
+          noteMap.set(note["UUID"], Note.deserialize(note));
         });
         this.setState({ noteMap: noteMap });
       });
-  }
+  };
 
   //A //B
   editNote(key) {
