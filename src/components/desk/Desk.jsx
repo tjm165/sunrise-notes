@@ -2,15 +2,16 @@ import React, { Component } from "react";
 import DeskDisplay from "./DeskDisplay";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
+import MySet from "../../objects/MySet";
 
+//make enums for operations. 0 = union, 1 = intersection
 class Desk extends Component {
   constructor() {
     super();
 
     this.state = {
-      contextNoteSet: new Set(),
-      contextTags: [], //eventually context will be a set of tags
-      tagMap: new Map(), //perhaps these are all the users tags?
+      context: { operation: 0, tags: [], notes: new MySet() },
+      tagMap: new Map(),
       noteMap: new Map([
         [-1, new Note("new note")],
         [20, new Note("Ford")],
@@ -18,112 +19,71 @@ class Desk extends Component {
         [22, new Note("Boeing")],
         [23, new Note("Airbus")],
         [24, new Note("Garfield")]
-      ]) //these are the notes that are in context
+      ])
     };
 
     this.functions = {
-      setContextTags: this.setContextTags.bind(this), //used by DeskDisplay
-      getContextNotes: this.getContextNotes.bind(this), //used by DeskNotes
-
-      AWS_getUser: this.AWS_getUser.bind(this), //used by DeskHeader
+      megamethod: this.megamethod.bind(this),
+      fetchUserTags: this.fetchUserTags.bind(this), //used by DeskHeader
 
       editNote: this.editNote.bind(this), //used by Note
       changeNoteTags: this.changeNoteTags.bind(this),
       changeNoteValue: this.changeNoteValue.bind(this), //used by Note
-      getNoteTags: this.getNoteTags.bind(this), //used by NoteGroup
-
-      AWS_getNoteSet: this.AWS_getNoteSet.bind(this), //used by TagSearch
-
-      saveNote: this.saveNote.bind(this), //used by Note
-      deleteNote: this.deleteNote.bind(this),
-      saveNewNote: this.saveNewNote.bind(this)
+      saveNote: this.saveNote.bind(this) //used by Note
     };
   }
 
-  //if the tag didn't exist before then you should add it
-  //really this sets context now.. and update notemap
-  setContextTags(value) {
-    //set the context of the tags.. TODO: make this a seperate function
-    this.setState({ contextTags: value });
-
-    //set the context of the noteSet.. TODO: make this a seperate function
-    var noteSet = new Set();
-
-    value.forEach(tag => {
-      this.state.tagMap.get(tag).noteIndices.forEach(note => {
-        noteSet.add(note);
-      });
-    });
-    /////////////////////update noteMap
-
-    /////////////////
-
-    this.setState({ contextNoteSet: noteSet });
-  }
-
-  //TODO: I think I can delete
-  getContextNotes() {
-    const contextTags = this.state.contextTags;
-    const tagMap = this.state.tagMap;
-    var noteSet = new Set();
-
-    contextTags.forEach(tagKey => {
-      if (tagKey.noteIndexes != null) {
-        //If there are actually notes
-        var noteKeys = tagMap.get(tagKey).noteIndices;
-        noteKeys.forEach(noteKey => {
-          noteSet.add(noteKey);
-        });
-      }
-    });
-
-    return noteSet;
-  }
-
-  //really get user tags or just get tags
-  AWS_getUser = async e => {
-    e.preventDefault();
+  fetchUserTags = async => {
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
 
-    //expected response
-    // [{"noteIndexes": [100.0, 101.0], "value": "heyyy2", "UUID": "9", "userId": 0.0}]
     fetch(ask)
       .then(response => response.json())
       .then(json => {
         var tagMap = new Map();
 
         json.forEach(json => {
-          tagMap.set(json["UUID"], new Tag(json["value"], json["noteUUIDs"]));
+          tagMap.set(json["UUID"], Tag.deserialize(json));
         });
 
         this.setState({ tagMap: tagMap });
       });
   };
 
-  //I think rename this to fetchNotes() or fetchNotesByUUIDs()
-  AWS_getNoteSet = async e => {
-    e.preventDefault();
+  megamethod(tags) {
+    //update the context
+    const context = this.computeContextByTags(tags);
+    this.fetchNotes(context.notes.params);
+    //update the notemap
+    //  requst the notes from aws
+    //  save those notes to the state
+  }
 
-    //TODO: eventually make this just the notes that aren't already loaded to the state.noteMap
-    //TODO: eventually just make the state hold the context note string instead of generating it everytime
-    var contextNoteString = "31,32,33";
+  computeContextByTags(tags) {
+    var context = this.state.context;
+    context.tags = tags;
+    context.notes = this.generateNoteSetByTags(tags);
 
-    // this.state.contextNoteSet.forEach(note => {
-    //   contextNoteString += note + ",";
-    // });
-    // contextNoteString = contextNoteString.slice(
-    //   0,
-    //   contextNoteString.length - 1
-    // );
-    // alert(contextNoteString);
+    return context;
+  }
 
+  generateNoteSetByTags(tags) {
+    const operation = this.state.context.operation;
+    var setA = new MySet();
+    var setB;
+
+    tags.forEach(tag => {
+      setB = new Set(this.state.tagMap.get(tag).noteUUIDs);
+      setA = MySet.union(setA, setB);
+    });
+
+    return setA;
+  }
+
+  fetchNotes(params) {
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes?UUIDs=" +
-      contextNoteString;
-
-    //expected response
-    // [{"value": "integrals", "UUID": "31", "tagUUIDs": ["21", "22"]}]
+      params;
 
     var noteMap = this.state.noteMap;
 
@@ -135,7 +95,7 @@ class Desk extends Component {
         });
         this.setState({ noteMap: noteMap });
       });
-  };
+  }
 
   //A //B
   editNote(key) {
@@ -178,19 +138,6 @@ class Desk extends Component {
     this.setState({ noteMap }); //save
   }
 
-  getNoteTags(key) {
-    // const tags = this.state.tagMap;
-    // var noteTags = [];
-    // //brute force
-    // [...tags.keys()].forEach(tagKey => {
-    //   var noteKeys = tags.get(tagKey).noteIndices;
-    //   noteKeys.forEach(noteKey => {
-    //     if (noteKey === key) noteTags = [...noteTags, tagKey];
-    //   });
-    // });
-    // return noteTags;
-  }
-
   saveNote(key, save) {
     const noteMap = this.state.noteMap; //get
     const noteObject = noteMap.get(key); //get
@@ -202,19 +149,6 @@ class Desk extends Component {
     }
 
     this.setState({ noteMap: noteMap }); //save
-  }
-
-  deleteNote(key) {
-    alert("delete");
-  }
-
-  editNewNote() {
-    alert("edit new note");
-  }
-
-  //rename to createNote
-  saveNewNote() {
-    alert("save new note");
   }
 
   render() {

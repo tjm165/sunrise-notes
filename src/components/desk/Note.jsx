@@ -18,8 +18,7 @@ class Note extends Component {
       editNote,
       changeNoteValue,
       selectedTags,
-      changeNoteTags,
-      deleteNote
+      changeNoteTags
     } = this.props;
 
     return (
@@ -44,8 +43,6 @@ class Note extends Component {
             />
             <Button onClick={saveNote}>Save</Button>
             <Button onClick={cancelNote}>Cancel</Button>
-
-            {deleteNote ? <Button onClick={deleteNote}>Delete</Button> : ""}
           </Card.Content>
         ) : (
           ""

@@ -1,6 +1,10 @@
-function Tag(value, noteIndices) {
-  this.value = value;
-  this.noteIndices = noteIndices;
-}
+export default class Tag {
+  constructor(value, noteUUIDs) {
+    this.value = value;
+    this.noteUUIDs = new Set(noteUUIDs);
+  }
 
-export default Tag;
+  static deserialize(json) {
+    return new Tag(json["value"], json["noteUUIDs"]);
+  }
+}
