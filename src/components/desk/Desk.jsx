@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import DeskDisplay from "./DeskDisplay";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
-import MySet from "../../objects/MySet";
 
 //make enums for operations. 0 = union, 1 = intersection
 class Desk extends Component {
@@ -10,7 +9,7 @@ class Desk extends Component {
     super();
 
     this.state = {
-      context: { operation: 0, tags: [], notes: new MySet() },
+      context: { operation: 0, tags: [], notes: new Tag() },
       tagMap: new Map(),
       noteMap: new Map([
         [-1, new Note("new note")],
@@ -51,29 +50,25 @@ class Desk extends Component {
   };
 
   megamethod(tags) {
-    const context = this.computeContextByTags(tags);
-    this.fetchNotes(context.notes.params);
-  }
-
-  computeContextByTags(tags) {
     var context = this.state.context;
-    context.tags = tags;
-    context.notes = this.generateNoteSetByTags(tags);
 
-    return context;
-  }
+    const { newTag, neededParams } = Tag.generateNewTag(
+      context.notes,
+      this.state.tagMap.get(tags[tags.length - 1]),
+      context.operation
+    );
 
-  generateNoteSetByTags(tags) {
-    const operation = this.state.context.operation;
-    var setA = new MySet();
-    var setB;
+    //will need to wait for this to be done
+    if (neededParams.length > 0) {
+      this.fetchNotes(neededParams);
+    }
 
-    tags.forEach(tag => {
-      setB = new Set(this.state.tagMap.get(tag).noteUUIDs);
-      setA = MySet.union(setA, setB);
-    });
+    {
+      context.tags = tags;
+      context.notes = newTag;
 
-    return setA;
+      this.setState({ context: context });
+    }
   }
 
   fetchNotes = async params => {
