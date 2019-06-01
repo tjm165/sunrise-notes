@@ -11,7 +11,12 @@ export default class Tag extends Set {
   }
 
   static _generateUnion(tagA, tagB) {
-    var _union = new Tag(tagA);
+    var name =
+      tagA.value === undefined
+        ? tagB.value
+        : tagA.value + " union " + tagB.value;
+
+    var _union = new Tag(name, tagA);
     var neededParams = "";
     for (var elem of tagB) {
       neededParams += tagA.has(elem) ? "" : elem + ",";
