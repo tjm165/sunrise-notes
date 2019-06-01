@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import DeskDisplay from "./DeskDisplay";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
+import { resolve } from "path";
 
 //make enums for operations. 0 = union, 1 = intersection
 class Desk extends Component {
@@ -49,7 +50,7 @@ class Desk extends Component {
       });
   };
 
-  megamethod(tags) {
+  async megamethod(tags) {
     var context = this.state.context;
 
     const { newTag, neededParams } = Tag.generateNewTag(
@@ -58,24 +59,9 @@ class Desk extends Component {
       context.operation
     );
 
-    //will need to wait for this to be done
-    if (neededParams.length > 0) {
-      this.fetchNotes(neededParams);
-    }
-
-    {
-      context.tags = tags;
-      context.notes = newTag;
-
-      this.setState({ context: context });
-    }
-  }
-
-  fetchNotes = async params => {
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes?UUIDs=" +
-      params;
-
+      neededParams;
     var noteMap = this.state.noteMap;
 
     fetch(ask)
@@ -85,8 +71,14 @@ class Desk extends Component {
           noteMap.set(note["UUID"], Note.deserialize(note));
         });
         this.setState({ noteMap: noteMap });
+      })
+      .then(() => {
+        context.tags = tags;
+        context.notes = newTag;
+
+        this.setState({ context: context });
       });
-  };
+  }
 
   //A //B
   editNote(key) {
