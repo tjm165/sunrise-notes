@@ -10,7 +10,9 @@ import TagSearch from "./TagSearch";
 
 class Note extends Component {
   render() {
-    const { tagMap, value, selectedTags } = this.props;
+    const { tagMap, note } = this.props;
+    const value = note.getValue();
+    const selectedTags = note.tagUUIDs;
 
     return (
       <Card>

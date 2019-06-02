@@ -5,7 +5,7 @@ import Note from "./Note";
 
 class DeskNotes extends Component {
   render() {
-    const { notes, tagMap, noteMap, functions } = this.props;
+    const { notes, tagMap, noteMap } = this.props;
     const size = notes.length;
     const top3 = notes.slice(0, 3);
     const next4 = notes.slice(3, 7);
@@ -13,10 +13,24 @@ class DeskNotes extends Component {
 
     return (
       <Container>
-
-        <NoteGroup notes={top3} itemsPerRow={3} state={state} />
-        <NoteGroup notes={next4} itemsPerRow={4} state={state} />
-        <NoteGroup notes={rest} itemsPerRow={5} state={state} />
+        <NoteGroup
+          notes={top3}
+          itemsPerRow={3}
+          tagMap={tagMap}
+          noteMap={noteMap}
+        />
+        <NoteGroup
+          notes={next4}
+          itemsPerRow={4}
+          tagMap={tagMap}
+          noteMap={noteMap}
+        />
+        <NoteGroup
+          notes={rest}
+          itemsPerRow={5}
+          tagMap={tagMap}
+          noteMap={noteMap}
+        />
       </Container>
     );
   }
