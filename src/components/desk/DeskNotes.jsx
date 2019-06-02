@@ -5,7 +5,7 @@ import Note from "./Note";
 
 class DeskNotes extends Component {
   render() {
-    const { state, functions } = this.props;
+    const { state } = this.props;
     const notes = Array.from(functions.getContextNotes());
     const size = notes.length;
     const top3 = notes.slice(0, 3);
@@ -15,38 +15,9 @@ class DeskNotes extends Component {
 
     return (
       <Container>
-        <Note
-          tagMap={state.tagMap}
-          value={state.noteMap.get(newNoteKey).getValue()}
-          editing={state.noteMap.get(newNoteKey).editing}
-          editNote={() => functions.editNote(newNoteKey)}
-          changeNoteValue={(i, e) =>
-            functions.changeNoteValue(newNoteKey, e.value)
-          }
-          changeNoteTags={e => functions.changeNoteTags(newNoteKey, e)}
-          saveNote={() => functions.saveNewNote()}
-          cancelNote={() => functions.saveNote(newNoteKey, false)}
-          selectedTags={functions.getNoteTags(newNoteKey)}
-        />
-
-        <NoteGroup
-          notes={top3}
-          itemsPerRow={3}
-          state={state}
-          functions={functions}
-        />
-        <NoteGroup
-          notes={next4}
-          itemsPerRow={4}
-          state={state}
-          functions={functions}
-        />
-        <NoteGroup
-          notes={rest}
-          itemsPerRow={5}
-          state={state}
-          functions={functions}
-        />
+        <NoteGroup notes={top3} itemsPerRow={3} state={state} />
+        <NoteGroup notes={next4} itemsPerRow={4} state={state} />
+        <NoteGroup notes={rest} itemsPerRow={5} state={state} />
       </Container>
     );
   }
