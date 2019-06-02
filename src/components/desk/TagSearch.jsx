@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Dropdown } from "semantic-ui-react";
 import { Container } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 
 class DeskSearch extends Component {
   render() {

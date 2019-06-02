@@ -6,24 +6,23 @@ import uuid
 from boto3.dynamodb.conditions import Key, Attr
 
 class Actions():
-    #takes a user UUID and returns the corresponding tag UUIDs
-    def get_tags(input):
-        table = Helper.get_users_table()
-        UUID = input['UUID']
-        try: #get the user's tagUUIDs property
-            tagUUIDs = table.get_item(
-                Key={
-                    'UUID': UUID
-                }
-            )['Item']['tagUUIDs']
-        except ClientError as e:
-            return e.response['Error']['Message']
-        else: #get all the tags in tagUUIDs
-            table = Helper.get_tags_table()
-            tags = []
-            for UUID in tagUUIDs:
-                tags.append(Helper.get_tag(UUID))
+    def get_tags_by_userUUID(userUUID):
+        table = Table('NotesApp-Users')
+        tagUUIDs = table.get_item(userUUID)['tagUUIDs']
+        table = Table('NotesApp-Tags')
+        tags = []
+
+        for UUID in tagUUIDs:
+            tags.append(table.get_item(UUID))
         return tags
+
+    def get_notes_by_UUIDs(noteUUIDs):
+        table = Table('NotesApp-Notes')
+        notes = []
+
+        for UUID in noteUUIDs:
+            notes.append(table.get_item(UUID))
+        return notes
     
     def put_tag(body):
         table = Helper.get_tags_table()
@@ -49,21 +48,6 @@ class Actions():
             }
         )
         return UUID
-    
-    def get_note(event):
-        table = Helper.get_notes_table()
-        UUID = event['UUID']
-        try:
-            response = table.get_item(
-                Key={
-                    'UUID': '1'
-                }
-            )
-        except ClientError as e:
-            return e.response['Error']['Message']
-        else:
-            item = response['Item']
-            return json.dumps(item, indent=4, cls=DecimalEncoder)
             
     def put_note(event):
         table = Helper.get_notes_table()
@@ -85,33 +69,20 @@ class Actions():
             }
         )
         return UUID
-        
+
+class Table():
+    table = None
+    dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
+
+    def __init__(self, table_name):
+        self.table = self.dynamodb.Table(table_name)
+
+    def get_item(self, UUID):
+        return self.table.get_item(Key={'UUID': UUID})['Item']
+
 class Helper():
-    def get_users_table():
-        dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
-        return dynamodb.Table('NotesApp-Users')
-    def get_tags_table():
-        dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
-        return dynamodb.Table('NotesApp-Tags')
-    def get_notes_table():
-        dynamodb = boto3.resource('dynamodb', region_name='us-east-2')
-        return dynamodb.Table('NotesApp-Notes')
     def newUUID():
-        #return json.dumps(uuid.uuid4(), cls=UUIDEncoder);
         return uuid.uuid4().hex
-    def get_tag(tagUUID):
-        table = Helper.get_tags_table()
-        try:
-            response = table.get_item(
-                Key={
-                    'UUID': tagUUID
-                }
-            )
-        except ClientError as e:
-            return e.response['Error']['Message']
-        else:
-            item = response['Item']
-        return item
 
 # Helper class to convert a DynamoDB item to JSON.
 class DecimalEncoder(json.JSONEncoder):
@@ -138,14 +109,13 @@ def lambda_handler(event, context):
     querystring = event['params']['querystring']
     
     if (action == "get_tags"):
-        return Actions.get_tags(querystring)
+        return Actions.get_tags_by_userUUID(querystring['UUID'])
     if (action == "put_tag"):
         return Actions.put_tag(body)
-    if (action == "get_note"):
-        return Actions.get_note(querystring)
+    if (action == "get_notes"):
+        return Actions.get_notes_by_UUIDs(querystring['UUIDs'].split(","))
     if (action == "put_note"):
         return Actions.put_note(body)
 
         
     return "action not supported: " + action
-   

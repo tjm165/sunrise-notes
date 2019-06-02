@@ -2,14 +2,15 @@ import React, { Component } from "react";
 import DeskDisplay from "./DeskDisplay";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
+import { resolve } from "path";
 
+//make enums for operations. 0 = union, 1 = intersection
 class Desk extends Component {
   constructor() {
     super();
 
     this.state = {
-      awsdata: null,
-      contextTags: [], //eventually context will be a set of tags
+      context: { operation: 0, tags: [], notes: new Tag() },
       tagMap: new Map(),
       noteMap: new Map([
         [-1, new Note("new note")],
@@ -22,65 +23,62 @@ class Desk extends Component {
     };
 
     this.functions = {
-      setContextTags: this.setContextTags.bind(this), //used by DeskDisplay
-      getContextNotes: this.getContextNotes.bind(this), //used by DeskNotes
-
-      AWS_getUser: this.AWS_getUser.bind(this), //used by DeskHeader
+      megamethod: this.megamethod.bind(this),
+      fetchUserTags: this.fetchUserTags.bind(this), //used by DeskHeader
 
       editNote: this.editNote.bind(this), //used by Note
       changeNoteTags: this.changeNoteTags.bind(this),
       changeNoteValue: this.changeNoteValue.bind(this), //used by Note
-      getNoteTags: this.getNoteTags.bind(this), //used by NoteGroup
-
-      saveNote: this.saveNote.bind(this), //used by Note
-      deleteNote: this.deleteNote.bind(this),
-      saveNewNote: this.saveNewNote.bind(this)
+      saveNote: this.saveNote.bind(this) //used by Note
     };
   }
 
-  //if the tag didn't exist before then you should add it
-  setContextTags(value) {
-    this.setState({ contextTags: value });
-  }
-
-  getContextNotes() {
-    const contextTags = this.state.contextTags;
-    const tagMap = this.state.tagMap;
-    var noteSet = new Set();
-
-    contextTags.forEach(tagKey => {
-      if (tagKey.noteIndexes != null) {
-        //If there are actually notes
-        var noteKeys = tagMap.get(tagKey).noteIndices;
-        noteKeys.forEach(noteKey => {
-          noteSet.add(noteKey);
-        });
-      }
-    });
-
-    return noteSet;
-  }
-
-  AWS_getUser = async e => {
-    e.preventDefault();
-    const UUID = "4ece6ae1f9584a7c897d3b0faa15076c";
+  fetchUserTags = async => {
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
 
-    //expected response
-    //[{"noteIndexes": [100.0, 101.0], "value": "heyyy2", "UUID": "9", "userId": 0.0}]
     fetch(ask)
       .then(response => response.json())
       .then(json => {
         var tagMap = new Map();
 
         json.forEach(json => {
-          tagMap.set(json["UUID"], new Tag(json["value"], json["noteIndexes"]));
+          tagMap.set(json["UUID"], Tag.deserialize(json));
         });
 
         this.setState({ tagMap: tagMap });
       });
   };
+
+  async megamethod(tags) {
+    var context = this.state.context;
+
+    const { newTag, neededParams } = Tag.generateNewTag(
+      context.notes,
+      this.state.tagMap.get(tags[tags.length - 1]),
+      context.operation
+    );
+
+    const ask =
+      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes?UUIDs=" +
+      neededParams;
+    var noteMap = this.state.noteMap;
+
+    fetch(ask)
+      .then(response => response.json())
+      .then(notes => {
+        notes.forEach(note => {
+          noteMap.set(note["UUID"], Note.deserialize(note));
+        });
+        this.setState({ noteMap: noteMap });
+      })
+      .then(() => {
+        context.tags = tags;
+        context.notes = newTag;
+
+        this.setState({ context: context });
+      });
+  }
 
   //A //B
   editNote(key) {
@@ -123,19 +121,6 @@ class Desk extends Component {
     this.setState({ noteMap }); //save
   }
 
-  getNoteTags(key) {
-    // const tags = this.state.tagMap;
-    // var noteTags = [];
-    // //brute force
-    // [...tags.keys()].forEach(tagKey => {
-    //   var noteKeys = tags.get(tagKey).noteIndices;
-    //   noteKeys.forEach(noteKey => {
-    //     if (noteKey === key) noteTags = [...noteTags, tagKey];
-    //   });
-    // });
-    // return noteTags;
-  }
-
   saveNote(key, save) {
     const noteMap = this.state.noteMap; //get
     const noteObject = noteMap.get(key); //get
@@ -147,19 +132,6 @@ class Desk extends Component {
     }
 
     this.setState({ noteMap: noteMap }); //save
-  }
-
-  deleteNote(key) {
-    alert("delete");
-  }
-
-  editNewNote() {
-    alert("edit new note");
-  }
-
-  //rename to createNote
-  saveNewNote() {
-    alert("save new note");
   }
 
   render() {
