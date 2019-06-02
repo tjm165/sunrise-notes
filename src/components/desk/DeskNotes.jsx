@@ -13,28 +13,10 @@ class DeskNotes extends Component {
 
     return (
       <Container>
-        TODO: add the template note
-        <NoteGroup
-          notes={top3}
-          itemsPerRow={3}
-          tagMap={tagMap}
-          noteMap={noteMap}
-          functions={functions}
-        />
-        <NoteGroup
-          notes={next4}
-          itemsPerRow={4}
-          tagMap={tagMap}
-          noteMap={noteMap}
-          functions={functions}
-        />
-        <NoteGroup
-          notes={rest}
-          itemsPerRow={5}
-          tagMap={tagMap}
-          noteMap={noteMap}
-          functions={functions}
-        />
+
+        <NoteGroup notes={top3} itemsPerRow={3} state={state} />
+        <NoteGroup notes={next4} itemsPerRow={4} state={state} />
+        <NoteGroup notes={rest} itemsPerRow={5} state={state} />
       </Container>
     );
   }

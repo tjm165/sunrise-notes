@@ -16,6 +16,7 @@ class DeskSearch extends Component {
           fluid
           search
           multiple
+          clearable
           selection
           allowAdditions
           onChange={(e, DropdownProps) => onChange(DropdownProps.value)}

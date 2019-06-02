@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import {
   Button,
   Card,
+  Modal,
   Form,
   TextArea
 } from "../../../node_modules/semantic-ui-react";
@@ -9,44 +10,17 @@ import TagSearch from "./TagSearch";
 
 class Note extends Component {
   render() {
-    const {
-      tagMap,
-      value,
-      editing,
-      saveNote,
-      cancelNote,
-      editNote,
-      changeNoteValue,
-      selectedTags,
-      changeNoteTags
-    } = this.props;
+    const { tagMap, value, selectedTags } = this.props;
 
     return (
       <Card>
-        <Card.Content>
-          <Form>
-            <TextArea
-              onFocus={editNote}
-              placeholder={value}
-              value={value}
-              onChange={changeNoteValue}
-            />
-          </Form>
-        </Card.Content>
-
-        {editing ? (
-          <Card.Content extra>
-            <TagSearch
-              tagMap={tagMap}
-              onChange={changeNoteTags}
-              defaultValue={selectedTags}
-            />
-            <Button onClick={saveNote}>Save</Button>
-            <Button onClick={cancelNote}>Cancel</Button>
-          </Card.Content>
-        ) : (
-          ""
-        )}
+        <Modal trigger={<Card.Content>{value}</Card.Content>}>
+          <Modal.Content>
+            <TagSearch tagMap={tagMap} defaultValue={selectedTags} />
+            <Button>Save</Button>
+            <Button>Cancel</Button>
+          </Modal.Content>
+        </Modal>
       </Card>
     );
   }
