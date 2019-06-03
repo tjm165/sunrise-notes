@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import DeskHeader from "./DeskHeader";
-import TagSearch from "./TagSearch";
-import DeskNotes from "./DeskNotes";
+import Header from "../header/Header";
+import Search from "../tag/Search";
+import Notes from "./Notes";
 import { Container } from "semantic-ui-react";
 
 //It seems like I'm passing the same constants to Board as well as to NotesOnDisplay. I wonder if theres a better way.
@@ -18,12 +18,9 @@ class DeskDisplay extends Component {
 
     return (
       <Container>
-        <DeskHeader />
-        <TagSearch
-          tagMap={state.tagMap}
-          onChange={e => functions.megamethod(e)}
-        />
-        <DeskNotes
+        <Header />
+        <Search tagMap={state.tagMap} onChange={e => functions.megamethod(e)} />
+        <Notes
           notes={Array.from(notes)}
           tagMap={tagMap}
           noteMap={noteMap}

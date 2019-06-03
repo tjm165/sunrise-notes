@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Container } from "semantic-ui-react";
-import NoteGroup from "./NoteGroup";
-import Note from "./Note";
+import NoteGroup from "../note/NoteGroup";
 
 class DeskNotes extends Component {
   render() {

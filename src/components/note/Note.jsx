@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import {
-  Button,
-  Card,
-  Modal,
-  Form,
-  TextArea
-} from "../../../node_modules/semantic-ui-react";
-import TagSearch from "./TagSearch";
+import { Button, Card, Modal, Form, TextArea } from "semantic-ui-react";
+import Search from "../tag/Search";
 
 class Note extends Component {
   render() {
@@ -29,7 +23,7 @@ class Note extends Component {
             <Form>
               <TextArea value={title} />
               <TextArea value={content} />
-              <TagSearch tagMap={tagMap} defaultValue={selectedTags} />
+              <Search tagMap={tagMap} defaultValue={selectedTags} />
             </Form>
             <Button>Save</Button>
             <Button>Cancel</Button>
