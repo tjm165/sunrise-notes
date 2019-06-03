@@ -23,7 +23,7 @@ class DeskSearch extends Component {
           options={[...tagMap.keys()].map(key => ({
             key: key,
             value: key,
-            text: tagMap.get(key).value
+            text: tagMap.get(key).title
           }))}
         />
       </Container>

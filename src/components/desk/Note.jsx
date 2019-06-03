@@ -11,14 +11,26 @@ import TagSearch from "./TagSearch";
 class Note extends Component {
   render() {
     const { tagMap, note } = this.props;
-    const value = note.getValue();
+    const title = note.title;
+    const content = note.content;
     const selectedTags = note.tagUUIDs;
 
     return (
       <Card>
-        <Modal trigger={<Card.Content>{value}</Card.Content>}>
+        <Modal
+          trigger={
+            <Card.Content>
+              <Card.Header>{title}</Card.Header>
+              <Card.Description>{content}</Card.Description>
+            </Card.Content>
+          }
+        >
           <Modal.Content>
-            <TagSearch tagMap={tagMap} defaultValue={selectedTags} />
+            <Form>
+              <TextArea value={title} />
+              <TextArea value={content} />
+              <TagSearch tagMap={tagMap} defaultValue={selectedTags} />
+            </Form>
             <Button>Save</Button>
             <Button>Cancel</Button>
           </Modal.Content>
