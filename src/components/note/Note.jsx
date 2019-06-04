@@ -1,6 +1,14 @@
 import React, { Component } from "react";
-import { Button, Card, Modal, Form, TextArea } from "semantic-ui-react";
-import Search from "../tag/Search";
+import {
+  Button,
+  Popup,
+  Icon,
+  Card,
+  Modal,
+  Form,
+  TextArea
+} from "semantic-ui-react";
+import Ellipsis from "../reuse/Ellipsis";
 
 class Note extends Component {
   render() {
@@ -11,24 +19,12 @@ class Note extends Component {
 
     return (
       <Card>
-        <Modal
-          trigger={
-            <Card.Content>
-              <Card.Header>{title}</Card.Header>
-              <Card.Description>{content}</Card.Description>
-            </Card.Content>
-          }
-        >
-          <Modal.Content>
-            <Form>
-              <TextArea value={title} />
-              <TextArea value={content} />
-              <Search tagMap={tagMap} defaultValue={selectedTags} />
-            </Form>
-            <Button>Save</Button>
-            <Button>Cancel</Button>
-          </Modal.Content>
-        </Modal>
+        <Card.Content>
+          <Card.Header>
+            {title} <Ellipsis />
+          </Card.Header>
+          <Card.Description>{content}</Card.Description>
+        </Card.Content>
       </Card>
     );
   }

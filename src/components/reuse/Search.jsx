@@ -5,8 +5,7 @@ import { Button } from "semantic-ui-react";
 
 class DeskSearch extends Component {
   render() {
-    const { onChange, tagMap, defaultValue } = this.props;
-    var i = 0;
+    const { onChange, options, defaultValue } = this.props;
 
     return (
       <Container>
@@ -20,11 +19,7 @@ class DeskSearch extends Component {
           selection
           allowAdditions
           onChange={(e, DropdownProps) => onChange(DropdownProps.value)}
-          options={[...tagMap.keys()].map(key => ({
-            key: key,
-            value: key,
-            text: tagMap.get(key).title
-          }))}
+          options={options}
         />
       </Container>
     );
