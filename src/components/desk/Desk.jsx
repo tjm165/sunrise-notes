@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import DeskDisplay from "./DeskDisplay";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
-import { resolve } from "path";
 
 //make enums for operations. 0 = union, 1 = intersection
 class Desk extends Component {
@@ -12,12 +11,15 @@ class Desk extends Component {
     this.state = {
       context: { operation: 0, tags: [], notes: new Tag() },
       tagMap: new Map(),
-      noteMap: new Map()
+      noteMap: new Map([[-1, new Note("new note", "content", null)]]),
+      editNote: { note: new Note(), UUID: -1 }
     };
 
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
-      megamethod: this.megamethod.bind(this)
+      megamethod: this.megamethod.bind(this),
+
+      noteFunctions: { selectNoteToEdit: this.selectNoteToEdit.bind(this) }
     };
   }
 
@@ -66,6 +68,10 @@ class Desk extends Component {
 
         this.setState({ context: context });
       });
+  }
+
+  selectNoteToEdit(noteUUID) {
+    this.setState({ editNote: noteUUID });
   }
 
   render() {

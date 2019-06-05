@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "../header/Header";
 import Notes from "./Notes";
 import TagSelector from "./TagSelector";
-import { Container } from "semantic-ui-react";
+import { Container, Modal } from "semantic-ui-react";
 
 class DeskDisplay extends Component {
   componentDidMount() {
@@ -26,7 +26,8 @@ class DeskDisplay extends Component {
           notes={Array.from(notes)}
           tagMap={tagMap}
           noteMap={noteMap}
-          functions={functions}
+          selectNoteToEdit={functions.noteFunctions.selectNoteToEdit}
+          editNote={state.editNote}
         />
       </Container>
     );

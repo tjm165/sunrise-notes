@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Icon, Button, Card, Modal, Form, TextArea } from "semantic-ui-react";
 
-class Editor extends Component {
+class NoteEditor extends Component {
   render() {
     return (
       <div>
         <Form>
-          <TextArea value={title} />
-          <TextArea value={content} />
-          <Search tagMap={tagMap} defaultValue={selectedTags} />
+          <TextArea value="a" />
+          <TextArea value="b" />
+          {/* <Search tagMap={tagMap} defaultValue={selectedTags} /> */}
         </Form>
         <Button>Save</Button>
         <Button>Cancel</Button>
@@ -17,4 +17,4 @@ class Editor extends Component {
   }
 }
 
-export default Editor;
+export default NoteEditor;
