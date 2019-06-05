@@ -4,7 +4,7 @@ import { Button } from "semantic-ui-react";
 
 class DeskHeader extends Component {
   render() {
-    return <Container>Desk Header</Container>;
+    return <Container>Header</Container>;
   }
 }
 

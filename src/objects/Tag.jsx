@@ -1,7 +1,7 @@
 export default class Tag extends Set {
-  constructor(value, noteUUIDs) {
+  constructor(title, noteUUIDs) {
     super(noteUUIDs);
-    this.value = value;
+    this.title = title;
   }
 
   //generate combined tag?
@@ -12,9 +12,9 @@ export default class Tag extends Set {
 
   static _generateUnion(tagA, tagB) {
     var name =
-      tagA.value === undefined
-        ? tagB.value
-        : tagA.value + " union " + tagB.value;
+      tagA.title === undefined
+        ? tagB.title
+        : tagA.title + " union " + tagB.title;
 
     var _union = new Tag(name, tagA);
     var neededParams = "";
@@ -28,6 +28,6 @@ export default class Tag extends Set {
   }
 
   static deserialize(json) {
-    return new Tag(json["value"], json["noteUUIDs"]);
+    return new Tag(json["title"], json["noteUUIDs"]);
   }
 }

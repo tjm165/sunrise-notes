@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import DeskDisplay from "./DeskDisplay";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
-import { resolve } from "path";
 
 //make enums for operations. 0 = union, 1 = intersection
 class Desk extends Component {
@@ -12,28 +11,19 @@ class Desk extends Component {
     this.state = {
       context: { operation: 0, tags: [], notes: new Tag() },
       tagMap: new Map(),
-      noteMap: new Map([
-        [-1, new Note("new note")],
-        [20, new Note("Ford")],
-        [21, new Note("Honda")],
-        [22, new Note("Boeing")],
-        [23, new Note("Airbus")],
-        [24, new Note("Garfield")]
-      ])
+      noteMap: new Map([[-1, new Note("new note", "content", null)]]),
+      editNote: { note: new Note(), UUID: -1 }
     };
 
     this.functions = {
+      fetchUserTags: this.fetchUserTags.bind(this),
       megamethod: this.megamethod.bind(this),
-      fetchUserTags: this.fetchUserTags.bind(this), //used by DeskHeader
 
-      editNote: this.editNote.bind(this), //used by Note
-      changeNoteTags: this.changeNoteTags.bind(this),
-      changeNoteValue: this.changeNoteValue.bind(this), //used by Note
-      saveNote: this.saveNote.bind(this) //used by Note
+      noteFunctions: { selectNoteToEdit: this.selectNoteToEdit.bind(this) }
     };
   }
 
-  fetchUserTags = async => {
+  async fetchUserTags() {
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
 
@@ -48,7 +38,7 @@ class Desk extends Component {
 
         this.setState({ tagMap: tagMap });
       });
-  };
+  }
 
   async megamethod(tags) {
     var context = this.state.context;
@@ -80,58 +70,8 @@ class Desk extends Component {
       });
   }
 
-  //A //B
-  editNote(key) {
-    const noteMap = this.state.noteMap; //get
-    const noteObject = noteMap.get(key); //get
-    noteObject.editing = true; //editing
-    //unique
-
-    this.setState({ noteMap }); //save
-  }
-
-  //A //B
-  editNewNote(key) {
-    const noteMap = this.state.noteMap; //get
-    const noteObject = noteMap.get(key); //get
-    noteObject.editing = true; //editing
-    //unique
-
-    this.setState({ noteMap }); //save
-  }
-
-  //Right now it just sets the note tags. Not the note edit tags
-  changeNoteTags(noteKey, newTagKeys) {
-    const tagMap = this.state.tagMap;
-
-    newTagKeys.forEach(tagKey => {
-      var noteKeys = tagMap.get(tagKey).noteIndices;
-      noteKeys = [...noteKeys, noteKey];
-    });
-
-    this.setState({ tagMap: tagMap });
-  }
-
-  //A
-  changeNoteValue(noteKey, value) {
-    const noteMap = this.state.noteMap; //get
-    const noteObject = noteMap.get(noteKey); //get
-
-    noteObject.editValue = value; //unique
-    this.setState({ noteMap }); //save
-  }
-
-  saveNote(key, save) {
-    const noteMap = this.state.noteMap; //get
-    const noteObject = noteMap.get(key); //get
-    noteObject.editing = false; //editing
-    if (save) {
-      noteObject.applyEdits(); //unique
-    } else {
-      noteObject.resetEdits(); //unique
-    }
-
-    this.setState({ noteMap: noteMap }); //save
+  selectNoteToEdit(noteUUID) {
+    this.setState({ editNote: noteUUID });
   }
 
   render() {
