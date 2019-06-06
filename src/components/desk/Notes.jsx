@@ -1,16 +1,23 @@
 import React, { Component } from "react";
 import { Container, Modal } from "semantic-ui-react";
 import NoteGroup from "../note/NoteGroup";
-import NoteEditor from "../note/NoteEditor";
+import NoteEditor from "../note/NoteEditor/NoteEditor";
 
 class DeskNotes extends Component {
   render() {
-    const { selectNoteToEdit, editNote, notes, tagMap, noteMap } = this.props;
+    const {
+      selectNoteToEdit,
+      editNoteUUID,
+      notes,
+      tagMap,
+      noteMap,
+      saveEditNote
+    } = this.props;
     const size = notes.length;
     const top3 = notes.slice(0, 3);
     const next4 = notes.slice(3, 7);
     const rest = notes.slice(6, size - 6);
-    const shouldNoteEditorDisplay = editNote.UUID != -1;
+    const shouldNoteEditorDisplay = editNoteUUID != -1;
 
     return (
       <Container>
@@ -36,7 +43,7 @@ class DeskNotes extends Component {
           selectNoteToEdit={selectNoteToEdit}
         />
         <Modal open={shouldNoteEditorDisplay}>
-          <NoteEditor />
+          <NoteEditor note={noteMap.get(editNoteUUID)} save={saveEditNote} />
         </Modal>
       </Container>
     );

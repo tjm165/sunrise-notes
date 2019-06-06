@@ -12,14 +12,17 @@ class Desk extends Component {
       context: { operation: 0, tags: [], notes: new Tag() },
       tagMap: new Map(),
       noteMap: new Map([[-1, new Note("new note", "content", null)]]),
-      editNote: { note: new Note(), UUID: -1 }
+      editNoteUUID: -1
     };
 
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
       megamethod: this.megamethod.bind(this),
 
-      noteFunctions: { selectNoteToEdit: this.selectNoteToEdit.bind(this) }
+      noteFunctions: {
+        selectNoteToEdit: this.selectNoteToEdit.bind(this),
+        saveEditNote: this.saveEditNote.bind(this)
+      }
     };
   }
 
@@ -71,13 +74,19 @@ class Desk extends Component {
   }
 
   selectNoteToEdit(noteUUID) {
-    this.setState({ editNote: noteUUID });
+    this.setState({ editNoteUUID: noteUUID });
+  }
+
+  saveEditNote(editNote) {
+    //need to make a POST call
+    const noteMap = this.state.noteMap;
+    const editNoteUUID = this.state.editNoteUUID;
+    noteMap.set(editNoteUUID, editNote);
+    this.setState({ noteMap: noteMap });
   }
 
   render() {
-    const functions = this.functions;
-
-    return <DeskDisplay state={this.state} functions={functions} />;
+    return <DeskDisplay state={this.state} functions={this.functions} />;
   }
 }
 

@@ -27,7 +27,8 @@ class DeskDisplay extends Component {
           tagMap={tagMap}
           noteMap={noteMap}
           selectNoteToEdit={functions.noteFunctions.selectNoteToEdit}
-          editNote={state.editNote}
+          editNoteUUID={state.editNoteUUID}
+          saveEditNote={functions.noteFunctions.saveEditNote}
         />
       </Container>
     );
