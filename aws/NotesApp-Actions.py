@@ -23,52 +23,17 @@ class Actions():
         for UUID in noteUUIDs:
             notes.append(table.get_item(UUID))
         return notes
-    
-    def put_tag(body):
-        table = Helper.get_tags_table()
-        
-        if hasattr(body, 'UUID'):
-            UUID = body['UUID']
-        else:
-            UUID = Helper.newUUID()
-            
-        if hasattr(body, 'noteIndexes'):
-            noteIndexes=body['noteIndexes']
-        else:
-            noteIndexes= None
 
-        value=body['value']
-        userUUID=body['userUUID']
-        
-        response = table.put_item(Item={
-            'value':value,
-            'UUID' : UUID,
-            'noteIndexes' :noteIndexes,
-            'userUUID' : userUUID
-            }
-        )
-        return UUID
-            
-    def put_note(event):
-        table = Helper.get_notes_table()
-    
-        if hasattr(event, 'UUID'):
-            UUID = event['UUID']
-        else:
-            UUID = Helper.newUUID()
-            
-        value=event['value']
-        tagIndexes=event['tagIndexes']
-        userUUID=event['userUUID']
-        
-        response = table.put_item(Item={
-            'value':value,
-            'UUID' : UUID,
-            'tagIndexes' :tagIndexes,
-            'userUUID' : userUUID
-            }
-        )
-        return UUID
+    def get_noteset_by_tagUUIDs(tagUUIDs):
+        table = Table('NotesApp-Tags')
+        noteUUIDset = set()
+
+        for tagUUID in tagUUIDs:
+            noteUUIDs = table.get_item(tagUUID)['noteUUIDs']
+            noteUUIDset.update(noteUUIDs) #this is the line that'll change based on the operation
+            #https://www.w3schools.com/python/python_sets.asp
+
+        return Actions.get_notes_by_UUIDs(noteUUIDset)
 
 class Table():
     table = None
@@ -114,6 +79,8 @@ def lambda_handler(event, context):
         return Actions.put_tag(body)
     if (action == "get_notes"):
         return Actions.get_notes_by_UUIDs(querystring['UUIDs'].split(","))
+    if (action == "get_noteset"):
+        return Actions.get_noteset_by_tagUUIDs(querystring['UUIDs'].split(","))
     if (action == "put_note"):
         return Actions.put_note(body)
 
