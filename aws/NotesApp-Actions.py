@@ -30,8 +30,7 @@ class Actions():
 
         for tagUUID in tagUUIDs:
             noteUUIDs = table.get_item(tagUUID)['noteUUIDs']
-            noteUUIDset.update(noteUUIDs) #this is the line that'll change based on the operation
-            #https://www.w3schools.com/python/python_sets.asp
+            noteUUIDset.update(noteUUIDs)
 
         return Actions.get_notes_by_UUIDs(noteUUIDset)
 
@@ -79,7 +78,7 @@ def lambda_handler(event, context):
         return Actions.put_tag(body)
     if (action == "get_notes"):
         return Actions.get_notes_by_UUIDs(querystring['UUIDs'].split(","))
-    if (action == "get_noteset"):
+    if (action == "note-set-GET"):
         return Actions.get_noteset_by_tagUUIDs(querystring['UUIDs'].split(","))
     if (action == "put_note"):
         return Actions.put_note(body)
