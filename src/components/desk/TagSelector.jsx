@@ -13,16 +13,7 @@ class TagSelector extends Component {
 
     return (
       <Segment>
-        <Grid columns={2} relaxed="very">
-          <Grid.Column>
-            <Search options={searchOptions} onChange={onChange} />
-          </Grid.Column>
-          <Grid.Column>
-            <Search options={searchOptions} onChange={onChange} />
-          </Grid.Column>
-        </Grid>
-
-        <Divider vertical>And</Divider>
+        <Search options={searchOptions} onChange={onChange} />
       </Segment>
     );
   }

@@ -9,17 +9,20 @@ class Desk extends Component {
     super();
 
     this.state = {
-      context: { operation: 0, tags: [], notes: new Tag() },
+      context: { operation: 0, tags: [], notes: new Set() },
       tagMap: new Map(),
       noteMap: new Map([[-1, new Note("new note", "content", null)]]),
-      editNote: { note: new Note(), UUID: -1 }
+      editNoteUUID: -1
     };
 
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
-      megamethod: this.megamethod.bind(this),
+      fetchNoteSet: this.fetchNoteSet.bind(this),
 
-      noteFunctions: { selectNoteToEdit: this.selectNoteToEdit.bind(this) }
+      noteFunctions: {
+        selectNoteToEdit: this.selectNoteToEdit.bind(this),
+        saveEditNote: this.saveEditNote.bind(this)
+      }
     };
   }
 
@@ -40,44 +43,47 @@ class Desk extends Component {
       });
   }
 
-  async megamethod(tags) {
+  async fetchNoteSet(tags) {
+    var noteMap = this.state.noteMap;
     var context = this.state.context;
+    context.tags = tags;
+    context.notes = new Set();
 
-    const { newTag, neededParams } = Tag.generateNewTag(
-      context.notes,
-      this.state.tagMap.get(tags[tags.length - 1]),
-      context.operation
-    );
+    if (tags.length == 0) {
+      this.setState({ noteMap: noteMap });
+      this.setState({ context: context });
+    }
 
     const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes?UUIDs=" +
-      neededParams;
-    var noteMap = this.state.noteMap;
+      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note-set?UUIDs=" +
+      tags;
 
     fetch(ask)
       .then(response => response.json())
       .then(notes => {
         notes.forEach(note => {
           noteMap.set(note["UUID"], Note.deserialize(note));
+          context.notes.add(note["UUID"]);
         });
         this.setState({ noteMap: noteMap });
-      })
-      .then(() => {
-        context.tags = tags;
-        context.notes = newTag;
-
         this.setState({ context: context });
       });
   }
 
   selectNoteToEdit(noteUUID) {
-    this.setState({ editNote: noteUUID });
+    this.setState({ editNoteUUID: noteUUID });
+  }
+
+  saveEditNote(editNote) {
+    //need to make a POST call
+    const noteMap = this.state.noteMap;
+    const editNoteUUID = this.state.editNoteUUID;
+    noteMap.set(editNoteUUID, editNote);
+    this.setState({ noteMap: noteMap });
   }
 
   render() {
-    const functions = this.functions;
-
-    return <DeskDisplay state={this.state} functions={functions} />;
+    return <DeskDisplay state={this.state} functions={this.functions} />;
   }
 }
 

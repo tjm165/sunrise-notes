@@ -4,11 +4,11 @@ import Ellipsis from "../reuse/Ellipsis";
 
 class Note extends Component {
   render() {
-    const { UUID, note, edit } = this.props;
+    const { UUID, note, selectNoteToEdit } = this.props;
     const title = note.title;
     const content = note.content;
     const ellipsisComponents = [
-      <Button onClick={() => edit(UUID)}>Edit</Button>,
+      <Button onClick={() => selectNoteToEdit(UUID)}>Edit</Button>,
       <Button>Delete</Button>
     ];
 

@@ -17,7 +17,6 @@ class DeskSearch extends Component {
           multiple
           clearable
           selection
-          allowAdditions
           onChange={(e, DropdownProps) => onChange(DropdownProps.value)}
           options={options}
         />

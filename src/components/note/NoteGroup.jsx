@@ -17,7 +17,7 @@ class NoteGroup extends Component {
         {notes.map(note => (
           <Note
             key={note}
-            edit={selectNoteToEdit}
+            selectNoteToEdit={selectNoteToEdit}
             UUID={note}
             tagMap={tagMap}
             note={noteMap.get(note)}

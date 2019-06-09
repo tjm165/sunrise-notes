@@ -20,14 +20,15 @@ class DeskDisplay extends Component {
         <Header />
         <TagSelector
           tagMap={state.tagMap}
-          onChange={e => functions.megamethod(e)}
+          onChange={e => functions.fetchNoteSet(e)}
         />
         <Notes
           notes={Array.from(notes)}
           tagMap={tagMap}
           noteMap={noteMap}
           selectNoteToEdit={functions.noteFunctions.selectNoteToEdit}
-          editNote={state.editNote}
+          editNoteUUID={state.editNoteUUID}
+          saveEditNote={functions.noteFunctions.saveEditNote}
         />
       </Container>
     );
