@@ -20,7 +20,7 @@ class DeskDisplay extends Component {
         <Header />
         <TagSelector
           tagMap={state.tagMap}
-          onChange={e => functions.megamethod(e)}
+          onChange={e => functions.fetchNoteSet(e)}
         />
         <Notes
           notes={Array.from(notes)}
