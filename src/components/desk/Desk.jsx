@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import DeskDisplay from "./DeskDisplay";
+import Layout from "./Layout";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
 
@@ -113,7 +113,7 @@ class Desk extends Component {
   }
 
   render() {
-    return <DeskDisplay state={this.state} functions={this.functions} />;
+    return <Layout state={this.state} functions={this.functions} />;
   }
 }
 

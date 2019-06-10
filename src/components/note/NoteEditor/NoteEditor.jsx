@@ -5,7 +5,8 @@ class NoteEditor extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      note: props.note
+      note: props.note,
+      uuid: props.g
     };
 
     this.functions = {
@@ -30,7 +31,10 @@ class NoteEditor extends Component {
 
   render() {
     return (
-      <NoteEditorDisplay note={this.state.note} functions={this.functions} />
+      <>
+        {this.state.uuid}
+        <NoteEditorDisplay note={this.state.note} functions={this.functions} />
+      </>
     );
   }
 }

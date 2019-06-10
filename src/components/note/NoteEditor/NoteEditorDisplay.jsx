@@ -21,7 +21,6 @@ class NoteEditorDisplay extends Component {
           {/* <Search tagMap={tagMap} defaultValue={selectedTags} /> */}
           <Button onClick={e => functions.save(note)}>Save</Button>
           <Button>Delete</Button>
-          <Button onClick={() => functions.close()}>Cancel</Button>
         </Form>
       </div>
     );

@@ -25,3 +25,5 @@ class Note extends Component {
   }
 }
 export default Note;
+
+export { default as NoteEditor } from "./NoteEditor/NoteEditor";
