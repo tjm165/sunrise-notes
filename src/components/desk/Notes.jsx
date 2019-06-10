@@ -11,7 +11,8 @@ class DeskNotes extends Component {
       notes,
       tagMap,
       noteMap,
-      saveEditNote
+      saveEditNote,
+      closeEditNote
     } = this.props;
     const size = notes.length;
     const top3 = notes.slice(0, 3);
@@ -42,8 +43,17 @@ class DeskNotes extends Component {
           noteMap={noteMap}
           selectNoteToEdit={selectNoteToEdit}
         />
-        <Modal open={shouldNoteEditorDisplay}>
-          <NoteEditor note={noteMap.get(editNoteUUID)} save={saveEditNote} />
+        <Modal
+          open={shouldNoteEditorDisplay}
+          closeOnDimmerClick
+          closeOnEscape
+          onClose={closeEditNote}
+        >
+          <NoteEditor
+            note={noteMap.get(editNoteUUID)}
+            save={saveEditNote}
+            close={closeEditNote}
+          />
         </Modal>
       </Container>
     );

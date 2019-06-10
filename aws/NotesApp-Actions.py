@@ -31,8 +31,24 @@ class Actions():
         for tagUUID in tagUUIDs:
             noteUUIDs = table.get_item(tagUUID)['noteUUIDs']
             noteUUIDset.update(noteUUIDs)
-
         return Actions.get_notes_by_UUIDs(noteUUIDset)
+
+    def put_note(data):
+        UUID = data['UUID'] if 'UUID' in data else Helper.newUUID()
+        content = data['content']
+        tagUUIDs = data['tagUUIDs']
+        title = data['title']
+
+        table = Table('NotesApp-Notes')
+        table.put_item({
+            'UUID' : UUID,
+            'content': content,
+            'tagUUIDs' :tagUUIDs,
+            'title' : title
+            }
+        )
+        return UUID
+
 
 class Table():
     table = None
@@ -43,6 +59,9 @@ class Table():
 
     def get_item(self, UUID):
         return self.table.get_item(Key={'UUID': UUID})['Item']
+
+    def put_item(self, item):
+        return self.table.put_item(Item=item)
 
 class Helper():
     def newUUID():
@@ -67,21 +86,16 @@ class UUIDEncoder(json.JSONEncoder):
 
 #decides what action to call
 def lambda_handler(event, context):
-
-    action = event['action']
-    body = event['body-json']
-    querystring = event['params']['querystring']
+    action = event['action'] if 'action' in event else None
+    body = event['body-json'] if 'body-json' in event else None
+    params = event['params'] if 'params' in event else None
+    querystring = params['querystring'] if (params != None) and ('querystring' in params) else None
     
     if (action == "get_tags"):
         return Actions.get_tags_by_userUUID(querystring['UUID'])
-    if (action == "put_tag"):
-        return Actions.put_tag(body)
-    if (action == "get_notes"):
-        return Actions.get_notes_by_UUIDs(querystring['UUIDs'].split(","))
     if (action == "note-set-GET"):
         return Actions.get_noteset_by_tagUUIDs(querystring['UUIDs'].split(","))
-    if (action == "put_note"):
+    if (action == "notes-POST"):
         return Actions.put_note(body)
 
-        
     return "action not supported: " + action
