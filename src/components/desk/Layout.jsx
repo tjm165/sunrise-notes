@@ -22,6 +22,7 @@ class Layout extends Component {
           <TagMenu
             tagMap={state.tagMap}
             onChange={e => functions.fetchNoteSet(e)}
+            open
           />
         </Grid.Column>
         <Grid.Column color="blue">

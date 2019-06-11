@@ -1,33 +1,26 @@
 export default class Tag extends Set {
-  constructor(title, noteUUIDs) {
+  constructor(title, noteUUIDs, rgb) {
     super(noteUUIDs);
     this.title = title;
-  }
-
-  //generate combined tag?
-  static generateNewTag(tagA, tagB, op) {
-    //if op is Union
-    return Tag._generateUnion(tagA, tagB);
-  }
-
-  static _generateUnion(tagA, tagB) {
-    var name =
-      tagA.title === undefined
-        ? tagB.title
-        : tagA.title + " union " + tagB.title;
-
-    var _union = new Tag(name, tagA);
-    var neededParams = "";
-    for (var elem of tagB) {
-      neededParams += tagA.has(elem) ? "" : elem + ",";
-      _union.add(elem);
-    }
-    neededParams = neededParams.substring(0, neededParams.length - 1);
-
-    return { newTag: _union, neededParams: neededParams };
+    this.rgb = rgb;
+    this.hex = Tag.rgbToHex(this.rgb.r, this.rgb.g, this.rgb.b);
   }
 
   static deserialize(json) {
-    return new Tag(json["title"], json["noteUUIDs"]);
+    return new Tag(json["title"], json["noteUUIDs"], json["rgb"]);
+  }
+
+  static componentToHex(c) {
+    var hex = c.toString(16);
+    return hex.length == 1 ? "0" + hex : hex;
+  }
+
+  static rgbToHex(r, g, b) {
+    return (
+      "#" +
+      Tag.componentToHex(r) +
+      Tag.componentToHex(g) +
+      Tag.componentToHex(b)
+    );
   }
 }

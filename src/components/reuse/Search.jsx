@@ -5,7 +5,13 @@ import { Button } from "semantic-ui-react";
 
 class DeskSearch extends Component {
   render() {
-    const { onChange, options, defaultValue } = this.props;
+    const { onChange, options, defaultValue, open } = this.props;
+
+    const renderLabel = label => ({
+      color: label.color,
+      content: `${label.text}`,
+      icon: "check"
+    });
 
     return (
       <Container>
@@ -19,6 +25,8 @@ class DeskSearch extends Component {
           selection
           onChange={(e, DropdownProps) => onChange(DropdownProps.value)}
           options={options}
+          open={open}
+          renderLabel={renderLabel}
         />
       </Container>
     );
