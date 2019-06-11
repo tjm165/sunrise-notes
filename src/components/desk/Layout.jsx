@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Note from "../note/Note";
 import { NoteEditor } from "../note/Note";
-import TagSelector from "./TagSelector";
+import TagMenu from "./TagMenu";
 import { Grid, Card } from "semantic-ui-react";
 
 class Layout extends Component {
@@ -18,13 +18,13 @@ class Layout extends Component {
 
     return (
       <Grid columns="equal">
-        <Grid.Column>
-          <TagSelector
+        <Grid.Column color="black">
+          <TagMenu
             tagMap={state.tagMap}
             onChange={e => functions.fetchNoteSet(e)}
           />
         </Grid.Column>
-        <Grid.Column>
+        <Grid.Column color="blue">
           <Card.Group itemsPerRow={1}>
             {Array.from(notes).map(note => (
               <Note
