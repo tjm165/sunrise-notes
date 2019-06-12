@@ -1,29 +1,26 @@
 import React, { Component } from "react";
-import DeskDisplay from "./DeskDisplay";
+import Layout from "./Layout";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
 
-//make enums for operations. 0 = union, 1 = intersection
-class Desk extends Component {
+class SmartLayout extends Component {
   constructor() {
     super();
 
     this.state = {
       context: { operation: 0, tags: [], notes: new Set() },
       tagMap: new Map(),
-      noteMap: new Map([[-1, new Note("new note", "content", null)]]),
-      editNoteUUID: -1
+      noteMap: new Map(),
+      activeNoteUUID: null
     };
 
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
-      noteFunctions: {
-        selectNoteToEdit: this.selectNoteToEdit.bind(this),
-        closeEditNote: this.closeEditNote.bind(this),
-        saveEditNote: this.saveEditNote.bind(this)
-      }
+      setAsActiveNote: this.setAsActiveNote.bind(this),
+      closeActiveNote: this.closeActiveNote.bind(this),
+      submitActiveNote: this.submitActiveNote.bind(this)
     };
   }
 
@@ -89,32 +86,33 @@ class Desk extends Component {
     }).then(response => response.json()); // parses JSON response into native Javascript objects
   }
 
-  selectNoteToEdit(noteUUID) {
-    this.setState({ editNoteUUID: noteUUID });
+  setAsActiveNote(noteUUID) {
+    this.setState({ activeNoteUUID: noteUUID });
   }
 
-  closeEditNote() {
-    this.setState({ editNoteUUID: -1 });
+  closeActiveNote() {
+    this.setState({ activeNoteUUID: -1 });
   }
 
-  async saveEditNote(editNote) {
-    //need to make a POST call
+  async submitActiveNote(activeNote) {
+    console.log(activeNote);
+
     const noteMap = this.state.noteMap;
-    const editNoteUUID = this.state.editNoteUUID;
-    noteMap.set(editNoteUUID, editNote);
+    const activeNoteUUID = this.state.activeNoteUUID;
+    noteMap.set(activeNoteUUID, activeNote);
     this.setState({ noteMap: noteMap });
 
     const ask =
       "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes";
 
-    this.postData(ask, { ...editNote, UUID: editNoteUUID })
+    this.postData(ask, { ...activeNote, UUID: activeNoteUUID })
       .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
       .catch(error => console.error(error));
   }
 
   render() {
-    return <DeskDisplay state={this.state} functions={this.functions} />;
+    return <Layout state={this.state} functions={this.functions} />;
   }
 }
 
-export default Desk;
+export default SmartLayout;
