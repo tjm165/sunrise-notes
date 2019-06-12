@@ -4,7 +4,7 @@ import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
 
 //make enums for operations. 0 = union, 1 = intersection
-class Desk extends Component {
+class SmartLayout extends Component {
   constructor() {
     super();
 
@@ -117,4 +117,4 @@ class Desk extends Component {
   }
 }
 
-export default Desk;
+export default SmartLayout;

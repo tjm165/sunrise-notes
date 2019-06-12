@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Header } from "semantic-ui-react";
-import Search from "../reuse/Search";
+import Search from "../../reuse/Search";
 
 class TagMenu extends Component {
   render() {

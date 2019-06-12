@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import Note from "../note/Note";
-import { NoteEditor } from "../note/Note";
-import TagMenu from "./TagMenu";
+import Note from "./NoteMenu/Note";
+import NoteEditor from "./ActiveNote/NoteEditor";
+import TagMenu from "./TagMenu/TagMenu";
 import { Grid, Card } from "semantic-ui-react";
 
 class Layout extends Component {

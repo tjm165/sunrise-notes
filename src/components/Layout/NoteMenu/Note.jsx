@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Card } from "semantic-ui-react";
-import Ellipsis from "../reuse/Ellipsis";
+import Ellipsis from "../../reuse/Ellipsis";
 
 class Note extends Component {
   render() {
@@ -25,5 +25,3 @@ class Note extends Component {
   }
 }
 export default Note;
-
-export { default as NoteEditor } from "./NoteEditor/NoteEditor";
