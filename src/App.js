@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
-import Desk from "./components/desk/Desk";
+import SmartLayout from "./components/Layout/SmartLayout";
 
 class App extends Component {
   render() {
-    return <Desk />;
+    return <SmartLayout />;
   }
 }
 
