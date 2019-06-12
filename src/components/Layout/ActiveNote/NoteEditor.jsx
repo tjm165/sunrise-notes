@@ -1,40 +1,39 @@
 import React, { Component } from "react";
-import NoteEditorDisplay from "./NoteEditorDisplay";
+import { TextArea, Button, Form } from "semantic-ui-react";
 
 class NoteEditor extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      note: props.note,
-      uuid: props.g
-    };
-
-    this.functions = {
-      setTitle: this.setTitle.bind(this),
-      setContent: this.setContent.bind(this),
-      save: props.save,
-      close: props.close
-    };
+    this.title = React.createRef();
+    this.content = React.createRef();
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  setTitle(value) {
-    const note = this.state.note;
-    note.title = value;
-    this.setState({ note: note });
-  }
+  handleSubmit(event) {
+    console.log(this.title);
 
-  setContent(value) {
-    const note = this.state.note;
-    note.content = value;
-    this.setState({ note: note });
+    this.props.onSubmit({
+      ...this.props.note,
+      title: this.title.current.value,
+      content: this.content.current.value
+    });
+    event.preventDefault();
   }
 
   render() {
+    const { note, onSubmit } = this.props;
+    const title = note.title;
+    const content = note.content;
+
     return (
-      <>
-        {this.state.uuid}
-        <NoteEditorDisplay note={this.state.note} functions={this.functions} />
-      </>
+      <div>
+        <Form onSubmit={this.handleSubmit}>
+          <textarea defaultValue={title} ref={this.title} />
+          <textarea defaultValue={content} ref={this.content} />
+          <Button>Save</Button>
+          <Button>Delete</Button>
+        </Form>
+      </div>
     );
   }
 }
