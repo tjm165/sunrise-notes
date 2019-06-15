@@ -1,17 +1,18 @@
-from uuid import UUID
 from table import Table
+from note import Note
+from tag import Tag
+from user import User
 import uuid
 from boto3.dynamodb.conditions import Key, Attr
 
 class Actions():
     def get_tags_by_userUUID(userUUID):
-        table = Table('NotesApp-Users')
-        tagUUIDs = table.get_item(userUUID)['tagUUIDs']
-        table = Table('NotesApp-Tags')
+        user = User(userUUID)
+        tag_uuids = user.get_tag_uuids()
         tags = []
 
-        for UUID in tagUUIDs:
-            tags.append(table.get_item(UUID))
+        for uuid in tag_uuids:
+            tags.append(Tag(uuid).toJSON().copy())
         return tags
 
     def get_notes_by_UUIDs(noteUUIDs):
