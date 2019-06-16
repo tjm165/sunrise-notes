@@ -28,21 +28,8 @@ class Actions():
         return notes
 
     def put_note(data):
-        UUID = data['UUID'] if 'UUID' in data else Helper.newUUID()
-        content = data['content']
-        tagUUIDs = data['tagUUIDs']
-        title = data['title']
-
-        table = Table('NotesApp-Notes')
-        table.put_item({
-            'UUID' : UUID,
-            'content': content,
-            'tagUUIDs' :tagUUIDs,
-            'title' : title
-            }
-        )
-        return UUID
-
-class Helper():
-    def newUUID():
-        return uuid.uuid4().hex
+        note = Note(data['UUID'])
+        note.set_title(data['title'])
+        note.set_content(data['content'])
+        note.set_tag_uuids(data['tagUUIDs'])
+        note.save()
