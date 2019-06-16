@@ -15,22 +15,17 @@ class Actions():
             tags.append(Tag(uuid).toJSON().copy())
         return tags
 
-    def get_notes_by_UUIDs(noteUUIDs):
-        table = Table('NotesApp-Notes')
-        notes = []
-
-        for UUID in noteUUIDs:
-            notes.append(table.get_item(UUID))
-        return notes
-
     def get_noteset_by_tagUUIDs(tagUUIDs):
-        table = Table('NotesApp-Tags')
-        noteUUIDset = set()
-
+        note_uuid_set = set()
         for tagUUID in tagUUIDs:
-            noteUUIDs = table.get_item(tagUUID)['noteUUIDs']
-            noteUUIDset.update(noteUUIDs)
-        return Actions.get_notes_by_UUIDs(noteUUIDset)
+            note_uuids = Tag(tagUUID).get_note_uuids()
+            note_uuid_set.update(note_uuids)
+
+        notes = []
+        for uuid in note_uuid_set:
+            notes.append(Note(uuid).toJSON().copy())
+
+        return notes
 
     def put_note(data):
         UUID = data['UUID'] if 'UUID' in data else Helper.newUUID()

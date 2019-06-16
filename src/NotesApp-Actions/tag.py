@@ -12,5 +12,8 @@ class Tag():
         self.attributes['rgb'] = row['rgb']
         self.attributes['title'] = row['title']
 
+    def get_note_uuids(self):
+        return self.attributes['noteUUIDs']
+
     def toJSON(self):
         return self.attributes
