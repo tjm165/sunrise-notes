@@ -2,7 +2,7 @@
 https://master.d3hhpvww013l91.amplifyapp.com/
 
 
-## Idea
+## My Example:
 ### Suppose these are the notes you have written.
 ![alt text](https://i.imgur.com/ve87onY.png)
 
