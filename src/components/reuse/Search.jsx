@@ -10,7 +10,7 @@ class DeskSearch extends Component {
     const renderLabel = label => ({
       color: label.color,
       content: `${label.text}`,
-      icon: "check"
+      icon: "tag"
     });
 
     return (
