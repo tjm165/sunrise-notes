@@ -8,11 +8,9 @@ def lambda_handler(event, context):
     params = event['params'] if 'params' in event else None
     querystring = params['querystring'] if (params != None) and ('querystring' in params) else None
     
-    if (action == "get_tags"):
+    if (action == "tags-GET"):
         return Actions.get_tags_by_userUUID(querystring['UUID'])
-    if (action == "note-set-GET"):
-        return Actions.get_noteset_by_tagUUIDs(querystring['UUIDs'].split(","))
-    if (action == "notes-POST"):
-        return Actions.post_note(body)
+    if(action == "note-GET"):
+        return Actions.get_note_by_uuid(querystring['UUID'])
 
     return "action not supported: " + action
