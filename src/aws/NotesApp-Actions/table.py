@@ -13,3 +13,9 @@ class Table():
 
     def put_item(self, item):
         return self.table.put_item(Item=item)
+        
+    def scan(self, fe):
+        return self.table.scan(FilterExpression=fe)['Items']
+        
+    def table(self):
+        return self.table
