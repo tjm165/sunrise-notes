@@ -10,11 +10,19 @@ class TagMenu extends Component {
       key: key,
       value: key,
       text: tagMap.get(key).title,
-      content: <Header icon="mobile" content={tagMap.get(key).title} />,
+      content: <Header content={tagMap.get(key).title} />,
+      //label= { color: 'red', empty: true, circular: true },
       color: tagMap.get(key).hex
     }));
 
-    return <Search options={searchOptions} onChange={onChange} open={open} />;
+    return (
+      <Search
+        placeholder="Search for tags"
+        options={searchOptions}
+        onChange={onChange}
+        open={open}
+      />
+    );
   }
 }
 
