@@ -14,7 +14,6 @@ class Layout extends Component {
     const { state, functions } = this.props;
     const notes = state.context.notes;
     const tagMap = state.tagMap;
-    const noteMap = state.noteMap;
     const activeNoteUUID = state.activeNoteUUID;
 
     return (
@@ -36,10 +35,9 @@ class Layout extends Component {
 
           <Card.Group itemsPerRow={1}>
             <NoteMenu
-              notes={Array.from(notes)}
+              notes={Array.from(notes)} //does this need to be an array any more? I think it's a map now
               functions={functions}
               tagMap={tagMap}
-              noteMap={noteMap}
             />
           </Card.Group>
         </Grid.Column>
@@ -47,7 +45,7 @@ class Layout extends Component {
         <Grid.Column width="13">
           {state.activeNoteUUID && (
             <NoteEditor
-              note={noteMap.get(activeNoteUUID)}
+              note={notes[activeNoteUUID]}
               onSubmit={functions.submitActiveNote}
               noteUUID={activeNoteUUID}
               key={activeNoteUUID}

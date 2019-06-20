@@ -8,9 +8,8 @@ class SmartLayout extends Component {
     super();
 
     this.state = {
-      context: { operation: 0, tags: [], notes: new Set() },
+      context: { operation: 0, tags: [], notes: new Map() },
       tagMap: new Map(),
-      noteMap: new Map(),
       activeNoteUUID: null
     };
 
@@ -42,13 +41,11 @@ class SmartLayout extends Component {
   }
 
   async fetchNoteSet(tags) {
-    var noteMap = this.state.noteMap;
     var context = this.state.context;
     context.tags = tags;
-    context.notes = new Set();
+    context.notes = new Map();
 
     if (tags.length == 0) {
-      this.setState({ noteMap: noteMap });
       this.setState({ context: context });
     }
 
@@ -59,11 +56,9 @@ class SmartLayout extends Component {
     fetch(ask)
       .then(response => response.json())
       .then(notes => {
-        notes.forEach(note => {
-          noteMap.set(note["UUID"], Note.deserialize(note));
-          context.notes.add(note["UUID"]);
+        Object.entries(notes).forEach(([key, note]) => {
+          context.notes.set(key, Note.deserialize(note));
         });
-        this.setState({ noteMap: noteMap });
         this.setState({ context: context });
       });
   }
