@@ -3,17 +3,17 @@ import Note from "./Note";
 
 class NoteMenu extends Component {
   render() {
-    const { functions, tagMap, noteMap, notes } = this.props;
+    const { functions, tagMap, notes } = this.props;
 
     return (
       <>
-        {notes.map(note => (
+        {notes.map(([key, note]) => (
           <Note
-            key={note}
+            key={key}
             setAsActiveNote={functions.setAsActiveNote}
-            UUID={note}
+            UUID={key}
             tagMap={tagMap}
-            note={noteMap.get(note)}
+            note={note}
           />
         ))}
       </>

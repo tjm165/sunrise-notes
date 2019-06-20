@@ -6,6 +6,7 @@ export default class Tag extends Set {
     this.hex = Tag.rgbToHex(this.rgb.r, this.rgb.g, this.rgb.b);
   }
 
+  //hmm these should know their uuid too
   static deserialize(json) {
     return new Tag(json["title"], json["noteUUIDs"], json["rgb"]);
   }

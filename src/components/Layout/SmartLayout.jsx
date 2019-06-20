@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import Layout from "./Layout";
-import Tag from "../../objects/Tag";
-import Note from "../../objects/Note";
+import { fetchUserTags, fetchNoteSet, fetchNote } from "./API";
 
 class SmartLayout extends Component {
   constructor() {
     super();
 
     this.state = {
-      context: { operation: 0, tags: [], notes: new Set() },
+      context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
-      noteMap: new Map(),
-      activeNoteUUID: null
+      activeNote: null
     };
 
     this.functions = {
@@ -24,48 +22,23 @@ class SmartLayout extends Component {
     };
   }
 
-  async fetchUserTags() {
-    const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
-
-    fetch(ask)
-      .then(response => response.json())
-      .then(json => {
-        var tagMap = new Map();
-
-        json.forEach(json => {
-          tagMap.set(json["UUID"], Tag.deserialize(json));
-        });
-
-        this.setState({ tagMap: tagMap });
-      });
+  //name?
+  fetchUserTags() {
+    fetchUserTags().then(tagMap => {
+      this.setState({ tagMap: tagMap });
+    });
   }
 
-  async fetchNoteSet(tags) {
-    var noteMap = this.state.noteMap;
+  //name?
+  fetchNoteSet(tags) {
     var context = this.state.context;
     context.tags = tags;
-    context.notes = new Set();
+    context.notes = new Map();
 
-    if (tags.length == 0) {
-      this.setState({ noteMap: noteMap });
+    fetchNoteSet(tags).then(notes => {
+      context.notes = notes;
       this.setState({ context: context });
-    }
-
-    const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note-set?UUIDs=" +
-      tags;
-
-    fetch(ask)
-      .then(response => response.json())
-      .then(notes => {
-        notes.forEach(note => {
-          noteMap.set(note["UUID"], Note.deserialize(note));
-          context.notes.add(note["UUID"]);
-        });
-        this.setState({ noteMap: noteMap });
-        this.setState({ context: context });
-      });
+    });
   }
 
   //should import this function
@@ -86,8 +59,9 @@ class SmartLayout extends Component {
     }).then(response => response.json()); // parses JSON response into native Javascript objects
   }
 
+  //name
   setAsActiveNote(noteUUID) {
-    this.setState({ activeNoteUUID: noteUUID });
+    fetchNote(noteUUID).then(note => this.setState({ activeNote: note }));
   }
 
   closeActiveNote() {
