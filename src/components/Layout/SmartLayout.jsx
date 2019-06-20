@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import Layout from "./Layout";
-import Tag from "../../objects/Tag";
-import Note from "../../objects/Note";
-import { fetchUserTags, fetchNoteSet } from "./API";
+import { fetchUserTags, fetchNoteSet, fetchNote } from "./API";
 
 class SmartLayout extends Component {
   constructor() {
     super();
 
     this.state = {
-      context: { operation: 0, tags: [], notes: new Map() },
+      context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
-      activeNoteUUID: null
+      activeNote: null
     };
 
     this.functions = {
@@ -24,12 +22,14 @@ class SmartLayout extends Component {
     };
   }
 
+  //name?
   fetchUserTags() {
     fetchUserTags().then(tagMap => {
       this.setState({ tagMap: tagMap });
     });
   }
 
+  //name?
   fetchNoteSet(tags) {
     var context = this.state.context;
     context.tags = tags;
@@ -59,8 +59,9 @@ class SmartLayout extends Component {
     }).then(response => response.json()); // parses JSON response into native Javascript objects
   }
 
+  //name
   setAsActiveNote(noteUUID) {
-    this.setState({ activeNoteUUID: noteUUID });
+    fetchNote(noteUUID).then(note => this.setState({ activeNote: note }));
   }
 
   closeActiveNote() {

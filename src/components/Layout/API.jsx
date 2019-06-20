@@ -32,3 +32,15 @@ export function fetchUserTags() {
       return tagMap;
     });
 }
+
+export function fetchNote(UUID) {
+  const ask =
+    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note?UUID=" +
+    UUID;
+
+  return fetch(ask)
+    .then(response => response.json())
+    .then(json => {
+      return Note.deserialize(json);
+    });
+}

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Note from "./NoteMenu/Note";
 import NoteEditor from "./ActiveNote/NoteEditor";
 import TagMenu from "./TagMenu/TagMenu";
 import NoteMenu from "./NoteMenu/NoteMenu";
@@ -43,12 +42,11 @@ class Layout extends Component {
         </Grid.Column>
 
         <Grid.Column width="13">
-          {state.activeNoteUUID && (
+          {state.activeNote && (
             <NoteEditor
-              note={notes[activeNoteUUID]}
+              note={state.activeNote}
               onSubmit={functions.submitActiveNote}
-              noteUUID={activeNoteUUID}
-              key={activeNoteUUID}
+              key={state.activeNote["UUID"]}
             />
           )}
         </Grid.Column>
