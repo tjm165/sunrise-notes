@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Layout from "./Layout";
 import Tag from "../../objects/Tag";
 import Note from "../../objects/Note";
+import { fetchUserTags, fetchNoteSet } from "./API";
 
 class SmartLayout extends Component {
   constructor() {
@@ -23,44 +24,21 @@ class SmartLayout extends Component {
     };
   }
 
-  async fetchUserTags() {
-    const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
-
-    fetch(ask)
-      .then(response => response.json())
-      .then(json => {
-        var tagMap = new Map();
-
-        json.forEach(json => {
-          tagMap.set(json["UUID"], Tag.deserialize(json));
-        });
-
-        this.setState({ tagMap: tagMap });
-      });
+  fetchUserTags() {
+    fetchUserTags().then(tagMap => {
+      this.setState({ tagMap: tagMap });
+    });
   }
 
-  async fetchNoteSet(tags) {
+  fetchNoteSet(tags) {
     var context = this.state.context;
     context.tags = tags;
     context.notes = new Map();
 
-    if (tags.length == 0) {
+    fetchNoteSet(tags).then(notes => {
+      context.notes = notes;
       this.setState({ context: context });
-    }
-
-    const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note-set?UUIDs=" +
-      tags;
-
-    fetch(ask)
-      .then(response => response.json())
-      .then(notes => {
-        Object.entries(notes).forEach(([key, note]) => {
-          context.notes.set(key, Note.deserialize(note));
-        });
-        this.setState({ context: context });
-      });
+    });
   }
 
   //should import this function
