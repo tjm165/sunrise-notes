@@ -16,7 +16,7 @@ class Actions():
             tags.append(tag_table.get_item(uuid))
         return tags
         
-    def get_noteset_by_tag_uuids(tag_uuids):
+    def get_note_set_by_tag_uuids(tag_uuids):
         junction_table = Table('NotesApp-NoteTagJunction')
         notes_table = Table('NotesApp-Notes')
         
@@ -41,5 +41,10 @@ class Actions():
         for junction in junction_table.scan(Key('noteUUID').eq(note_uuid)):
             note['tags'].append(junction['tagUUID'])
             
+        return note
+        
+    def post_note(note):
+        note_table = Table('NotesApp-Notes')
+        note_table.put_item(note)
         return note
         
