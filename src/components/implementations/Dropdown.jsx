@@ -6,7 +6,7 @@ import { Button } from "semantic-ui-react";
 //call this tag dropdown
 export class TagDropdown extends Component {
   render() {
-    const { onChange, tagMap, ...rest } = this.props;
+    const { tagMap, ...rest } = this.props;
     const tagKeys = [...tagMap.keys()];
     const options = tagKeys.map(key => ({
       key: key,
@@ -29,7 +29,6 @@ export class TagDropdown extends Component {
         multiple
         clearable
         selection
-        onChange={(e, DropdownProps) => onChange(DropdownProps.value)}
         options={options}
         renderLabel={renderLabel}
         {...rest}

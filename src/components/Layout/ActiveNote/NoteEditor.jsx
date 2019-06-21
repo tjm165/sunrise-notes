@@ -14,7 +14,7 @@ class NoteEditor extends Component {
   handleSubmit(event) {
     this.props.onSubmit({
       ...this.props.note,
-      tagUUIDs: this.tagUUIDs.current.value,
+      tagUUIDs: ["25"],
       title: this.title.current.value,
       content: this.content.current.value
     });

@@ -10,7 +10,7 @@ class TagMenu extends Component {
       <TagDropdown
         placeholder="Search for tags"
         tagMap={tagMap}
-        onChange={onChange}
+        onChange={(e, DropdownProps) => onChange(DropdownProps.value)}
       />
     );
   }

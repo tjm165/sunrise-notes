@@ -37,14 +37,25 @@ class Actions():
         junction_table = Table('NotesApp-NoteTagJunction')
         
         note = note_table.get_item(note_uuid)
-        note['tags'] = []
+        note['tagUUIDs'] = []
         for junction in junction_table.scan(Key('noteUUID').eq(note_uuid)):
-            note['tags'].append(junction['tagUUID'])
+            note['tagUUIDs'].append(junction['tagUUID'])
             
         return note
         
-    def post_note(note):
+    def post_note(note_object):
         note_table = Table('NotesApp-Notes')
-        note_table.put_item(note)
-        return note
+        junction_table = Table('NotesApp-NoteTagJunction')
+
+        if 'UUID' not in note_object:
+           note_object['UUID'] = uuid.uuid4().hex
+        for tagUUID in note_object['tagUUIDs']: #still need client to determine new from old from remove
+            junction={}
+            junction['UUID'] = uuid.uuid4().hex
+            junction['noteUUID'] = note_object['UUID']
+            junction['tagUUID'] = tagUUID
+            junction_table.put_item(junction) 
+
+        note_table.put_item(note_object)
+        return True
         
