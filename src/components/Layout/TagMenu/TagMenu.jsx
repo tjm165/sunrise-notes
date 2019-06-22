@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TagDropdown } from "../../implementations/Dropdown";
+import { TagDropdown } from "../../Implementations/Dropdown";
 
 //When we change to query column we can get rid of this component
 class TagMenu extends Component {

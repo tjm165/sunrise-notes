@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { TextArea, Button, Form } from "semantic-ui-react";
-import { TagDropdown } from "../../implementations/Dropdown";
+import { Button, Form } from "semantic-ui-react";
+import { TagDropdown } from "../../Implementations/Dropdown";
 
 class NoteEditor extends Component {
   constructor(props) {
@@ -9,6 +9,7 @@ class NoteEditor extends Component {
     this.content = React.createRef();
     this.tagUUIDs = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.test = this.test.bind(this);
   }
 
   handleSubmit(event) {
@@ -19,6 +20,10 @@ class NoteEditor extends Component {
       content: this.content.current.value
     });
     event.preventDefault();
+  }
+
+  test(v) {
+    alert(v);
   }
 
   render() {
@@ -36,6 +41,8 @@ class NoteEditor extends Component {
             placeholder="tags..."
             tagMap={tagMap}
             defaultValue={tagUUIDs}
+            test={this.test}
+            onChange={(e, DropdownProps) => this.test(DropdownProps.value)}
           />
           <Button>Save</Button>
           <Button>Delete</Button>
