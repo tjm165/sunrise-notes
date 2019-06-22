@@ -7,30 +7,58 @@ class NoteEditor extends Component {
     super(props);
     this.title = React.createRef();
     this.content = React.createRef();
-    this.tagUUIDs = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
     this.test = this.test.bind(this);
+
+    this.state = {
+      removeTags: [],
+      insertTags: [],
+      previousTags: props.note.tagUUIDs
+    };
   }
 
   handleSubmit(event) {
     this.props.onSubmit({
       ...this.props.note,
-      tagUUIDs: ["25"],
       title: this.title.current.value,
-      content: this.content.current.value
+      content: this.content.current.value,
+      insertTags: this.state.insertTags,
+      removeTags: this.state.removeTags
     });
+
+    //clear insert and remove tags
     event.preventDefault();
   }
 
-  test(v) {
-    alert(v);
+  test(current) {
+    const previous = this.state.previousTags;
+    const isInserting = current.length > previous.length;
+
+    const insertTags = this.state.insertTags;
+    const removeTags = this.state.removeTags;
+
+    if (isInserting) {
+      const toInsert = current[current.length - 1];
+
+      if (removeTags.includes(toInsert)) {
+      } else {
+        insertTags.push(toInsert);
+      }
+    } else {
+    }
+
+    this.setState({
+      insertTags: insertTags,
+      removeTags: removeTags,
+      previousTags: current
+    });
   }
 
   render() {
     const { note, tagMap } = this.props;
     const title = note.title;
     const content = note.content;
-    const tagUUIDs = note.tagUUIDs;
+    const defaultTagUUIDs = note.tagUUIDs;
 
     return (
       <div>
@@ -40,7 +68,7 @@ class NoteEditor extends Component {
           <TagDropdown
             placeholder="tags..."
             tagMap={tagMap}
-            defaultValue={tagUUIDs}
+            defaultValue={defaultTagUUIDs}
             test={this.test}
             onChange={(e, DropdownProps) => this.test(DropdownProps.value)}
           />

@@ -49,7 +49,7 @@ class Actions():
 
         if 'UUID' not in note_object:
            note_object['UUID'] = uuid.uuid4().hex
-        for tagUUID in note_object['tagUUIDs']: #still need client to determine new from old from remove
+        for tagUUID in note_object['insertTags']: #handle the insert tags
             junction={}
             junction['UUID'] = uuid.uuid4().hex
             junction['noteUUID'] = note_object['UUID']
