@@ -13,10 +13,10 @@ class Layout extends Component {
     const { state, functions } = this.props;
     const notes = state.context.notes;
     const tagMap = state.tagMap;
-    const activeNoteUUID = state.activeNoteUUID;
 
     return (
       <Grid padded>
+        {/* This is the query column */}
         <Grid.Column width="3" color="green" verticalAlign="top">
           <Divider horizontal>
             <Header as="h4">
@@ -41,9 +41,11 @@ class Layout extends Component {
           </Card.Group>
         </Grid.Column>
 
+        {/* This is the active note column */}
         <Grid.Column width="13">
           {state.activeNote && (
             <NoteEditor
+              tagMap={tagMap}
               note={state.activeNote}
               onSubmit={functions.submitActiveNote}
               key={state.activeNote["UUID"]}

@@ -61,7 +61,10 @@ class SmartLayout extends Component {
 
   //name
   setAsActiveNote(noteUUID) {
-    fetchNote(noteUUID).then(note => this.setState({ activeNote: note }));
+    fetchNote(noteUUID).then(note => {
+      //note["UUID"] = noteUUID;
+      this.setState({ activeNote: note });
+    });
   }
 
   closeActiveNote() {
@@ -69,18 +72,11 @@ class SmartLayout extends Component {
   }
 
   async submitActiveNote(activeNote) {
-    console.log(activeNote);
-
-    const noteMap = this.state.noteMap;
-    const activeNoteUUID = this.state.activeNoteUUID;
-    noteMap.set(activeNoteUUID, activeNote);
-    this.setState({ noteMap: noteMap });
-
     const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/notes";
+      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note";
 
-    this.postData(ask, { ...activeNote, UUID: activeNoteUUID })
-      .then(data => console.log(JSON.stringify(data))) // JSON-string from `response.json()` call
+    this.postData(ask, activeNote)
+      .then(data => console.log(JSON.stringify(data)))
       .catch(error => console.error(error));
   }
 

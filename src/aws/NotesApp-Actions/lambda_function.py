@@ -10,10 +10,12 @@ def lambda_handler(event, context):
     
     if (action == "tags-GET"):
         return Actions.get_tags_by_user_uuid(querystring['UUID'])
-    if (action == "noteset-GET"):
-        return Actions.get_noteset_by_tag_uuids(querystring['UUIDs'].split(','))
+    if (action == "note-set-GET"):
+        return Actions.get_note_set_by_tag_uuids(querystring['UUIDs'].split(','))
     if(action == "note-GET"):
         return Actions.get_note_by_uuid(querystring['UUID'])
+    if (action == "note-POST"):
+        return Actions.post_note(body)
 
     return "action not supported: " + action
     
