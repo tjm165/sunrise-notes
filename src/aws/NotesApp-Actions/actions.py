@@ -55,6 +55,13 @@ class Actions():
             junction['noteUUID'] = note_object['UUID']
             junction['tagUUID'] = tagUUID
             junction_table.put_item(junction) 
+            
+        for tagUUID in note_object['removeTags']: #handle the insert tags
+            junction={}
+            junction['UUID'] = uuid.uuid4().hex
+            note_uuid = note_object['UUID']
+            junctionUUID = junction_table.scan(Key('noteUUID').eq(note_uuid) & Key('tagUUID').eq(tagUUID))[0]['UUID']
+            junction_table.delete_item({'UUID': junctionUUID}) 
 
         note_table.put_item(note_object)
         return True

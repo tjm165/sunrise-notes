@@ -8,7 +8,7 @@ class NoteEditor extends Component {
     this.title = React.createRef();
     this.content = React.createRef();
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.test = this.test.bind(this);
+    this.handleTagChange = this.handleTagChange.bind(this);
 
     this.state = {
       removeTags: [],
@@ -26,31 +26,36 @@ class NoteEditor extends Component {
       removeTags: this.state.removeTags
     });
 
-    //clear insert and remove tags
+    this.setState({ removeTags: [], insertTags: [] });
     event.preventDefault();
   }
 
-  test(current) {
+  handleTagChange({ value }) {
     const previous = this.state.previousTags;
-    const isInserting = current.length > previous.length;
+    const isInserting = value.length > previous.length;
 
     const insertTags = this.state.insertTags;
     const removeTags = this.state.removeTags;
 
     if (isInserting) {
-      const toInsert = current[current.length - 1];
+      const toInsert = value[value.length - 1];
 
       if (removeTags.includes(toInsert)) {
       } else {
         insertTags.push(toInsert);
       }
     } else {
+      let toRemove = previous.filter(x => !value.includes(x))[0]; //perhaps we can make one variable for isInserting and !isInserting and call it difference
+      if (insertTags.includes(toRemove)) {
+      } else {
+        removeTags.push(toRemove);
+      }
     }
 
     this.setState({
       insertTags: insertTags,
       removeTags: removeTags,
-      previousTags: current
+      previousTags: value
     });
   }
 
@@ -69,8 +74,7 @@ class NoteEditor extends Component {
             placeholder="tags..."
             tagMap={tagMap}
             defaultValue={defaultTagUUIDs}
-            test={this.test}
-            onChange={(e, DropdownProps) => this.test(DropdownProps.value)}
+            onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}
           />
           <Button>Save</Button>
           <Button>Delete</Button>

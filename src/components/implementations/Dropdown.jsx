@@ -3,7 +3,7 @@ import { Dropdown, Header } from "semantic-ui-react";
 
 export class TagDropdown extends Component {
   render() {
-    const { tagMap, test, ...rest } = this.props;
+    const { tagMap, ...rest } = this.props;
     const tagKeys = [...tagMap.keys()];
 
     //the choices
@@ -15,7 +15,7 @@ export class TagDropdown extends Component {
 
     //when it is selected
     const renderLabel = label => ({
-      content: `${label.text}`,
+      content: label.text,
       icon: "tag"
     });
 

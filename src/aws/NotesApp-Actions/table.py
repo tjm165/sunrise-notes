@@ -14,8 +14,12 @@ class Table():
     def put_item(self, item):
         return self.table.put_item(Item=item)
         
+    def delete_item(self, key):
+        return self.table.delete_item(Key=key)
+        
     def scan(self, fe):
         return self.table.scan(FilterExpression=fe)['Items']
         
     def table(self):
         return self.table
+         
