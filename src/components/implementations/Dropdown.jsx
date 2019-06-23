@@ -10,13 +10,18 @@ export class TagDropdown extends Component {
     const options = tagKeys.map(key => ({
       key: key,
       value: key,
-      text: tagMap.get(key).title
+      text: tagMap.get(key).title,
+      rgb: tagMap.get(key).rgb
     }));
 
     //when it is selected
     const renderLabel = label => ({
       content: label.text,
-      icon: "tag"
+      icon: "tag",
+      style: {
+        backgroundColor:
+          "rgb(" + label.rgb.r + "," + label.rgb.g + "," + label.rgb.b + ")"
+      }
     });
 
     return (

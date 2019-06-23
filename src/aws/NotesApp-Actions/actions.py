@@ -2,6 +2,7 @@ from table import Table
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
 import uuid
+from subactions import mix_colors
 
 class Actions():
     def get_tags_by_user_uuid(user_uuid):
@@ -19,16 +20,18 @@ class Actions():
     def get_note_set_by_tag_uuids(tag_uuids):
         junction_table = Table('NotesApp-NoteTagJunction')
         notes_table = Table('NotesApp-Notes')
+        tags_table = Table('NotesApp-Tags')
         
         dict = {}
         for tag_uuid in tag_uuids:
             for junction in junction_table.scan(Key('tagUUID').eq(tag_uuid)):
                 note_uuid = junction['noteUUID']
+                tag_rgb = tags_table.get_item(tag_uuid)['rgb']
                 if note_uuid in dict:
-                    dict[note_uuid]['color'] = 'mixed'
+                    dict[note_uuid]['rgb'] = mix_colors(dict[note_uuid]['rgb'], tag_rgb)
                 else:
                     dict[note_uuid] = notes_table.get_item(note_uuid)
-                    dict[note_uuid]['color'] = 'og'
+                    dict[note_uuid]['rgb'] = tag_rgb
         
         return dict
         
@@ -56,7 +59,7 @@ class Actions():
             junction['tagUUID'] = tagUUID
             junction_table.put_item(junction) 
             
-        for tagUUID in note_object['removeTags']: #handle the insert tags
+        for tagUUID in note_object['removeTags']: #handle the insert tags.. 
             junction={}
             junction['UUID'] = uuid.uuid4().hex
             note_uuid = note_object['UUID']
@@ -65,4 +68,5 @@ class Actions():
 
         note_table.put_item(note_object)
         return True
+        
         

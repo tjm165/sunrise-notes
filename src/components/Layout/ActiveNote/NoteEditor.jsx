@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, Form } from "semantic-ui-react";
-import { TagDropdown } from "../../Implementations/Dropdown";
+import { TagDropdown } from "../../implementations/Dropdown";
 
 class NoteEditor extends Component {
   constructor(props) {

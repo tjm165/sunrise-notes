@@ -6,9 +6,15 @@ class Note extends Component {
     const { UUID, note, setAsActiveNote } = this.props;
     const title = note.title;
     const content = note.content;
+    const rgb = note.rgb;
 
     return (
-      <Card onClick={() => setAsActiveNote(UUID)}>
+      <Card
+        style={{
+          backgroundColor: "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")"
+        }}
+        onClick={() => setAsActiveNote(UUID)}
+      >
         <Card.Content>
           <Card.Header>{title}</Card.Header>
           <Card.Description>{content}</Card.Description>

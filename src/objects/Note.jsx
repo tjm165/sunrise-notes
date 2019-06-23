@@ -1,9 +1,10 @@
 export default class Note {
-  constructor(title, content, tagUUIDs, UUID) {
+  constructor(title, content, tagUUIDs, UUID, rgb) {
     this.title = title;
     this.tagUUIDs = tagUUIDs;
     this.content = content;
     this.UUID = UUID;
+    this.rgb = rgb;
   }
 
   static deserialize(json) {
@@ -11,7 +12,8 @@ export default class Note {
       json["title"],
       json["content"],
       json["tagUUIDs"],
-      json["UUID"]
+      json["UUID"],
+      json["rgb"]
     );
   }
 }

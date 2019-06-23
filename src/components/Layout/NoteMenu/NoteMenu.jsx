@@ -12,7 +12,7 @@ class NoteMenu extends Component {
             key={key}
             setAsActiveNote={functions.setAsActiveNote}
             UUID={key}
-            tagMap={tagMap}
+            tagMap={tagMap} //don't think I need this one
             note={note}
           />
         ))}
