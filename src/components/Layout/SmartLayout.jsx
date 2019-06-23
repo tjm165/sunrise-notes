@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from "./Layout";
-import { fetchUserTags, fetchNoteSet, fetchNote } from "./API";
+import { fetchUserTags, fetchNoteSet, fetchNote, postNote } from "./API";
 
 class SmartLayout extends Component {
   constructor() {
@@ -17,7 +17,6 @@ class SmartLayout extends Component {
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
       setAsActiveNote: this.setAsActiveNote.bind(this),
-      closeActiveNote: this.closeActiveNote.bind(this),
       submitActiveNote: this.submitActiveNote.bind(this)
     };
   }
@@ -41,25 +40,7 @@ class SmartLayout extends Component {
     });
   }
 
-  //should import this function
-  postData(url = "", data = {}) {
-    // Default options are marked with *
-    return fetch(url, {
-      method: "POST", // *GET, POST, PUT, DELETE, etc.
-      mode: "cors", // no-cors, cors, *same-origin
-      cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-      credentials: "same-origin", // include, *same-origin, omit
-      headers: {
-        "Content-Type": "application/json"
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      redirect: "follow", // manual, *follow, error
-      referrer: "no-referrer", // no-referrer, *client
-      body: JSON.stringify(data) // body data type must match "Content-Type" header
-    }).then(response => response.json()); // parses JSON response into native Javascript objects
-  }
-
-  //name
+  //name?
   setAsActiveNote(noteUUID) {
     fetchNote(noteUUID).then(note => {
       //note["UUID"] = noteUUID;
@@ -67,17 +48,8 @@ class SmartLayout extends Component {
     });
   }
 
-  closeActiveNote() {
-    this.setState({ activeNoteUUID: -1 });
-  }
-
-  async submitActiveNote(activeNote) {
-    const ask =
-      "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note";
-
-    this.postData(ask, activeNote)
-      .then(data => console.log(JSON.stringify(data)))
-      .catch(error => console.error(error));
+  submitActiveNote(activeNote) {
+    postNote(activeNote);
   }
 
   render() {
