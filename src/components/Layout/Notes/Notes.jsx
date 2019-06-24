@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Note from "./Note";
 
-class NoteMenu extends Component {
+class Notes extends Component {
   render() {
     const { functions, tagMap, notes } = this.props;
 
@@ -21,4 +21,4 @@ class NoteMenu extends Component {
   }
 }
 
-export default NoteMenu;
+export default Notes;

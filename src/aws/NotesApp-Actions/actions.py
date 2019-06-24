@@ -46,20 +46,24 @@ class Actions():
             
         return note
         
-    def post_note(note_object):
+    def post_note(data):
+        note_object = data['noteObject']
+        insert_tags = data['insertTags']
+        remove_tags = data['removeTags']
+        
         note_table = Table('NotesApp-Notes')
         junction_table = Table('NotesApp-NoteTagJunction')
 
         if 'UUID' not in note_object:
            note_object['UUID'] = uuid.uuid4().hex
-        for tagUUID in note_object['insertTags']: #handle the insert tags
+        for tagUUID in insert_tags: #handle the insert tags
             junction={}
             junction['UUID'] = uuid.uuid4().hex
             junction['noteUUID'] = note_object['UUID']
             junction['tagUUID'] = tagUUID
             junction_table.put_item(junction) 
             
-        for tagUUID in note_object['removeTags']: #handle the insert tags.. 
+        for tagUUID in remove_tags: #handle the insert tags.. 
             junction={}
             junction['UUID'] = uuid.uuid4().hex
             note_uuid = note_object['UUID']
