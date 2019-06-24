@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Card } from "semantic-ui-react";
+import { Icon, Card } from "semantic-ui-react";
 
 class Note extends Component {
   render() {
@@ -7,16 +7,15 @@ class Note extends Component {
     const title = note.title;
     const content = note.content;
     const rgb = note.rgb;
+    const rgbString = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
 
     return (
-      <Card
-        style={{
-          backgroundColor: "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")"
-        }}
-        onClick={() => setAsActiveNote(UUID)}
-      >
+      <Card onClick={() => setAsActiveNote(UUID)}>
         <Card.Content>
-          <Card.Header>{title}</Card.Header>
+          <Card.Header>
+            <Icon name="sticky note" style={{ color: rgbString }} />
+            {title}
+          </Card.Header>
           <Card.Description>{content}</Card.Description>
         </Card.Content>
       </Card>
@@ -24,3 +23,4 @@ class Note extends Component {
   }
 }
 export default Note;
+//        style={{color: rgbString}}

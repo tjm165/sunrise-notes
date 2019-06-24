@@ -45,11 +45,11 @@ export function fetchNote(UUID) {
     });
 }
 
-export function postNote(noteObject) {
+export function postNote(noteObject, insertTags, removeTags) {
   const ask =
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note";
 
-  post(ask, noteObject)
+  post(ask, { noteObject, insertTags, removeTags })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
 }

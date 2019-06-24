@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Form } from "semantic-ui-react";
+import { Icon, Button, Form } from "semantic-ui-react";
 import { TagDropdown } from "../../implementations/Dropdown";
 
 class NoteEditor extends Component {
@@ -18,13 +18,15 @@ class NoteEditor extends Component {
   }
 
   handleSubmit(event) {
-    this.props.onSubmit({
-      ...this.props.note,
-      title: this.title.current.value,
-      content: this.content.current.value,
-      insertTags: this.state.insertTags,
-      removeTags: this.state.removeTags
-    });
+    this.props.onSubmit(
+      {
+        UUID: this.props.note.UUID,
+        title: this.title.current.value,
+        content: this.content.current.value
+      },
+      this.state.insertTags,
+      this.state.removeTags
+    );
 
     this.setState({ removeTags: [], insertTags: [] });
     event.preventDefault();
@@ -76,8 +78,14 @@ class NoteEditor extends Component {
             defaultValue={defaultTagUUIDs}
             onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}
           />
-          <Button>Save</Button>
-          <Button>Delete</Button>
+          <Button icon>
+            <Icon name="save" />
+            Save
+          </Button>
+          <Button icon>
+            <Icon name="trash alternate" />
+            Delete
+          </Button>
         </Form>
       </div>
     );

@@ -17,11 +17,11 @@ class Layout extends Component {
 
     return (
       <Grid padded>
-        {/* This is the query column */}
+        {/* Selection column */}
         <Grid.Column width="3" color="green" verticalAlign="top">
           <Divider horizontal>
             <Header as="h4">
-              <Icon name="tag" />
+              <Icon name="tags" />
               Select tags...
             </Header>
           </Divider>
@@ -50,7 +50,7 @@ class Layout extends Component {
           </Card.Group>
         </Grid.Column>
 
-        {/* This is the active note column */}
+        {/* Column with the active note */}
         <Grid.Column width="13">
           {state.activeNote && (
             <NoteEditor

@@ -10,28 +10,27 @@ export class TagDropdown extends Component {
     const options = tagKeys.map(key => {
       const rgb = tagMap.get(key).rgb;
       const rgbString = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+      const text = tagMap.get(key).title;
       return {
         key: key,
         value: key,
-        text: tagMap.get(key).title,
+        text: text,
         rgbString: rgbString,
         content: (
-          // A: needs to be a separate component along with B
+          // A: needs to be a separate component
           <Header size="tiny">
             <Icon name="tag" style={{ color: rgbString }} />
-            option
+            {text}
           </Header>
         )
       };
     });
 
-    const renderLabel = label => (
-      // B: needs to be a separate component along with A
-      <Label>
-        <Icon name="tag" style={{ color: label.rgbString }} />
-        {label.text}
-      </Label>
-    );
+    const renderLabel = label => ({
+      color: label.color,
+      content: `${label.text}`,
+      icon: { name: "tag", style: { color: label.rgbString } }
+    });
 
     return (
       <Dropdown

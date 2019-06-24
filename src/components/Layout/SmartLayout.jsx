@@ -48,8 +48,8 @@ class SmartLayout extends Component {
     });
   }
 
-  submitActiveNote(activeNote) {
-    postNote(activeNote);
+  submitActiveNote(activeNote, insertTags, removeTags) {
+    postNote(activeNote, insertTags, removeTags);
   }
 
   render() {
