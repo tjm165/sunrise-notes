@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import NoteEditor from "./NoteEditor/NoteEditor";
-import { TagDropdown } from "../implementations/Dropdown";
-
-import Notes from "./Notes/Notes";
-import { Divider, Header, Icon, Grid, Card } from "semantic-ui-react";
+import Sidebar from "./Sidebar/index";
+import { Grid } from "semantic-ui-react";
 
 class Layout extends Component {
   componentDidMount() {
@@ -17,40 +15,10 @@ class Layout extends Component {
 
     return (
       <Grid padded>
-        {/* Selection column */}
-        <Grid.Column width="3" color="green" verticalAlign="top">
-          <Divider horizontal>
-            <Header as="h4">
-              <Icon name="tags" />
-              Select tags...
-            </Header>
-          </Divider>
-
-          <TagDropdown
-            placeholder="Use me to select tags..."
-            tagMap={tagMap}
-            onChange={(e, DropdownProps) =>
-              functions.fetchNoteSet(DropdownProps.value)
-            }
-          />
-          <Divider horizontal>
-            <Header as="h4">
-              {notes.size > 0
-                ? "Select a note"
-                : "... and your notes will appear here"}
-            </Header>
-          </Divider>
-
-          <Card.Group itemsPerRow={1}>
-            <Notes
-              notes={Array.from(notes)} //does this need to be an array any more? I think it's a map now
-              functions={functions}
-              tagMap={tagMap}
-            />
-          </Card.Group>
+        <Grid.Column width="3" verticalAlign="top" color="black">
+          <Sidebar notes={notes} tagMap={tagMap} functions={functions} />
         </Grid.Column>
 
-        {/* Column with the active note */}
         <Grid.Column width="13">
           {state.activeNote && (
             <NoteEditor
