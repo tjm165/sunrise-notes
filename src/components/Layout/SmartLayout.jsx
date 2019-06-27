@@ -46,6 +46,7 @@ class SmartLayout extends Component {
     } else {
       fetchNoteSet(tags).then(notes => {
         context.notes = notes;
+        this.setState({ context: context });
       });
     }
   }

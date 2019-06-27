@@ -80,5 +80,7 @@ function post(url = "", data = {}) {
 }
 
 function DELETE(url = "", params = "") {
-  return fetch(url + params).then(response => response.json());
+  return fetch(url + params, { method: "DELETE" }).then(response =>
+    response.json()
+  );
 }
