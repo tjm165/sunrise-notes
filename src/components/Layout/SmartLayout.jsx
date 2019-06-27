@@ -15,7 +15,7 @@ class SmartLayout extends Component {
     this.state = {
       context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
-      activeNote: null
+      activeNote: false
     };
 
     this.functions = {
@@ -64,7 +64,11 @@ class SmartLayout extends Component {
   }
 
   deleteNote(noteUUID) {
+    const context = this.state.context;
+    context.notes.delete(noteUUID);
     deleteNote(noteUUID);
+
+    this.setState({ context, activeNote: false });
   }
 
   render() {
