@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import Layout from "./Layout";
-import { fetchUserTags, fetchNoteSet, fetchNote, postNote } from "./API";
+import {
+  fetchUserTags,
+  fetchNoteSet,
+  fetchNote,
+  postNote,
+  deleteNote
+} from "./API";
 
 class SmartLayout extends Component {
   constructor() {
@@ -16,6 +22,7 @@ class SmartLayout extends Component {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
+      deleteNote: this.deleteNote.bind(this),
       setAsActiveNote: this.setAsActiveNote.bind(this),
       submitActiveNote: this.submitActiveNote.bind(this)
     };
@@ -53,6 +60,10 @@ class SmartLayout extends Component {
 
   submitActiveNote(activeNote, insertTags, removeTags) {
     postNote(activeNote, insertTags, removeTags);
+  }
+
+  deleteNote(noteUUID) {
+    deleteNote(noteUUID);
   }
 
   render() {

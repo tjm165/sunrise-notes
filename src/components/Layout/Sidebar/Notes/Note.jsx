@@ -7,11 +7,11 @@ class Note extends Component {
     const title = note.title;
     const content = note.content;
     const rgb = note.rgb;
-    const rgbString = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+    const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
 
     return (
       <>
-        <Icon name="sticky note" style={{ color: rgbString }} />
+        <Icon name="sticky note" style={{ color: rgbstring }} />
         {title}
         {content}
       </>
@@ -19,4 +19,4 @@ class Note extends Component {
   }
 }
 export default Note;
-//        style={{color: rgbString}}
+//        style={{color: rgbstring}}

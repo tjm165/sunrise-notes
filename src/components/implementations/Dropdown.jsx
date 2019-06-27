@@ -9,17 +9,17 @@ export class TagDropdown extends Component {
     //the choices
     const options = tagKeys.map(key => {
       const rgb = tagMap.get(key).rgb;
-      const rgbString = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+      const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
       const text = tagMap.get(key).title;
       return {
         key: key,
         value: key,
         text: text,
-        rgbString: rgbString,
+        rgbstring: rgbstring,
         content: (
           // A: needs to be a separate component
           <Header size="tiny">
-            <Icon name="tag" style={{ color: rgbString }} />
+            <Icon name="tag" style={{ color: rgbstring }} />
             {text}
           </Header>
         )
@@ -29,7 +29,7 @@ export class TagDropdown extends Component {
     const renderLabel = label => ({
       color: label.color,
       content: `${label.text}`,
-      icon: { name: "tag", style: { color: label.rgbString } }
+      icon: { name: "tag", style: { color: label.rgbstring } }
     });
 
     return (

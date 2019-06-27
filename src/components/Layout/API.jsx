@@ -45,6 +45,14 @@ export function fetchNote(UUID) {
     });
 }
 
+export function deleteNote(UUID) {
+  const ask =
+    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note?UUID=" +
+    UUID;
+
+  return DELETE(ask);
+}
+
 export function postNote(noteObject, insertTags, removeTags) {
   const ask =
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note";
@@ -69,4 +77,8 @@ function post(url = "", data = {}) {
     referrer: "no-referrer", // no-referrer, *client
     body: JSON.stringify(data) // body data type must match "Content-Type" header
   }).then(response => response.json()); // parses JSON response into native Javascript objects
+}
+
+function DELETE(url = "", params = "") {
+  return fetch(url + params).then(response => response.json());
 }
