@@ -34,10 +34,13 @@ class SmartLayout extends Component {
     context.tags = tags;
     context.notes = new Map();
 
-    fetchNoteSet(tags).then(notes => {
-      context.notes = notes;
+    if (tags.length === 0) {
       this.setState({ context: context });
-    });
+    } else {
+      fetchNoteSet(tags).then(notes => {
+        context.notes = notes;
+      });
+    }
   }
 
   //name?
