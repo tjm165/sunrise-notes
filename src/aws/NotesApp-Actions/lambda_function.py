@@ -1,5 +1,3 @@
-import json
-import decimal
 from actions import Actions
 
 def lambda_handler(event, context):
@@ -14,6 +12,8 @@ def lambda_handler(event, context):
         return Actions.get_note_set_by_tag_uuids(querystring['UUIDs'].split(','))
     if(action == "note-GET"):
         return Actions.get_note_by_uuid(querystring['UUID'])
+    if(action == "note-DELETE"):
+        return Actions.delete_note_by_uuid(querystring['UUID'])
     if (action == "note-POST"):
         return Actions.post_note(body)
 
