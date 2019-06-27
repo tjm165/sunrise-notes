@@ -25,6 +25,7 @@ class Layout extends Component {
               tagMap={tagMap}
               note={state.activeNote}
               onSubmit={functions.submitActiveNote}
+              onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
               key={state.activeNote["UUID"]}
             />
           )}

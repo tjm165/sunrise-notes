@@ -1,6 +1,12 @@
 import React, { Component } from "react";
 import Layout from "./Layout";
-import { fetchUserTags, fetchNoteSet, fetchNote, postNote } from "./API";
+import {
+  fetchUserTags,
+  fetchNoteSet,
+  fetchNote,
+  postNote,
+  deleteNote
+} from "./API";
 
 class SmartLayout extends Component {
   constructor() {
@@ -9,13 +15,14 @@ class SmartLayout extends Component {
     this.state = {
       context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
-      activeNote: null
+      activeNote: false
     };
 
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
+      deleteNote: this.deleteNote.bind(this),
       setAsActiveNote: this.setAsActiveNote.bind(this),
       submitActiveNote: this.submitActiveNote.bind(this)
     };
@@ -39,6 +46,7 @@ class SmartLayout extends Component {
     } else {
       fetchNoteSet(tags).then(notes => {
         context.notes = notes;
+        this.setState({ context: context });
       });
     }
   }
@@ -53,6 +61,14 @@ class SmartLayout extends Component {
 
   submitActiveNote(activeNote, insertTags, removeTags) {
     postNote(activeNote, insertTags, removeTags);
+  }
+
+  deleteNote(noteUUID) {
+    const context = this.state.context;
+    context.notes.delete(noteUUID);
+    deleteNote(noteUUID);
+
+    this.setState({ context, activeNote: false });
   }
 
   render() {

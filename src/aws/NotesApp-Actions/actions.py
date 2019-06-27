@@ -73,4 +73,12 @@ class Actions():
         note_table.put_item(note_object)
         return True
         
+    def delete_note_by_uuid(note_uuid):
+        note_table = Table('NotesApp-Notes')
+        junction_table = Table('NotesApp-NoteTagJunction')
         
+        note_table.delete_item({'UUID': note_uuid})
+        junctions_to_delete = junction_table.scan(Key('noteUUID').eq(note_uuid))
+        for junction in junctions_to_delete:
+                junction_table.delete_item({'UUID': junction['UUID']})  
+                

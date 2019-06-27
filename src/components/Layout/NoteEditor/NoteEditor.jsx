@@ -62,7 +62,7 @@ class NoteEditor extends Component {
   }
 
   render() {
-    const { note, tagMap } = this.props;
+    const { note, tagMap, onDelete } = this.props;
     const title = note.title;
     const content = note.content;
     const defaultTagUUIDs = note.tagUUIDs;
@@ -82,7 +82,7 @@ class NoteEditor extends Component {
             <Icon name="save" />
             Save
           </Button>
-          <Button icon>
+          <Button icon onClick={onDelete}>
             <Icon name="trash alternate" />
             Delete
           </Button>
