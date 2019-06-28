@@ -70,10 +70,18 @@ class NoteEditor extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-          <textarea defaultValue={title} ref={this.title} />
-          <textarea defaultValue={content} ref={this.content} />
+          <textarea
+            defaultValue={title}
+            ref={this.title}
+            placeholder="Give your note a title..."
+          />
+          <textarea
+            defaultValue={content}
+            ref={this.content}
+            placeholder="Enter content here..."
+          />
           <TagDropdown
-            placeholder="tags..."
+            placeholder="Add tags to your note"
             tagMap={tagMap}
             defaultValue={defaultTagUUIDs}
             onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}

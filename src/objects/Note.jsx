@@ -1,7 +1,7 @@
 export default class Note {
   constructor(
-    title = "Title",
-    content = "content",
+    title = "",
+    content = "",
     tagUUIDs = [],
     UUID = null,
     rgb = null
