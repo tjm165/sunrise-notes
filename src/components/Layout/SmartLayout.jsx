@@ -7,7 +7,7 @@ import {
   postNote,
   deleteNote
 } from "./API";
-import Note from "./Sidebar/Notes/Note";
+import Note from "../../objects/Note";
 
 class SmartLayout extends Component {
   constructor() {
@@ -56,11 +56,10 @@ class SmartLayout extends Component {
   setAsActiveNote(noteUUID) {
     if (noteUUID !== 0) {
       fetchNote(noteUUID).then(note => {
-        //note["UUID"] = noteUUID;
         this.setState({ activeNote: note });
       });
     } else {
-      const note = new Note("enter title", "enter content", null, null, null);
+      const note = new Note();
       this.setState({ activeNote: note });
     }
   }

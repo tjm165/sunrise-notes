@@ -47,7 +47,7 @@ class NoteEditor extends Component {
         insertTags.push(toInsert);
       }
     } else {
-      let toRemove = previous.filter(x => !value.includes(x))[0]; //perhaps we can make one variable for isInserting and !isInserting and call it difference
+      const toRemove = previous.filter(x => !value.includes(x))[0]; //perhaps we can make one variable for isInserting and !isInserting and call it difference
       if (insertTags.includes(toRemove)) {
       } else {
         removeTags.push(toRemove);
