@@ -54,7 +54,7 @@ class Actions():
         note_table = Table('NotesApp-Notes')
         junction_table = Table('NotesApp-NoteTagJunction')
 
-        if 'UUID' not in note_object:
+        if ('UUID' not in note_object) or note_object['UUID'] is None:
            note_object['UUID'] = uuid.uuid4().hex
         for tagUUID in insert_tags: #handle the insert tags
             junction={}
@@ -70,9 +70,8 @@ class Actions():
             junctionUUID = junction_table.scan(Key('noteUUID').eq(note_uuid) & Key('tagUUID').eq(tagUUID))[0]['UUID']
             junction_table.delete_item({'UUID': junctionUUID}) 
 
-        note_table.put_item(note_object)
-        return True
-        
+        return note_table.put_item(note_object)
+
     def delete_note_by_uuid(note_uuid):
         note_table = Table('NotesApp-Notes')
         junction_table = Table('NotesApp-NoteTagJunction')

@@ -7,6 +7,7 @@ import {
   postNote,
   deleteNote
 } from "./API";
+import Note from "../../objects/Note";
 
 class SmartLayout extends Component {
   constructor() {
@@ -53,10 +54,14 @@ class SmartLayout extends Component {
 
   //name?
   setAsActiveNote(noteUUID) {
-    fetchNote(noteUUID).then(note => {
-      //note["UUID"] = noteUUID;
+    if (noteUUID !== 0) {
+      fetchNote(noteUUID).then(note => {
+        this.setState({ activeNote: note });
+      });
+    } else {
+      const note = new Note();
       this.setState({ activeNote: note });
-    });
+    }
   }
 
   submitActiveNote(activeNote, insertTags, removeTags) {

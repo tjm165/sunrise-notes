@@ -34,7 +34,7 @@ class NoteEditor extends Component {
 
   handleTagChange({ value }) {
     const previous = this.state.previousTags;
-    const isInserting = value.length > previous.length;
+    const isInserting = previous ? value.length > previous.length : true;
 
     const insertTags = this.state.insertTags;
     const removeTags = this.state.removeTags;
@@ -47,7 +47,7 @@ class NoteEditor extends Component {
         insertTags.push(toInsert);
       }
     } else {
-      let toRemove = previous.filter(x => !value.includes(x))[0]; //perhaps we can make one variable for isInserting and !isInserting and call it difference
+      const toRemove = previous.filter(x => !value.includes(x))[0]; //perhaps we can make one variable for isInserting and !isInserting and call it difference
       if (insertTags.includes(toRemove)) {
       } else {
         removeTags.push(toRemove);
@@ -70,10 +70,18 @@ class NoteEditor extends Component {
     return (
       <div>
         <Form onSubmit={this.handleSubmit}>
-          <textarea defaultValue={title} ref={this.title} />
-          <textarea defaultValue={content} ref={this.content} />
+          <textarea
+            defaultValue={title}
+            ref={this.title}
+            placeholder="Give your note a title..."
+          />
+          <textarea
+            defaultValue={content}
+            ref={this.content}
+            placeholder="Enter content here..."
+          />
           <TagDropdown
-            placeholder="tags..."
+            placeholder="Add tags to your note"
             tagMap={tagMap}
             defaultValue={defaultTagUUIDs}
             onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}
