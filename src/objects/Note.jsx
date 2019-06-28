@@ -1,5 +1,5 @@
 export default class Note {
-  constructor(title, content, tagUUIDs, UUID, rgb) {
+  constructor(title, content, tagUUIDs = [], UUID = 0, rgb = null) {
     this.title = title;
     this.tagUUIDs = tagUUIDs;
     this.content = content;

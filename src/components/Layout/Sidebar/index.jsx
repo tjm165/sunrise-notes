@@ -33,7 +33,7 @@ class Sidebar extends Component {
             />{" "}
           </Menu.Item>
           <Menu.Item>
-            <Button positive>
+            <Button positive onClick={() => functions.setAsActiveNote(0)}>
               <Icon name="pencil" />
               New note
             </Button>

@@ -34,7 +34,7 @@ class NoteEditor extends Component {
 
   handleTagChange({ value }) {
     const previous = this.state.previousTags;
-    const isInserting = value.length > previous.length;
+    const isInserting = previous ? value.length > previous.length : true;
 
     const insertTags = this.state.insertTags;
     const removeTags = this.state.removeTags;
