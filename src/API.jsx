@@ -1,5 +1,5 @@
-import Note from "../../objects/Note";
-import Tag from "../../objects/Tag";
+import Note from "./objects/Note";
+import Tag from "./objects/Tag";
 
 export function fetchNoteSet(tags) {
   const ask =

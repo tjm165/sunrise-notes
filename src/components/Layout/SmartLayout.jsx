@@ -6,7 +6,7 @@ import {
   fetchNote,
   postNote,
   deleteNote
-} from "./API";
+} from "../../API";
 import Note from "../../objects/Note";
 
 class SmartLayout extends Component {

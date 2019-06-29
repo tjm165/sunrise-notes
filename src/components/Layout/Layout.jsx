@@ -1,38 +1,48 @@
-import React, { Component } from "react";
-import NoteEditor from "./NoteEditor/NoteEditor";
-import Sidebar from "./Sidebar/index";
-import { Grid } from "semantic-ui-react";
+import React, { useState, useEffect } from "react";
+import NoteEditor from "../implementations/Note/NoteEditor";
+import SelectionGrid from "./SelectionGrid";
+import { Button, Segment, Sidebar } from "semantic-ui-react";
 
-class Layout extends Component {
-  componentDidMount() {
-    this.props.functions.fetchUserTags();
-  }
+function Layout(props) {
+  useEffect(() => {
+    props.functions.fetchUserTags();
+  });
 
-  render() {
-    const { state, functions } = this.props;
-    const notes = state.context.notes;
-    const tagMap = state.tagMap;
+  const { state, functions } = props;
+  const notes = state.context.notes;
+  const tagMap = state.tagMap;
+  const [isExpanded, setExpanded] = useState(false);
 
-    return (
-      <Grid padded>
-        <Grid.Column width="3" verticalAlign="top" color="black">
-          <Sidebar notes={notes} tagMap={tagMap} functions={functions} />
-        </Grid.Column>
+  return (
+    <>
+      <Sidebar.Pushable as={Segment}>
+        <Sidebar
+          animation="push"
+          icon="labeled"
+          inverted
+          vertical
+          visible={!isExpanded}
+          width="very wide"
+        >
+          <SelectionGrid notes={notes} tagMap={tagMap} functions={functions} />
+        </Sidebar>
 
-        <Grid.Column width="13">
-          {state.activeNote && (
-            <NoteEditor
-              tagMap={tagMap}
-              note={state.activeNote}
-              onSubmit={functions.submitActiveNote}
-              onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
-              key={state.activeNote["UUID"]}
-            />
-          )}
-        </Grid.Column>
-      </Grid>
-    );
-  }
+        <Sidebar.Pusher>
+          <Button
+            icon={isExpanded ? "expand" : "expand arrows alternate"}
+            onClick={() => setExpanded(!isExpanded)}
+          />
+          <NoteEditor
+            tagMap={tagMap}
+            note={state.activeNote}
+            onSubmit={functions.submitActiveNote}
+            onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
+            key={state.activeNote["UUID"]}
+          />
+        </Sidebar.Pusher>
+      </Sidebar.Pushable>
+    </>
+  );
 }
 
 export default Layout;

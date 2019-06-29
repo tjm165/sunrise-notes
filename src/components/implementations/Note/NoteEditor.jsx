@@ -75,16 +75,16 @@ class NoteEditor extends Component {
             ref={this.title}
             placeholder="Give your note a title..."
           />
-          <textarea
-            defaultValue={content}
-            ref={this.content}
-            placeholder="Enter content here..."
-          />
           <TagDropdown
             placeholder="Add tags to your note"
             tagMap={tagMap}
             defaultValue={defaultTagUUIDs}
             onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}
+          />
+          <textarea
+            defaultValue={content}
+            ref={this.content}
+            placeholder="Enter content here..."
           />
           <Button icon>
             <Icon name="save" />
