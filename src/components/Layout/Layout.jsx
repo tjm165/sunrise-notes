@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import NoteEditor from "./NoteEditor/NoteEditor";
-import SidebarX from "./Sidebar/index";
-import {
-  Header,
-  Icon,
-  Image,
-  Menu,
-  Grid,
-  Segment,
-  Sidebar
-} from "semantic-ui-react";
+import NoteEditor from "../implementations/Note/NoteEditor";
+import SelectionGrid from "./SelectionGrid";
+import { Segment, Sidebar } from "semantic-ui-react";
 
 class Layout extends Component {
   componentDidMount() {
@@ -32,7 +24,11 @@ class Layout extends Component {
             visible
             width="very wide"
           >
-            <SidebarX notes={notes} tagMap={tagMap} functions={functions} />
+            <SelectionGrid
+              notes={notes}
+              tagMap={tagMap}
+              functions={functions}
+            />
           </Sidebar>
 
           <Sidebar.Pusher>
