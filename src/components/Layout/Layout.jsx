@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import NoteEditor from "../implementations/Note/NoteEditor";
-import SelectionGrid from "./SelectionGrid";
+import ControlGrid from "./ControlGrid";
 import { Button, Segment, Sidebar } from "semantic-ui-react";
 
 function Layout(props) {
   useEffect(() => {
     props.functions.fetchUserTags();
-  });
+  }, []);
 
   const { state, functions } = props;
   const notes = state.context.notes;
@@ -24,7 +24,7 @@ function Layout(props) {
           visible={!isExpanded}
           width="very wide"
         >
-          <SelectionGrid notes={notes} tagMap={tagMap} functions={functions} />
+          <ControlGrid notes={notes} tagMap={tagMap} functions={functions} />
         </Sidebar>
 
         <Sidebar.Pusher>
