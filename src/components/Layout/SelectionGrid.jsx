@@ -14,7 +14,6 @@ class SelectionGrid extends Component {
           <Icon name="tags" />
           Select tags...
           <TagDropdown
-            className="hi"
             placeholder="Use me to select tags..."
             tagMap={tagMap}
             open

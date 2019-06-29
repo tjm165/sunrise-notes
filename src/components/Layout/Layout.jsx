@@ -29,7 +29,7 @@ function Layout(props) {
 
         <Sidebar.Pusher>
           <Button
-            icon="expand arrows alternate"
+            icon={isExpanded ? "expand" : "expand arrows alternate"}
             onClick={() => setExpanded(!isExpanded)}
           />
           <NoteEditor

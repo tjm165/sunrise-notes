@@ -30,8 +30,3 @@
     transform: rotate(360deg);
   }
 }
-
-div.ui.active.visible.fluid.search.selection.dropdown.hi
-  > div.visible.menu.transition {
-  background-color: red;
-}
