@@ -3,12 +3,11 @@ import NoteEditor from "../implementations/Note/NoteEditor";
 import ControlGrid from "./ControlGrid";
 import { Button, Segment, Sidebar } from "semantic-ui-react";
 
-function Layout(props) {
+function Layout({ state, functions }) {
   useEffect(() => {
-    props.functions.fetchUserTags();
+    functions.fetchUserTags();
   }, []);
 
-  const { state, functions } = props;
   const notes = state.context.notes;
   const tagMap = state.tagMap;
   const [isExpanded, setExpanded] = useState(false);

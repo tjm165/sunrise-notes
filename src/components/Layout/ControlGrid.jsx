@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Grid, Icon } from "semantic-ui-react";
-import { TagDropdown } from "../implementations/Dropdown";
+import { Grid } from "semantic-ui-react";
+import TagMenu from "../implementations/Tag/TagMenu";
 import NoteMenu from "../implementations/Note/NoteMenu";
 
 class ControlGrid extends Component {
@@ -11,17 +11,7 @@ class ControlGrid extends Component {
     return (
       <Grid celled>
         <Grid.Column width={8}>
-          <Icon name="tags" />
-          {/* Make a Tag Menu */}
-          Select tags...
-          <TagDropdown
-            placeholder="Use me to select tags..."
-            tagMap={tagMap}
-            open
-            onChange={(e, DropdownProps) =>
-              functions.fetchNoteSet(DropdownProps.value)
-            }
-          />
+          <TagMenu tagMap={tagMap} functions={functions} />
         </Grid.Column>
         <Grid.Column width={8}>
           <NoteMenu notes={arrayNotes} functions={functions} tagMap={tagMap} />
