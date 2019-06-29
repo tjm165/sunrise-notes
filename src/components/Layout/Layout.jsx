@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 import NoteEditor from "./NoteEditor/NoteEditor";
-import Sidebar from "./Sidebar/index";
-import { Grid } from "semantic-ui-react";
+import SidebarX from "./Sidebar/index";
+import {
+  Header,
+  Icon,
+  Image,
+  Menu,
+  Grid,
+  Segment,
+  Sidebar
+} from "semantic-ui-react";
 
 class Layout extends Component {
   componentDidMount() {
@@ -14,13 +22,20 @@ class Layout extends Component {
     const tagMap = state.tagMap;
 
     return (
-      <Grid padded>
-        <Grid.Column width="3" verticalAlign="top" color="black">
-          <Sidebar notes={notes} tagMap={tagMap} functions={functions} />
-        </Grid.Column>
+      <>
+        <Sidebar.Pushable as={Segment}>
+          <Sidebar
+            animation="push"
+            icon="labeled"
+            inverted
+            vertical
+            visible
+            width="very wide"
+          >
+            <SidebarX notes={notes} tagMap={tagMap} functions={functions} />
+          </Sidebar>
 
-        <Grid.Column width="13">
-          {state.activeNote && (
+          <Sidebar.Pusher>
             <NoteEditor
               tagMap={tagMap}
               note={state.activeNote}
@@ -28,9 +43,9 @@ class Layout extends Component {
               onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
               key={state.activeNote["UUID"]}
             />
-          )}
-        </Grid.Column>
-      </Grid>
+          </Sidebar.Pusher>
+        </Sidebar.Pushable>
+      </>
     );
   }
 }
