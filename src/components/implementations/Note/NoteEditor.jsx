@@ -12,7 +12,7 @@ class NoteEditor extends Component {
 
     this.state = {
       removeTags: [],
-      insertTags: [],
+      insertTags: props.insertTags,
       previousTags: props.note.tagUUIDs
     };
   }
@@ -65,7 +65,7 @@ class NoteEditor extends Component {
     const { note, tagMap, onDelete } = this.props;
     const title = note.title;
     const content = note.content;
-    const defaultTagUUIDs = note.tagUUIDs;
+    const defaultTagUUIDs = note.tagUUIDs.concat(this.state.insertTags);
 
     return (
       <div>

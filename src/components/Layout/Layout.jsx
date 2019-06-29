@@ -35,6 +35,7 @@ function Layout(props) {
           <NoteEditor
             tagMap={tagMap}
             note={state.activeNote}
+            insertTags={state.activeNote.UUID ? [] : state.context.tags}
             onSubmit={functions.submitActiveNote}
             onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
             key={state.activeNote["UUID"]}

@@ -16,7 +16,7 @@ class SmartLayout extends Component {
     this.state = {
       context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
-      activeNote: false
+      activeNote: new Note()
     };
 
     this.functions = {
