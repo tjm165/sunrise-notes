@@ -1,13 +1,17 @@
-import React from "react";
-import { Icon } from "semantic-ui-react";
-import { TagDropdown } from "../../implementations/Dropdown";
+import React, { useState } from "react";
+import { Modal, Button, Icon } from "semantic-ui-react";
+import { TagDropdown } from "./TagDropdown";
+import TagEditor from "./TagEditor";
 
 function TagMenu({ tagMap, functions }) {
+  const [isTagEditorOpen, setIsTagEditorOpen] = useState(false);
+
   return (
     <>
-      <Icon name="tags" />
-      {/* Make a Tag Menu */}
-      Select tags...
+      <Button positive onClick={() => setIsTagEditorOpen(true)}>
+        <Icon name="pencil" />
+        New Tag
+      </Button>
       <TagDropdown
         placeholder="Use me to select tags..."
         tagMap={tagMap}
@@ -16,6 +20,12 @@ function TagMenu({ tagMap, functions }) {
           functions.fetchNoteSet(DropdownProps.value)
         }
       />
+      <Modal open={isTagEditorOpen} closeIcon>
+        <TagEditor />
+        <Button positive onClick={() => setIsTagEditorOpen(false)}>
+          Close
+        </Button>
+      </Modal>
     </>
   );
 }

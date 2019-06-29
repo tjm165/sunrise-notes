@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Icon, Menu, Button } from "semantic-ui-react";
-import NoteCard from "./NoteCard";
+import NoteSegment from "./NoteSegment";
 
 class NoteMenu extends Component {
   render() {
@@ -20,7 +20,7 @@ class NoteMenu extends Component {
           </Menu.Item>
           {notes.map(([key, note]) => (
             <Menu.Item onClick={() => functions.setAsActiveNote(key)}>
-              <NoteCard
+              <NoteSegment
                 key={key}
                 UUID={key}
                 tagMap={tagMap} //don't think I need this one

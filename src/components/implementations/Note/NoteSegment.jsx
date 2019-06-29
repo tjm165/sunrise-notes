@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Icon } from "semantic-ui-react";
 
-class NoteCard extends Component {
+class NoteSegment extends Component {
   render() {
     const { note } = this.props;
     const title = note.title;
@@ -14,9 +14,8 @@ class NoteCard extends Component {
         <Icon name="sticky note" style={{ color: rgbstring }} />
         {title}
         {content}
-        asfin
       </>
     );
   }
 }
-export default NoteCard;
+export default NoteSegment;
