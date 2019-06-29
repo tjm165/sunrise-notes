@@ -12,7 +12,7 @@ class NoteEditor extends Component {
 
     this.state = {
       removeTags: [],
-      insertTags: [],
+      insertTags: props.insertTags,
       previousTags: props.note.tagUUIDs
     };
   }
@@ -65,7 +65,7 @@ class NoteEditor extends Component {
     const { note, tagMap, onDelete } = this.props;
     const title = note.title;
     const content = note.content;
-    const defaultTagUUIDs = note.tagUUIDs;
+    const defaultTagsToDisplay = note.tagUUIDs.concat(this.state.insertTags);
 
     return (
       <div>
@@ -78,7 +78,7 @@ class NoteEditor extends Component {
           <TagDropdown
             placeholder="Add tags to your note"
             tagMap={tagMap}
-            defaultValue={defaultTagUUIDs}
+            defaultValue={defaultTagsToDisplay}
             onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}
           />
           <textarea

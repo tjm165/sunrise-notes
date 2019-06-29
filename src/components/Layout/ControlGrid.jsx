@@ -3,7 +3,7 @@ import { Grid, Icon } from "semantic-ui-react";
 import { TagDropdown } from "../implementations/Dropdown";
 import NoteMenu from "../implementations/Note/NoteMenu";
 
-class SelectionGrid extends Component {
+class ControlGrid extends Component {
   render() {
     const { tagMap, functions, notes } = this.props;
     const arrayNotes = Array.from(notes);
@@ -12,6 +12,7 @@ class SelectionGrid extends Component {
       <Grid celled>
         <Grid.Column width={8}>
           <Icon name="tags" />
+          {/* Make a Tag Menu */}
           Select tags...
           <TagDropdown
             placeholder="Use me to select tags..."
@@ -30,4 +31,4 @@ class SelectionGrid extends Component {
   }
 }
 
-export default SelectionGrid;
+export default ControlGrid;
