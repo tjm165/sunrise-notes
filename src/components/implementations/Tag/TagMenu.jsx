@@ -1,14 +1,11 @@
 import React, { useState } from "react";
-import { Modal, Button, Icon } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import { TagDropdown } from "./TagDropdown";
-import TagEditor from "./TagEditor";
 
 function TagMenu({ tagMap, functions }) {
-  const [isTagEditorOpen, setIsTagEditorOpen] = useState(false);
-
   return (
     <>
-      <Button positive onClick={() => setIsTagEditorOpen(true)}>
+      <Button positive onClick={() => functions.setAsActiveTag(true)}>
         <Icon name="pencil" />
         New Tag
       </Button>
@@ -20,12 +17,6 @@ function TagMenu({ tagMap, functions }) {
           functions.fetchNoteSet(DropdownProps.value)
         }
       />
-      <Modal open={isTagEditorOpen} closeIcon>
-        <TagEditor />
-        <Button positive onClick={() => setIsTagEditorOpen(false)}>
-          Close
-        </Button>
-      </Modal>
     </>
   );
 }

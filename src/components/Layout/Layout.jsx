@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import NoteEditor from "../implementations/Note/NoteEditor";
 import ControlGrid from "./ControlGrid";
-import { Button, Segment, Sidebar } from "semantic-ui-react";
+import { Button, Segment, Sidebar, Modal } from "semantic-ui-react";
+import TagEditor from "../implementations/Tag/TagEditor";
+import Tag from "../../objects/Tag";
 
 function Layout({ state, functions }) {
   useEffect(() => {
@@ -9,6 +11,7 @@ function Layout({ state, functions }) {
   }, []);
 
   const notes = state.context.notes;
+  const activeTag = state.activeTag;
   const tagMap = state.tagMap;
   const [isExpanded, setExpanded] = useState(false);
 
@@ -41,6 +44,16 @@ function Layout({ state, functions }) {
           />
         </Sidebar.Pusher>
       </Sidebar.Pushable>
+
+      <Modal open={activeTag} closeIcon>
+        <TagEditor
+          tag={activeTag === true ? new Tag() : tagMap.get(activeTag)}
+          onSubmit={functions.submitActiveTag}
+        />
+        <Button positive onClick={() => functions.setAsActiveTag(false)}>
+          Close
+        </Button>
+      </Modal>
     </>
   );
 }

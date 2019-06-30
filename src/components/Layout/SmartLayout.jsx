@@ -5,29 +5,32 @@ import {
   fetchNoteSet,
   fetchNote,
   postNote,
+  postTag,
   deleteNote
 } from "../../API";
 import Note from "../../objects/Note";
-import Tag from "../../objects/Tag";
 
 class SmartLayout extends Component {
   constructor() {
     super();
 
     this.state = {
+      userUUID: "testTommy",
       context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
       activeNote: new Note(),
-      activeTag: new Tag()
+      activeTag: false
     };
 
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
+      setAsActiveTag: this.setAsActiveTag.bind(this),
       deleteNote: this.deleteNote.bind(this),
       setAsActiveNote: this.setAsActiveNote.bind(this),
-      submitActiveNote: this.submitActiveNote.bind(this)
+      submitActiveNote: this.submitActiveNote.bind(this),
+      submitActiveTag: this.submitActiveTag.bind(this)
     };
   }
 
@@ -54,7 +57,7 @@ class SmartLayout extends Component {
     }
   }
 
-  //name?
+  ///Work on making this one set the active as a UUID
   setAsActiveNote(noteUUID) {
     if (noteUUID !== 0) {
       fetchNote(noteUUID).then(note => {
@@ -66,8 +69,18 @@ class SmartLayout extends Component {
     }
   }
 
+  //this one is going to set the active as a UUID
+  setAsActiveTag(tagUUID) {
+    this.setState({ activeTag: tagUUID });
+  }
+
   submitActiveNote(activeNote, insertTags, removeTags) {
     postNote(activeNote, insertTags, removeTags);
+  }
+
+  submitActiveTag(activeNote) {
+    const userUUID = this.state.userUUID;
+    postNote(activeNote, userUUID);
   }
 
   deleteNote(noteUUID) {
