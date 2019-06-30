@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Grid } from "semantic-ui-react";
 import TagMenu from "../implementations/Tag/TagMenu";
 import NoteMenu from "../implementations/Note/NoteMenu";

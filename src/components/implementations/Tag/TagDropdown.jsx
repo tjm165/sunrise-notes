@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Label, Dropdown, Header } from "semantic-ui-react";
+import { Dropdown, Header } from "semantic-ui-react";
 import TagSegment from "./TagSegment";
 
 export class TagDropdown extends Component {
