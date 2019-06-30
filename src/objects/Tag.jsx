@@ -1,14 +1,20 @@
 export default class Tag extends Set {
-  constructor(title, noteUUIDs, rgb) {
+  constructor(
+    title = "",
+    noteUUIDs = "",
+    rgb = { r: 0, g: 0, b: 0 },
+    UUID = null
+  ) {
     super(noteUUIDs);
     this.title = title;
     this.rgb = rgb;
+    this.UUID = UUID;
     this.hex = Tag.rgbToHex(this.rgb.r, this.rgb.g, this.rgb.b);
   }
 
   //hmm these should know their uuid too
   static deserialize(json) {
-    return new Tag(json["title"], json["noteUUIDs"], json["rgb"]);
+    return new Tag(json["title"], json["noteUUIDs"], json["rgb"], json["UUID"]);
   }
 
   static componentToHex(c) {

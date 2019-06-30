@@ -8,6 +8,7 @@ import {
   deleteNote
 } from "../../API";
 import Note from "../../objects/Note";
+import Tag from "../../objects/Tag";
 
 class SmartLayout extends Component {
   constructor() {
@@ -16,7 +17,8 @@ class SmartLayout extends Component {
     this.state = {
       context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
-      activeNote: new Note()
+      activeNote: new Note(),
+      activeTag: new Tag()
     };
 
     this.functions = {
