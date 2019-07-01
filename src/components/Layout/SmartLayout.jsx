@@ -28,8 +28,7 @@ class SmartLayout extends Component {
       setAsActiveTag: this.setAsActiveTag.bind(this),
       deleteNote: this.deleteNote.bind(this),
       setAsActiveNote: this.setAsActiveNote.bind(this),
-      submitActiveNote: this.submitActiveNote.bind(this),
-      submitActiveTag: this.submitActiveTag.bind(this)
+      submitActiveNote: this.submitActiveNote.bind(this)
     };
   }
 
