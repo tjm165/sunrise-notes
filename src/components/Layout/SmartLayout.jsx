@@ -14,15 +14,18 @@ class SmartLayout extends Component {
     super();
 
     this.state = {
+      userUUID: "testTommy",
       context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
-      activeNote: new Note()
+      activeNote: new Note(),
+      activeTag: false
     };
 
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
+      setAsActiveTag: this.setAsActiveTag.bind(this),
       deleteNote: this.deleteNote.bind(this),
       setAsActiveNote: this.setAsActiveNote.bind(this),
       submitActiveNote: this.submitActiveNote.bind(this)
@@ -52,7 +55,7 @@ class SmartLayout extends Component {
     }
   }
 
-  //name?
+  ///Work on making this one set the active as a UUID
   setAsActiveNote(noteUUID) {
     if (noteUUID !== 0) {
       fetchNote(noteUUID).then(note => {
@@ -62,6 +65,11 @@ class SmartLayout extends Component {
       const note = new Note();
       this.setState({ activeNote: note });
     }
+  }
+
+  //this one is going to set the active as a UUID
+  setAsActiveTag(tagUUID) {
+    this.setState({ activeTag: tagUUID });
   }
 
   submitActiveNote(activeNote, insertTags, removeTags) {

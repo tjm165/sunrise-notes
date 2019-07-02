@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Icon, Button, Form } from "semantic-ui-react";
-import { TagDropdown } from "../../implementations/Dropdown";
+import { TagDropdown } from "../Tag/TagDropdown";
 
 class NoteEditor extends Component {
   constructor(props) {
@@ -68,34 +68,32 @@ class NoteEditor extends Component {
     const defaultTagsToDisplay = note.tagUUIDs.concat(this.state.insertTags);
 
     return (
-      <div>
-        <Form onSubmit={this.handleSubmit}>
-          <textarea
-            defaultValue={title}
-            ref={this.title}
-            placeholder="Give your note a title..."
-          />
-          <TagDropdown
-            placeholder="Add tags to your note"
-            tagMap={tagMap}
-            defaultValue={defaultTagsToDisplay}
-            onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}
-          />
-          <textarea
-            defaultValue={content}
-            ref={this.content}
-            placeholder="Enter content here..."
-          />
-          <Button icon>
-            <Icon name="save" />
-            Save
-          </Button>
-          <Button icon onClick={onDelete}>
-            <Icon name="trash alternate" />
-            Delete
-          </Button>
-        </Form>
-      </div>
+      <Form onSubmit={this.handleSubmit}>
+        <textarea
+          defaultValue={title}
+          ref={this.title}
+          placeholder="Give your note a title..."
+        />
+        <TagDropdown
+          placeholder="Add tags to your note"
+          tagMap={tagMap}
+          defaultValue={defaultTagsToDisplay}
+          onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}
+        />
+        <textarea
+          defaultValue={content}
+          ref={this.content}
+          placeholder="Enter content here..."
+        />
+        <Button icon>
+          <Icon name="save" />
+          Save
+        </Button>
+        <Button icon onClick={onDelete}>
+          <Icon name="trash alternate" />
+          Delete
+        </Button>
+      </Form>
     );
   }
 }

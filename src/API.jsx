@@ -18,6 +18,7 @@ export function fetchNoteSet(tags) {
     });
 }
 
+//need to unhard code this soon!
 export function fetchUserTags() {
   const ask =
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
@@ -58,6 +59,14 @@ export function postNote(noteObject, insertTags, removeTags) {
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note";
 
   post(ask, { noteObject, insertTags, removeTags })
+    .then(data => console.log(JSON.stringify(data)))
+    .catch(error => console.error(error));
+}
+
+export function postTag(tagObject, userUUID) {
+  const ask =
+    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tag";
+  post(ask, { tagObject, userUUID })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
 }

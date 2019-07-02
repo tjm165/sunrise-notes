@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Label, Dropdown, Header, Icon } from "semantic-ui-react";
+import { Dropdown, Header } from "semantic-ui-react";
+import TagSegment from "./TagSegment";
 
 export class TagDropdown extends Component {
   render() {
@@ -9,27 +10,22 @@ export class TagDropdown extends Component {
     //the choices
     const options = tagKeys.map(key => {
       const rgb = tagMap.get(key).rgb;
-      const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
       const text = tagMap.get(key).title;
       return {
         key: key,
         value: key,
         text: text,
-        rgbstring: rgbstring,
+        rgb: rgb,
         content: (
-          // A: needs to be a separate component
           <Header size="tiny">
-            <Icon name="tag" style={{ color: rgbstring }} />
-            {text}
+            <TagSegment text={text} rgb={rgb} />
           </Header>
         )
       };
     });
 
     const renderLabel = label => ({
-      color: label.color,
-      content: `${label.text}`,
-      icon: { name: "tag", style: { color: label.rgbstring } }
+      content: <TagSegment text={label.text} rgb={label.rgb} />
     });
 
     return (
