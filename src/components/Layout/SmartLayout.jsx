@@ -26,9 +26,9 @@ class SmartLayout extends Component {
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
       setAsActiveTag: this.setAsActiveTag.bind(this),
+      submitNote: this.submitNote.bind(this),
       deleteNote: this.deleteNote.bind(this),
-      setAsActiveNote: this.setAsActiveNote.bind(this),
-      submitActiveNote: this.submitActiveNote.bind(this)
+      setAsActiveNote: this.setAsActiveNote.bind(this)
     };
   }
 
@@ -73,8 +73,8 @@ class SmartLayout extends Component {
     this.setState({ activeTag: tagUUID });
   }
 
-  submitActiveNote(activeNote, insertTags, removeTags) {
-    postNote(activeNote, insertTags, removeTags);
+  submitNote(note, tagsToInsert, tagsToRemove) {
+    postNote(note, tagsToInsert, tagsToRemove);
   }
 
   deleteNote(noteUUID) {

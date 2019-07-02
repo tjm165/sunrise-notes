@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { TextArea, Icon, Button, Form } from "semantic-ui-react";
 import { TagDropdown } from "../Tag/TagDropdown";
-import { postNote } from "../../../API";
 
-const NoteEditor = ({ note, tagMap, onDelete }) => {
+const NoteEditor = ({ note, tagMap, onSubmit, onDelete }) => {
   const defaultTags = note.insertTags ? note.insertTags : note.tagUUIDs;
   const [tagsToInsert, setTagsToInsert] = useState(note.insertTags || []);
   const [tagsToRemove, setTagsToRemove] = useState([]);
@@ -12,7 +11,7 @@ const NoteEditor = ({ note, tagMap, onDelete }) => {
   console.log(defaultTags);
 
   const handleSubmit = event => {
-    postNote(
+    onSubmit(
       {
         UUID: note.UUID,
         title: event.currentTarget.title.value,
