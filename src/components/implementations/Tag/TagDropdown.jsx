@@ -4,7 +4,7 @@ import TagSegment from "./TagSegment";
 
 export class TagDropdown extends Component {
   render() {
-    const { tagMap, ...rest } = this.props;
+    const { tagMap, defaultValue, ...rest } = this.props;
     const tagKeys = [...tagMap.keys()];
 
     //the choices
@@ -37,6 +37,7 @@ export class TagDropdown extends Component {
         selection
         options={options}
         renderLabel={renderLabel}
+        defaultValue={defaultValue}
         {...rest}
       />
     );

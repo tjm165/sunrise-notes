@@ -1,101 +1,80 @@
-import React, { Component } from "react";
-import { Icon, Button, Form } from "semantic-ui-react";
+import React, { useState } from "react";
+import { TextArea, Icon, Button, Form } from "semantic-ui-react";
 import { TagDropdown } from "../Tag/TagDropdown";
+import { postNote } from "../../../API";
 
-class NoteEditor extends Component {
-  constructor(props) {
-    super(props);
-    this.title = React.createRef();
-    this.content = React.createRef();
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleTagChange = this.handleTagChange.bind(this);
+const NoteEditor = ({ note, tagMap, onDelete }) => {
+  const defaultTags = note.insertTags ? note.insertTags : note.tagUUIDs;
+  const [tagsToInsert, setTagsToInsert] = useState(note.insertTags || []);
+  const [tagsToRemove, setTagsToRemove] = useState([]);
+  const [previousTags, setPreviousTags] = useState(note.tagUUIDs || []);
 
-    this.state = {
-      removeTags: [],
-      insertTags: props.insertTags,
-      previousTags: props.note.tagUUIDs
-    };
-  }
+  console.log(defaultTags);
 
-  handleSubmit(event) {
-    this.props.onSubmit(
+  const handleSubmit = event => {
+    postNote(
       {
-        UUID: this.props.note.UUID,
-        title: this.title.current.value,
-        content: this.content.current.value
+        UUID: note.UUID,
+        title: event.currentTarget.title.value,
+        content: event.currentTarget.content.value
       },
-      this.state.insertTags,
-      this.state.removeTags
+      tagsToInsert,
+      tagsToRemove
     );
+  };
 
-    this.setState({ removeTags: [], insertTags: [] });
-    event.preventDefault();
-  }
-
-  handleTagChange({ value }) {
-    const previous = this.state.previousTags;
-    const isInserting = previous ? value.length > previous.length : true;
-
-    const insertTags = this.state.insertTags;
-    const removeTags = this.state.removeTags;
+  const handleTagChange = ({ value }) => {
+    const isInserting = value.length > previousTags.length;
 
     if (isInserting) {
       const toInsert = value[value.length - 1];
 
-      if (removeTags.includes(toInsert)) {
+      if (tagsToRemove.includes(toInsert)) {
       } else {
-        insertTags.push(toInsert);
+        tagsToInsert.push(toInsert); //can probably set state here
       }
     } else {
-      const toRemove = previous.filter(x => !value.includes(x))[0]; //perhaps we can make one variable for isInserting and !isInserting and call it difference
-      if (insertTags.includes(toRemove)) {
+      const toRemove = previousTags.filter(x => !value.includes(x))[0]; //perhaps we can make one variable for isInserting and !isInserting and call it difference
+      if (tagsToInsert.includes(toRemove)) {
       } else {
-        removeTags.push(toRemove);
+        tagsToRemove.push(toRemove); //can probably set state here
       }
     }
 
-    this.setState({
-      insertTags: insertTags,
-      removeTags: removeTags,
-      previousTags: value
-    });
-  }
+    setTagsToInsert(tagsToInsert); //instead of setting state here
+    setTagsToRemove(tagsToRemove); //instead of setting state here
 
-  render() {
-    const { note, tagMap, onDelete } = this.props;
-    const title = note.title;
-    const content = note.content;
-    const defaultTagsToDisplay = note.tagUUIDs.concat(this.state.insertTags);
+    setPreviousTags(previousTags);
+  };
 
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <textarea
-          defaultValue={title}
-          ref={this.title}
-          placeholder="Give your note a title..."
-        />
-        <TagDropdown
-          placeholder="Add tags to your note"
-          tagMap={tagMap}
-          defaultValue={defaultTagsToDisplay}
-          onChange={(e, DropdownProps) => this.handleTagChange(DropdownProps)}
-        />
-        <textarea
-          defaultValue={content}
-          ref={this.content}
-          placeholder="Enter content here..."
-        />
-        <Button icon>
-          <Icon name="save" />
-          Save
-        </Button>
-        <Button icon onClick={onDelete}>
-          <Icon name="trash alternate" />
-          Delete
-        </Button>
-      </Form>
-    );
-  }
-}
+  return (
+    <Form onSubmit={handleSubmit}>
+      <TextArea
+        name="title"
+        defaultValue={note.title}
+        placeholder="Give your note a title..."
+      />
+      <TagDropdown
+        placeholder="Add tags to your note"
+        tagMap={tagMap}
+        defaultValue={defaultTags}
+        onChange={(e, DropdownProps) => handleTagChange(DropdownProps)}
+      />
+      <TextArea
+        name="content"
+        defaultValue={note.content}
+        placeholder="Enter content here..."
+      />
+      <Button icon>
+        <Icon name="save" />
+        Save
+      </Button>
+      <Button icon onClick={onDelete}>
+        <Icon name="trash alternate" />
+        Delete
+      </Button>
+    </Form>
+  );
+};
 
 export default NoteEditor;

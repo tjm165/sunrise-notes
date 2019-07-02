@@ -21,8 +21,6 @@ function Layout({ state, functions }) {
         <Sidebar
           animation="push"
           icon="labeled"
-          inverted
-          vertical
           visible={!isExpanded}
           width="very wide"
         >
@@ -35,12 +33,10 @@ function Layout({ state, functions }) {
             onClick={() => setExpanded(!isExpanded)}
           />
           <NoteEditor
+            key={Math.random()}
             tagMap={tagMap}
             note={state.activeNote}
-            insertTags={state.activeNote.UUID ? [] : state.context.tags}
-            onSubmit={functions.submitActiveNote}
             onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
-            key={state.activeNote["UUID"]}
           />
         </Sidebar.Pusher>
       </Sidebar.Pushable>
