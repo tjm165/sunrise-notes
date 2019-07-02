@@ -71,6 +71,11 @@ class Actions():
             junction_table.delete_item({'UUID': junctionUUID}) 
 
         return note_table.put_item(note_object)
+    
+    def post_tag(data):
+        return data
+        #add it to the user tags list
+        #add it to the tag table
 
     def delete_note_by_uuid(note_uuid):
         note_table = Table('NotesApp-Notes')
