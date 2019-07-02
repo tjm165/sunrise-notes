@@ -33,7 +33,7 @@ function Layout({ state, functions }) {
             onClick={() => setExpanded(!isExpanded)}
           />
           <NoteEditor
-            key={Math.random()}
+            key={JSON.stringify(state.activeNote)}
             tagMap={tagMap}
             note={state.activeNote}
             onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
