@@ -36,6 +36,7 @@ function Layout({ state, functions }) {
             key={JSON.stringify(state.activeNote)}
             tagMap={tagMap}
             note={state.activeNote}
+            onSubmit={functions.submitNote}
             onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
           />
         </Sidebar.Pusher>
