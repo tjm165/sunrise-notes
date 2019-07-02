@@ -19,9 +19,8 @@ class NoteMenu extends Component {
               : "... and your notes will appear here"}
           </Menu.Item>
           {notes.map(([key, note]) => (
-            <Menu.Item onClick={() => functions.setAsActiveNote(key)}>
+            <Menu.Item onClick={() => functions.setAsActiveNote(key)} key={key}>
               <NoteSegment
-                key={key}
                 UUID={key}
                 tagMap={tagMap} //don't think I need this one
                 note={note}

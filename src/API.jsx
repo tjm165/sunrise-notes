@@ -54,11 +54,11 @@ export function deleteNote(UUID) {
   return DELETE(ask);
 }
 
-export function postNote(noteObject, insertTags, removeTags) {
+export function postNote(noteObject, tagsToInsert, tagsToRemove) {
   const ask =
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note";
 
-  post(ask, { noteObject, insertTags, removeTags })
+  post(ask, { noteObject, tagsToInsert, tagsToRemove })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
 }

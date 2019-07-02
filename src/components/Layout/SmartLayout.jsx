@@ -63,6 +63,7 @@ class SmartLayout extends Component {
       });
     } else {
       const note = new Note();
+      note.insertTags = this.state.context.tags;
       this.setState({ activeNote: note });
     }
   }
