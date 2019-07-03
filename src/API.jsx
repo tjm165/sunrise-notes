@@ -1,6 +1,8 @@
 import Note from "./objects/Note";
 import Tag from "./objects/Tag";
 
+export const NEW_INSTANCE_UUID = -1;
+
 export function fetchNoteSet(tags) {
   const ask =
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note-set?UUIDs=" +
@@ -19,9 +21,8 @@ export function fetchNoteSet(tags) {
 }
 
 //need to unhard code this soon!
-export function fetchUserTags() {
-  const ask =
-    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
+export function fetchUserTags(userUUID) {
+  const ask = `https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=${userUUID}`;
   var tagMap = new Map();
 
   return fetch(ask)
@@ -53,6 +54,8 @@ export function deleteNote(UUID) {
 
   return DELETE(ask);
 }
+
+export function deleteTag(UUID) {}
 
 export function postNote(noteObject, tagsToInsert, tagsToRemove) {
   const ask =
