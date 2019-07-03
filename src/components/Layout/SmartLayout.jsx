@@ -92,10 +92,7 @@ class SmartLayout extends Component {
   }
 
   submitTag(tag) {
-    const tagMap = this.state.tagMap;
-    tagMap.set(tag["tagUUID"], tag);
-    this.setState({ tagMap: tagMap });
-    postTag(tag, this.state.userUUID);
+    postTag(tag, this.state.userUUID).then(() => this.fetchUserTags());
   }
 
   deleteTag(tagUUID) {

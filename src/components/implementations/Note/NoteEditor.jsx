@@ -12,6 +12,7 @@ const NoteEditor = ({ note, tagMap, onSubmit, onDelete }) => {
   const isPreexisting = note["UUID"] !== NEW_INSTANCE_UUID;
 
   const handleSubmit = event => {
+    event.preventDefault();
     onSubmit(
       {
         UUID: note.UUID,
