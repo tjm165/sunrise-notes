@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Icon, Menu, Button } from "semantic-ui-react";
 import NoteSegment from "./NoteSegment";
+import { NEW_INSTANCE_UUID } from "../../../API";
 
 class NoteMenu extends Component {
   render() {
@@ -8,7 +9,10 @@ class NoteMenu extends Component {
 
     return (
       <>
-        <Button positive onClick={() => functions.setAsActiveNote(0)}>
+        <Button
+          positive
+          onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}
+        >
           <Icon name="pencil" />
           New note
         </Button>

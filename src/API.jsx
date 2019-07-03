@@ -1,6 +1,8 @@
 import Note from "./objects/Note";
 import Tag from "./objects/Tag";
 
+export const NEW_INSTANCE_UUID = -1;
+
 export function fetchNoteSet(tags) {
   const ask =
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note-set?UUIDs=" +
@@ -19,9 +21,8 @@ export function fetchNoteSet(tags) {
 }
 
 //need to unhard code this soon!
-export function fetchUserTags() {
-  const ask =
-    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=testTommy";
+export function fetchUserTags(userUUID) {
+  const ask = `https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=${userUUID}`;
   var tagMap = new Map();
 
   return fetch(ask)
@@ -54,11 +55,13 @@ export function deleteNote(UUID) {
   return DELETE(ask);
 }
 
+export function deleteTag(UUID) {}
+
 export function postNote(noteObject, tagsToInsert, tagsToRemove) {
   const ask =
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note";
 
-  post(ask, { noteObject, tagsToInsert, tagsToRemove })
+  return post(ask, { noteObject, tagsToInsert, tagsToRemove })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
 }
@@ -66,7 +69,7 @@ export function postNote(noteObject, tagsToInsert, tagsToRemove) {
 export function postTag(tagObject, userUUID) {
   const ask =
     "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tag";
-  post(ask, { tagObject, userUUID })
+  return post(ask, { tagObject, userUUID })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
 }

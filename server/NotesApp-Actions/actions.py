@@ -48,13 +48,13 @@ class Actions():
         
     def post_note(data):
         note_object = data['noteObject']
-        insert_tags = data['insertTags']
-        remove_tags = data['removeTags']
+        insert_tags = data['tagsToInsert']
+        remove_tags = data['tagsToRemove']
         
         note_table = Table('NotesApp-Notes')
         junction_table = Table('NotesApp-NoteTagJunction')
 
-        if ('UUID' not in note_object) or note_object['UUID'] is None:
+        if ('UUID' not in note_object) or note_object['UUID'] is -1:
            note_object['UUID'] = uuid.uuid4().hex
         for tagUUID in insert_tags: #handle the insert tags
             junction={}
@@ -71,11 +71,21 @@ class Actions():
             junction_table.delete_item({'UUID': junctionUUID}) 
 
         return note_table.put_item(note_object)
-    
+        
     def post_tag(data):
-        return data
-        #add it to the user tags list
-        #add it to the tag table
+        tag_object = data['tagObject']
+        user_uuid = data['userUUID']
+        
+        tag_table = Table('NotesApp-Tags')
+        user_table = Table('NotesApp-Users')
+        if ('UUID' not in tag_object) or tag_object['UUID'] is -1:
+            tag_object['UUID'] = uuid.uuid4().hex
+        user_object = user_table.get_item(user_uuid)
+        if tag_object['UUID'] not in user_object['tagUUIDs']:
+            user_object['tagUUIDs'].append(tag_object['UUID'])
+        
+        tag_table.put_item(tag_object)
+        return user_table.put_item(user_object)
 
     def delete_note_by_uuid(note_uuid):
         note_table = Table('NotesApp-Notes')

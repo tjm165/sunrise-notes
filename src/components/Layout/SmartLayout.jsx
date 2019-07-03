@@ -5,9 +5,13 @@ import {
   fetchNoteSet,
   fetchNote,
   postNote,
-  deleteNote
+  deleteNote,
+  postTag,
+  deleteTag
 } from "../../API";
 import Note from "../../objects/Note";
+import { NEW_INSTANCE_UUID } from "../../API";
+import Tag from "../../objects/Tag";
 
 class SmartLayout extends Component {
   constructor() {
@@ -28,13 +32,15 @@ class SmartLayout extends Component {
       setAsActiveTag: this.setAsActiveTag.bind(this),
       submitNote: this.submitNote.bind(this),
       deleteNote: this.deleteNote.bind(this),
-      setAsActiveNote: this.setAsActiveNote.bind(this)
+      setAsActiveNote: this.setAsActiveNote.bind(this),
+      submitTag: this.submitTag.bind(this),
+      deleteTag: this.deleteTag.bind(this)
     };
   }
 
   //name?
   fetchUserTags() {
-    fetchUserTags().then(tagMap => {
+    fetchUserTags(this.state.userUUID).then(tagMap => {
       this.setState({ tagMap: tagMap });
     });
   }
@@ -57,32 +63,50 @@ class SmartLayout extends Component {
 
   ///Work on making this one set the active as a UUID
   setAsActiveNote(noteUUID) {
-    if (noteUUID !== 0) {
-      fetchNote(noteUUID).then(note => {
-        this.setState({ activeNote: note });
-      });
-    } else {
+    if (noteUUID === NEW_INSTANCE_UUID) {
       const note = new Note();
       note.insertTags = this.state.context.tags;
       this.setState({ activeNote: note });
+    } else {
+      fetchNote(noteUUID).then(note => {
+        this.setState({ activeNote: note });
+      });
     }
   }
 
   //this one is going to set the active as a UUID
   setAsActiveTag(tagUUID) {
-    this.setState({ activeTag: tagUUID });
+    if (tagUUID === false) {
+      this.setState({ activeTag: tagUUID });
+    }
+    if (tagUUID === NEW_INSTANCE_UUID) {
+      this.setState({ activeTag: new Tag() });
+    } else {
+      const tag = this.state.tagMap.get(tagUUID);
+      this.setState({ activeTag: tag }); //get the tag here
+    }
   }
 
   submitNote(note, tagsToInsert, tagsToRemove) {
     postNote(note, tagsToInsert, tagsToRemove);
   }
 
+  submitTag(tag) {
+    postTag(tag, this.state.userUUID).then(() => this.fetchUserTags());
+  }
+
+  deleteTag(tagUUID) {
+    deleteTag(tagUUID);
+    const tagMap = this.state.tagMap;
+    tagMap.delete(tagUUID);
+    this.setState({ tagMap: tagMap });
+  }
+
   deleteNote(noteUUID) {
     const context = this.state.context;
     context.notes.delete(noteUUID);
-    deleteNote(noteUUID);
-
     this.setState({ context, activeNote: false });
+    deleteNote(noteUUID);
   }
 
   render() {

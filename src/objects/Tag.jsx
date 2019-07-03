@@ -1,9 +1,11 @@
+import { NEW_INSTANCE_UUID } from "../API";
+
 export default class Tag extends Set {
   constructor(
     title = "",
     noteUUIDs = "",
     rgb = { r: 0, g: 0, b: 0 },
-    UUID = null
+    UUID = NEW_INSTANCE_UUID
   ) {
     super(noteUUIDs);
     this.title = title;

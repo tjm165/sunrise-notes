@@ -1,25 +1,42 @@
 import React from "react";
-import { Form, TextArea, Button } from "semantic-ui-react";
-import { postTag } from "../../../API";
+import { Form, TextArea, Button, Label, Icon } from "semantic-ui-react";
+import { NEW_INSTANCE_UUID } from "../../../API";
+import Tag from "../../../objects/Tag";
 
-const TagEditor = ({ tag, userUUID }) => {
-  const onSubmit = event => {
-    postTag(
-      {
-        UUID: tag.UUID,
-        title: event.currentTarget.title.value
-      },
-      userUUID
+const TagEditor = ({ tag, onSubmit, onDelete }) => {
+  const handleSubmit = event => {
+    onSubmit(
+      new Tag(
+        event.currentTarget.title.value,
+        tag.noteUUIDs,
+        { r: 0, g: 0, b: 0 },
+        tag.UUID
+      )
     );
 
     event.preventDefault();
   };
 
+  const isPreexisting = tag["UUID"] !== NEW_INSTANCE_UUID;
+
   return (
-    <Form onSubmit={onSubmit}>
-      <TextArea name="title" defaultValue={tag.title} />
-      <Button>save</Button>
-    </Form>
+    <>
+      <Label>Edit Tag</Label>
+      <Form onSubmit={handleSubmit}>
+        <TextArea name="title" defaultValue={tag.title} placeholder="Title" />
+        <Button icon>
+          <Icon name="save" />
+          Save
+        </Button>
+
+        {isPreexisting && (
+          <Button icon onClick={onDelete}>
+            <Icon name="trash alternate" />
+            Delete
+          </Button>
+        )}
+      </Form>
+    </>
   );
 };
 

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TextArea, Icon, Button, Form } from "semantic-ui-react";
 import { TagDropdown } from "../Tag/TagDropdown";
+import { NEW_INSTANCE_UUID } from "../../../API";
 
 const NoteEditor = ({ note, tagMap, onSubmit, onDelete }) => {
   const defaultTags = note.insertTags ? note.insertTags : note.tagUUIDs;
@@ -8,9 +9,10 @@ const NoteEditor = ({ note, tagMap, onSubmit, onDelete }) => {
   const [tagsToRemove, setTagsToRemove] = useState([]);
   const [previousTags, setPreviousTags] = useState(note.tagUUIDs || []);
 
-  console.log(defaultTags);
+  const isPreexisting = note["UUID"] !== NEW_INSTANCE_UUID;
 
   const handleSubmit = event => {
+    event.preventDefault();
     onSubmit(
       {
         UUID: note.UUID,
@@ -68,10 +70,12 @@ const NoteEditor = ({ note, tagMap, onSubmit, onDelete }) => {
         <Icon name="save" />
         Save
       </Button>
-      <Button icon onClick={onDelete}>
-        <Icon name="trash alternate" />
-        Delete
-      </Button>
+      {isPreexisting && (
+        <Button icon onClick={onDelete}>
+          <Icon name="trash alternate" />
+          Delete
+        </Button>
+      )}
     </Form>
   );
 };

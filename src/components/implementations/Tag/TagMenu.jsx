@@ -1,11 +1,15 @@
 import React from "react";
 import { Button, Icon } from "semantic-ui-react";
 import { TagDropdown } from "./TagDropdown";
+import { NEW_INSTANCE_UUID } from "../../../API";
 
 function TagMenu({ tagMap, functions }) {
   return (
     <>
-      <Button positive onClick={() => functions.setAsActiveTag(true)}>
+      <Button
+        positive
+        onClick={() => functions.setAsActiveTag(NEW_INSTANCE_UUID)}
+      >
         <Icon name="pencil" />
         New Tag
       </Button>

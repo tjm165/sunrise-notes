@@ -1,5 +1,13 @@
+import { NEW_INSTANCE_UUID } from "../API";
+
 export default class Note {
-  constructor(title = "", content = "", tagUUIDs = [], UUID = -1, rgb = null) {
+  constructor(
+    title = "",
+    content = "",
+    tagUUIDs = [],
+    UUID = NEW_INSTANCE_UUID,
+    rgb = null
+  ) {
     this.title = title;
     this.tagUUIDs = tagUUIDs;
     this.content = content;
