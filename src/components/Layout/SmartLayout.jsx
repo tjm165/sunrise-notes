@@ -92,7 +92,9 @@ class SmartLayout extends Component {
   }
 
   submitTag(tag) {
-    postTag(tag, this.state.userUUID).then(() => this.fetchUserTags());
+    postTag(tag, this.state.userUUID)
+      .then(() => this.fetchUserTags())
+      .then(() => this.fetchNoteSet(this.state.context.tags));
   }
 
   deleteTag(tagUUID) {
