@@ -17,7 +17,7 @@ const TagEditor = ({ tag, onSubmit, onDelete }) => {
     event.preventDefault();
   };
 
-  const isPreexisting = tag["UUID"] !== NEW_INSTANCE_UUID;
+  const isPreexisting = tag["UUID"] !== NEW_INSTANCE_UUID; //isInDatabase
 
   return (
     <>

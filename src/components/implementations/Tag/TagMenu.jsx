@@ -17,6 +17,7 @@ function TagMenu({ tagMap, functions }) {
         placeholder="Use me to select tags..."
         tagMap={tagMap}
         open
+        setAsActiveTag={functions.setAsActiveTag}
         onChange={(e, DropdownProps) =>
           functions.fetchNoteSet(DropdownProps.value)
         }

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Dropdown, Header } from "semantic-ui-react";
+import { Dropdown, Header, Icon } from "semantic-ui-react";
 import TagSegment from "./TagSegment";
 
 export class TagDropdown extends Component {
   render() {
-    const { tagMap, defaultValue, ...rest } = this.props;
+    const { tagMap, defaultValue, setAsActiveTag, ...rest } = this.props;
     const tagKeys = [...tagMap.keys()];
 
     //the choices
@@ -18,6 +18,7 @@ export class TagDropdown extends Component {
         rgb: rgb,
         content: (
           <Header size="tiny">
+            <Icon name="write" onClick={() => setAsActiveTag(key)} />
             <TagSegment text={text} rgb={rgb} />
           </Header>
         )
@@ -25,7 +26,8 @@ export class TagDropdown extends Component {
     });
 
     const renderLabel = label => ({
-      content: <TagSegment text={label.text} rgb={label.rgb} />
+      content: <TagSegment text={label.text} rgb={label.rgb} />,
+      onClick: () => setAsActiveTag(label.value)
     });
 
     return (

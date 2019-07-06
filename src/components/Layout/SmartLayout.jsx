@@ -10,7 +10,7 @@ import {
   deleteTag
 } from "../../API";
 import Note from "../../objects/Note";
-import { NEW_INSTANCE_UUID } from "../../API";
+import { NEW_INSTANCE_UUID, NO_INSTANCE_UUID } from "../../API";
 import Tag from "../../objects/Tag";
 
 class SmartLayout extends Component {
@@ -76,8 +76,8 @@ class SmartLayout extends Component {
 
   //this one is going to set the active as a UUID
   setAsActiveTag(tagUUID) {
-    if (tagUUID === false) {
-      this.setState({ activeTag: tagUUID });
+    if (tagUUID === NO_INSTANCE_UUID) {
+      this.setState({ activeTag: NO_INSTANCE_UUID });
     }
     if (tagUUID === NEW_INSTANCE_UUID) {
       this.setState({ activeTag: new Tag() });
