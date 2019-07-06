@@ -16,7 +16,7 @@ function Layout({ state, functions }) {
 
   return (
     <>
-      <Sidebar.Pushable as={Segment}>
+      <Sidebar.Pushable as={Segment} style={{ height: "900px" }}>
         <Sidebar
           animation="push"
           icon="labeled"
