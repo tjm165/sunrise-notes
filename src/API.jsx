@@ -2,6 +2,7 @@ import Note from "./objects/Note";
 import Tag from "./objects/Tag";
 
 export const NEW_INSTANCE_UUID = -1;
+export const NO_INSTANCE_UUID = false;
 
 export function fetchNoteSet(tags) {
   const ask =
