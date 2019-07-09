@@ -1,24 +1,25 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import { Form, Button, Header } from "semantic-ui-react";
 
 class Signin extends Component {
   constructor() {
     super();
     this.state = {
-      username: "testTommy",
-      email: "tom.moawad@gmail.com",
-      password: "Abcdefg1!"
+      email: "",
+      password: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.setEmail = this.setEmail.bind(this);
   }
 
   handleSubmit = async event => {
     event.preventDefault();
     console.log("hey");
 
-    const { username, email, password } = this.state;
+    const { email, password } = this.state;
+    const username = email;
     try {
       const user = await Auth.signIn(username, password);
       console.log(user);
@@ -29,12 +30,35 @@ class Signin extends Component {
     }
   };
 
+  setEmail(email) {
+    this.setState({ email });
+  }
+
+  setPassword(password) {
+    this.setState({ password });
+  }
+
   render() {
     return (
-      <div>
-        Login
-        <button onClick={e => this.handleSubmit(e)}>click</button>
-      </div>
+      <>
+        <Header as="h2">Sign in</Header>
+        <Form>
+          <Form.Input
+            label="Email"
+            placeholder="email"
+            value={this.state.email}
+            onChange={event => this.setEmail(event.target.value)}
+          />
+          <Form.Input
+            label="Enter Password"
+            type="password"
+            placeholder="password"
+            value={this.state.password}
+            onChange={event => this.setPassword(event.target.value)}
+          />
+          <Button onClick={e => this.handleSubmit(e)}>Sign in</Button>
+        </Form>
+      </>
     );
   }
 }
