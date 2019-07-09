@@ -5,7 +5,7 @@ import { Button, Segment, Sidebar, Modal } from "semantic-ui-react";
 import TagEditor from "../implementations/Tag/TagEditor";
 import { NO_INSTANCE_UUID } from "../../API";
 
-function Layout({ state, functions }) {
+function Dashboard({ state, functions }) {
   useEffect(() => {
     functions.fetchUserTags();
   }, []);
@@ -67,4 +67,4 @@ function Layout({ state, functions }) {
   );
 }
 
-export default Layout;
+export default Dashboard;

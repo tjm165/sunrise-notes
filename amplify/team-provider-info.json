@@ -1,0 +1,14 @@
+{
+    "notesapp": {
+        "awscloudformation": {
+            "AuthRoleName": "sticky-notes-app-notesapp-20190707172202-authRole",
+            "UnauthRoleArn": "arn:aws:iam::299774672086:role/sticky-notes-app-notesapp-20190707172202-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::299774672086:role/sticky-notes-app-notesapp-20190707172202-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "sticky-notes-app-notesapp-20190707172202-deployment",
+            "UnauthRoleName": "sticky-notes-app-notesapp-20190707172202-unauthRole",
+            "StackName": "sticky-notes-app-notesapp-20190707172202",
+            "StackId": "arn:aws:cloudformation:us-east-2:299774672086:stack/sticky-notes-app-notesapp-20190707172202/43b29d60-a0fd-11e9-8192-0659c08a3f80"
+        }
+    }
+}
