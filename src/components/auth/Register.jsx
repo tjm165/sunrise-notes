@@ -27,7 +27,7 @@ class Signin extends Component {
         attributes: { email }
       });
       console.log(signUpResponse);
-      this.props.history.push("/dashboard");
+      this.props.history.push("/dashboard"); //should send you to confirmation page
     } catch (error) {
       console.log(error); //more info in part 2 at 8:15
     }

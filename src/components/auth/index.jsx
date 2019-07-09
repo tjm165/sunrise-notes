@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Register from "./Register";
 import Signin from "./Signin";
 import { Button, Container } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 
 function Auth() {
   const [isRegistering, setRegistering] = useState(true);
@@ -20,4 +21,4 @@ function Auth() {
   );
 }
 
-export default Auth;
+export default withRouter(Auth);

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
 import { Form, Button, Header } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
 
 class Signin extends Component {
   constructor() {
@@ -63,4 +64,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+export default withRouter(Signin);
