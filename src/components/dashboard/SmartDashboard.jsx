@@ -10,7 +10,7 @@ import {
   deleteTag
 } from "../../API";
 import Note from "../../objects/Note";
-import { NEW_INSTANCE_UUID } from "../../API";
+import { NEW_INSTANCE_UUID, NO_INSTANCE_UUID } from "../../API";
 import Tag from "../../objects/Tag";
 
 class SmartDashboard extends Component {
@@ -76,8 +76,8 @@ class SmartDashboard extends Component {
 
   //this one is going to set the active as a UUID
   setAsActiveTag(tagUUID) {
-    if (tagUUID === false) {
-      this.setState({ activeTag: tagUUID });
+    if (tagUUID === NO_INSTANCE_UUID) {
+      this.setState({ activeTag: NO_INSTANCE_UUID });
     }
     if (tagUUID === NEW_INSTANCE_UUID) {
       this.setState({ activeTag: new Tag() });
@@ -92,7 +92,9 @@ class SmartDashboard extends Component {
   }
 
   submitTag(tag) {
-    postTag(tag, this.state.userUUID).then(() => this.fetchUserTags());
+    postTag(tag, this.state.userUUID)
+      .then(() => this.fetchUserTags())
+      .then(() => this.fetchNoteSet(this.state.context.tags));
   }
 
   deleteTag(tagUUID) {
