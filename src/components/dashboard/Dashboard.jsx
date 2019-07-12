@@ -3,8 +3,9 @@ import NoteEditor from "../implementations/Note/NoteEditor";
 import ControlGrid from "./ControlGrid";
 import { Button, Segment, Sidebar, Modal } from "semantic-ui-react";
 import TagEditor from "../implementations/Tag/TagEditor";
+import { NO_INSTANCE_UUID } from "../../API";
 
-function Layout({ state, functions }) {
+function Dashboard({ state, functions }) {
   useEffect(() => {
     functions.fetchUserTags();
   }, []);
@@ -16,7 +17,7 @@ function Layout({ state, functions }) {
 
   return (
     <>
-      <Sidebar.Pushable as={Segment}>
+      <Sidebar.Pushable as={Segment} style={{ height: "900px" }}>
         <Sidebar
           animation="push"
           icon="labeled"
@@ -37,19 +38,27 @@ function Layout({ state, functions }) {
             note={state.activeNote}
             onSubmit={functions.submitNote}
             onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
+            setAsActiveTag={functions.setAsActiveTag}
           />
         </Sidebar.Pusher>
       </Sidebar.Pushable>
 
       {activeTag && (
-        <Modal open={activeTag} closeIcon>
+        <Modal
+          open={activeTag}
+          closeIcon
+          onClose={() => functions.setAsActiveTag(NO_INSTANCE_UUID)}
+        >
           <TagEditor
             tag={activeTag}
             userUUID={state.userUUID}
             onSubmit={functions.submitTag}
             onDelete={() => functions.deleteTag(activeTag["UUID"])}
           />
-          <Button positive onClick={() => functions.setAsActiveTag(false)}>
+          <Button
+            positive
+            onClick={() => functions.setAsActiveTag(NO_INSTANCE_UUID)}
+          >
             Close
           </Button>
         </Modal>
@@ -58,4 +67,4 @@ function Layout({ state, functions }) {
   );
 }
 
-export default Layout;
+export default Dashboard;

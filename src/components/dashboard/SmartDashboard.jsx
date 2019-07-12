@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Layout from "./Layout";
+import Dashboard from "./Dashboard";
 import {
   fetchUserTags,
   fetchNoteSet,
@@ -10,10 +10,10 @@ import {
   deleteTag
 } from "../../API";
 import Note from "../../objects/Note";
-import { NEW_INSTANCE_UUID } from "../../API";
+import { NEW_INSTANCE_UUID, NO_INSTANCE_UUID } from "../../API";
 import Tag from "../../objects/Tag";
 
-class SmartLayout extends Component {
+class SmartDashboard extends Component {
   constructor() {
     super();
 
@@ -76,8 +76,8 @@ class SmartLayout extends Component {
 
   //this one is going to set the active as a UUID
   setAsActiveTag(tagUUID) {
-    if (tagUUID === false) {
-      this.setState({ activeTag: tagUUID });
+    if (tagUUID === NO_INSTANCE_UUID) {
+      this.setState({ activeTag: NO_INSTANCE_UUID });
     }
     if (tagUUID === NEW_INSTANCE_UUID) {
       this.setState({ activeTag: new Tag() });
@@ -92,7 +92,9 @@ class SmartLayout extends Component {
   }
 
   submitTag(tag) {
-    postTag(tag, this.state.userUUID).then(() => this.fetchUserTags());
+    postTag(tag, this.state.userUUID)
+      .then(() => this.fetchUserTags())
+      .then(() => this.fetchNoteSet(this.state.context.tags));
   }
 
   deleteTag(tagUUID) {
@@ -110,8 +112,8 @@ class SmartLayout extends Component {
   }
 
   render() {
-    return <Layout state={this.state} functions={this.functions} />;
+    return <Dashboard state={this.state} functions={this.functions} />;
   }
 }
 
-export default SmartLayout;
+export default SmartDashboard;

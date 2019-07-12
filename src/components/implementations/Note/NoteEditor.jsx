@@ -3,7 +3,7 @@ import { TextArea, Icon, Button, Form } from "semantic-ui-react";
 import { TagDropdown } from "../Tag/TagDropdown";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
-const NoteEditor = ({ note, tagMap, onSubmit, onDelete }) => {
+const NoteEditor = ({ note, tagMap, onSubmit, onDelete, setAsActiveTag }) => {
   const defaultTags = note.insertTags ? note.insertTags : note.tagUUIDs;
   const [tagsToInsert, setTagsToInsert] = useState(note.insertTags || []);
   const [tagsToRemove, setTagsToRemove] = useState([]);
@@ -60,6 +60,7 @@ const NoteEditor = ({ note, tagMap, onSubmit, onDelete }) => {
         tagMap={tagMap}
         defaultValue={defaultTags}
         onChange={(e, DropdownProps) => handleTagChange(DropdownProps)}
+        setAsActiveTag={setAsActiveTag}
       />
       <TextArea
         name="content"
