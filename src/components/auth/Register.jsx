@@ -87,8 +87,7 @@ class Signin extends Component {
             <Header as="h1">Thank you for chosing Sunrise Notes!</Header>A
             verification link has been sent to {this.state.email}
             <br />
-            Please click the link to finihs the registration process!
-            {this.state.email}
+            Please click the link to finish the registration process!
           </div>
         )}
       </>
