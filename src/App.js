@@ -8,11 +8,14 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
+        {/* //eventually home page */}
+        <Route exact path="/" render={props => <Auth {...props} />} />
+        <Route exact path="/auth" render={props => <Auth {...props} />} />
         <Route
-          path="/auth"
-          render={props => <Auth {...props} name="tommy" />}
+          exact
+          path="/dashboard"
+          render={props => <SmartDashboard {...props} />}
         />
-        <Route path="/dashboard" component={SmartDashboard} />
       </BrowserRouter>
     );
   }
