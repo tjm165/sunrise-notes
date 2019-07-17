@@ -18,7 +18,6 @@ class SmartDashboard extends Component {
     super();
 
     this.state = {
-      userUUID: "testTommy",
       context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
       activeNote: new Note(),
@@ -40,7 +39,7 @@ class SmartDashboard extends Component {
 
   //name?
   fetchUserTags() {
-    fetchUserTags(this.state.userUUID).then(tagMap => {
+    fetchUserTags().then(tagMap => {
       this.setState({ tagMap: tagMap });
     });
   }

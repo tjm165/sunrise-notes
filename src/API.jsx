@@ -1,17 +1,25 @@
 import Note from "./objects/Note";
 import Tag from "./objects/Tag";
-
+import { Auth } from "aws-amplify";
+import config from "./config";
 export const NEW_INSTANCE_UUID = -1;
 export const NO_INSTANCE_UUID = false;
 
-export function fetchNoteSet(tags) {
-  const ask =
-    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note-set?UUIDs=" +
-    tags;
+const api = config.api.invokeUrl;
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length === 2)
+    return parts
+      .pop()
+      .split(";")
+      .shift();
+}
 
+export function fetchNoteSet(tags) {
   var noteset = new Map();
 
-  return fetch(ask)
+  return GET(`note-set`, `?UUIDs=${tags}`)
     .then(response => response.json())
     .then(notes => {
       Object.entries(notes).forEach(([key, note]) => {
@@ -21,19 +29,25 @@ export function fetchNoteSet(tags) {
     });
 }
 
+export function signin(username, password) {
+  return Auth.signIn(username, password).then(user => {
+    console.log(user);
+    document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
+
+    return true;
+  });
+}
+
 //need to unhard code this soon!
-export function fetchUserTags(userUUID) {
-  const ask = `https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tags?UUID=${userUUID}`;
+export function fetchUserTags() {
   var tagMap = new Map();
 
-  return fetch(ask)
-    .then(response => response.json())
-    .then(json => {
-      json.forEach(json => {
-        tagMap.set(json["UUID"], Tag.deserialize(json));
-      });
-      return tagMap;
+  return GET(`tags`).then(json => {
+    json.forEach(json => {
+      tagMap.set(json["UUID"], Tag.deserialize(json));
     });
+    return tagMap;
+  });
 }
 
 export function fetchNote(UUID) {
@@ -73,6 +87,29 @@ export function postTag(tagObject, userUUID) {
   return post(ask, { tagObject, userUUID })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
+}
+
+function GET(path, querystring = null) {
+  let ask = `${api}/${path}/${querystring}`;
+
+  // Default options are marked with *
+  if (querystring === null) {
+    ask = `${api}/${path}`;
+  }
+
+  return fetch(ask, {
+    method: "GET", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, cors, *same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getCookie("idToken")
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    redirect: "follow", // manual, *follow, error
+    referrer: "no-referrer" // no-referrer, *client
+  }).then(response => response.json()); // parses JSON response into native Javascript objects
 }
 
 function post(url = "", data = {}) {
