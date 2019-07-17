@@ -82,19 +82,17 @@ export function postNote(noteObject, tagsToInsert, tagsToRemove) {
 }
 
 export function postTag(tagObject, userUUID) {
-  const ask =
-    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/tag";
-  return post(ask, { tagObject, userUUID })
+  return POST(`tag`, { tagObject, userUUID })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
 }
 
-function GET(path, querystring = null) {
-  let ask = `${api}/${path}/${querystring}`;
+function GET(resource, querystring = null) {
+  let ask = `${api}/${resource}/${querystring}`;
 
   // Default options are marked with *
   if (querystring === null) {
-    ask = `${api}/${path}`;
+    ask = `${api}/${resource}`;
   }
 
   return fetch(ask, {
@@ -105,23 +103,28 @@ function GET(path, querystring = null) {
     headers: {
       "Content-Type": "application/json",
       Authorization: getCookie("idToken")
-      // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client
   }).then(response => response.json()); // parses JSON response into native Javascript objects
 }
 
-function post(url = "", data = {}) {
+function post() {
+  return "depreciated";
+}
+
+function POST(resource, data = {}) {
+  const ask = `${api}/${resource}`;
+
   // Default options are marked with *
-  return fetch(url, {
+  return fetch(ask, {
     method: "POST", // *GET, POST, PUT, DELETE, etc.
     mode: "cors", // no-cors, cors, *same-origin
     cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
-      "Content-Type": "application/json"
-      // 'Content-Type': 'application/x-www-form-urlencoded',
+      "Content-Type": "application/json",
+      Authorization: getCookie("idToken")
     },
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer", // no-referrer, *client
