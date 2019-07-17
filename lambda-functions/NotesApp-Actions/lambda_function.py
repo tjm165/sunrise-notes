@@ -14,7 +14,9 @@ def lambda_handler(event, context):
     if (action == "tags-GET"):
         return user.get_all_tags()
     if (action == "tag-POST"):
-        return user.put_tag(body['tagObject'])
+        response = user.put_tag(body['tagObject'])
+        user.save_permissions()
+        return response
     # if (action == "note-set-GET"):
     #     return Actions.get_note_set_by_tag_uuids(querystring['UUIDs'].split(','))
     # if(action == "note-GET"):

@@ -13,26 +13,26 @@ class User():
     tags_table = None
     notes_table = None
 
-    secure_user_object = None
+    __secure_user_object = None
 
     def __init__(self, user_uuid):
         self.user_table = Table('NotesApp-Users')
         self.tags_table = Table('NotesApp-Tags')
         self.notes_table = Table('NotesApp-Notes')
         self.junction_table = Table('NotesApp-NoteTagJunction')
-        self.secure_user_object = self.user_table.get_item(user_uuid)
+        self.__secure_user_object = self.user_table.get_item(user_uuid)
 
     def get_secure_notes(self):
-        return self.secure_user_object['noteUUIDs']
+        return self.__secure_user_object['noteUUIDs']
 
     def get_secure_tags(self):
-        return self.secure_user_object['tagUUIDs']
+        return self.__secure_user_object['tagUUIDs']
 
     def get_secure_junctions(self):
-        return self.secure_user_object['junctionUUIDs']
+        return self.__secure_user_object['junctionUUIDs']
 
-    def save_user(self):
-        return self.user_table.put_item(self.secure_user_object)
+    def save_permissions(self):
+        return self.user_table.put_item(self.__secure_user_object)
 
     def is_tag_secure(self, uuid):
         return uuid in self.get_secure_tags()
@@ -78,11 +78,10 @@ class User():
         self.is_tag_secure(tag_object['UUID'])
         if ('UUID' not in tag_object) or tag_object['UUID'] is -1:
             tag_object['UUID'] = uuid4().hex
-        if tag_object['UUID'] not in self.secure_user_object['tagUUIDs']:
+        if tag_object['UUID'] not in self.get_secure_tags():
             self.get_secure_tags().add(tag_object['UUID'])
 
-        self.tags_table.put_item(tag_object)
-        self.user_table.put_item(self.secure_user_object)
+        return self.tags_table.put_item(tag_object)
 
     # puts the note object in the table
     # updates the junctions if necessary
