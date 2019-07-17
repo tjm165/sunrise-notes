@@ -8,15 +8,14 @@ def lambda_handler(event, context):
     querystring = params['querystring'] if (
         params != None) and ('querystring' in params) else None
     user = User(event['sunrise-user'])
+    response = False
 
-    if(action == "test"):
-        return user.get_all_tags()
+    if (action == "test"):
+        response = user.get_all_tags()
     if (action == "tags-GET"):
-        return user.get_all_tags()
+        response = user.get_all_tags()
     if (action == "tag-POST"):
         response = user.put_tag(body['tagObject'])
-        user.save_permissions()
-        return response
     # if (action == "note-set-GET"):
     #     return Actions.get_note_set_by_tag_uuids(querystring['UUIDs'].split(','))
     # if(action == "note-GET"):
@@ -26,4 +25,7 @@ def lambda_handler(event, context):
     # if (action == "note-POST"):
     #     return Actions.post_note(body)
 
+    if response:
+        user.save_permissions()
+        return response
     return "action not supported: " + action
