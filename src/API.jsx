@@ -30,12 +30,7 @@ export function fetchNoteSet(tags) {
 }
 
 export function signin(username, password) {
-  return Auth.signIn(username, password).then(user => {
-    console.log(user);
-    document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
-
-    return true;
-  });
+  return Auth.signIn(username, password);
 }
 
 //need to unhard code this soon!

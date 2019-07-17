@@ -13,7 +13,10 @@ const Signin = props => {
     console.log("hey");
 
     signin(email, password)
-      .then(props.history.push("/dashboard"))
+      .then(user => {
+        document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
+        props.history.push("/dashboard");
+      })
       .catch(error => {
         console.log(error);
         setError(error.message);
