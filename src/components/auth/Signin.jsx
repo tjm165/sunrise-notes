@@ -1,67 +1,48 @@
-import React, { Component } from "react";
-import { Auth } from "aws-amplify";
+import React, { useState } from "react";
+import { signin } from "../../API";
 import { Form, Button, Header } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 
-class Signin extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: "",
-      password: ""
-    };
+const Signin = props => {
+  const [email, setEmail] = useState([""]);
+  const [password, setPassword] = useState([""]);
+  const [error, setError] = useState(null);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.setEmail = this.setEmail.bind(this);
-  }
-
-  handleSubmit = async event => {
+  const handleSubmit = event => {
     event.preventDefault();
     console.log("hey");
 
-    const { email, password } = this.state;
-    const username = email;
-    try {
-      const user = await Auth.signIn(username, password);
-      console.log(user);
-
-      this.props.history.push("/dashboard");
-    } catch (error) {
-      console.log(error); //more info in part 2 at 8:15
-    }
+    signin(email, password)
+      .then(props.history.push("/dashboard"))
+      .catch(error => {
+        console.log(error);
+        setError(error.message);
+      });
   };
 
-  setEmail(email) {
-    this.setState({ email });
-  }
+  return (
+    <>
+      <Header as="h2">Sign in</Header>
+      {error && <Header as="h4">{error}</Header>}
 
-  setPassword(password) {
-    this.setState({ password });
-  }
-
-  render() {
-    return (
-      <>
-        <Header as="h2">Sign in</Header>
-        <Form>
-          <Form.Input
-            label="Email"
-            placeholder="email"
-            value={this.state.email}
-            onChange={event => this.setEmail(event.target.value)}
-          />
-          <Form.Input
-            label="Enter Password"
-            type="password"
-            placeholder="password"
-            value={this.state.password}
-            onChange={event => this.setPassword(event.target.value)}
-          />
-          <Button onClick={e => this.handleSubmit(e)}>Sign in</Button>
-        </Form>
-      </>
-    );
-  }
-}
+      <Form>
+        <Form.Input
+          label="Email"
+          placeholder="email"
+          value={email}
+          onChange={event => setEmail(event.target.value)}
+        />
+        <Form.Input
+          label="Enter Password"
+          type="password"
+          placeholder="password"
+          value={password}
+          onChange={event => setPassword(event.target.value)}
+        />
+        <Button onClick={e => handleSubmit(e)}>Sign in</Button>
+      </Form>
+    </>
+  );
+};
 
 export default withRouter(Signin);
