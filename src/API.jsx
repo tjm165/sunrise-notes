@@ -16,17 +16,18 @@ function getCookie(name) {
       .shift();
 }
 
-export function fetchNoteSet(tags) {
+export function fetchNoteSet(baseTagUUIDs, requiredTagUUIDs, optionalTagUUIDs) {
   var noteset = new Map();
 
-  return GET(`note-set`, `?UUIDs=${tags}`)
-    .then(response => response.json())
-    .then(notes => {
-      Object.entries(notes).forEach(([key, note]) => {
-        noteset.set(key, Note.deserialize(note));
-      });
-      return noteset;
+  return GET(
+    `note-set`,
+    `?baseTagUUIDs=${baseTagUUIDs}&requiredTagUUIDs=${requiredTagUUIDs}&optionalTagUUIDs=${optionalTagUUIDs}`
+  ).then(notes => {
+    Object.entries(notes).forEach(([key, note]) => {
+      noteset.set(key, Note.deserialize(note));
     });
+    return noteset;
+  });
 }
 
 export function signin(username, password) {

@@ -16,8 +16,12 @@ def lambda_handler(event, context):
         response = user.get_all_tags()
     if (action == "tag-POST"):
         response = user.put_tag(body['tagObject'])
-    # if (action == "note-set-GET"):
-    #     return Actions.get_note_set_by_tag_uuids(querystring['UUIDs'].split(','))
+    if (action == "note-set-GET"):
+        base_tags = querystring['baseTagUUIDs'].split(',')
+        req = querystring['requiredTagUUIDs'].split(',')
+        opt = querystring['optionalTagUUIDs'].split(',')
+
+        response = user.get_noteset_by_tag_uuids(base_tags, req, opt)
     # if(action == "note-GET"):
     #     return Actions.get_note_by_uuid(querystring['UUID'])
     # if(action == "note-DELETE"):
