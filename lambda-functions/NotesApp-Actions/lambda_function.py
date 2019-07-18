@@ -8,7 +8,7 @@ def lambda_handler(event, context):
     querystring = params['querystring'] if (
         params != None) and ('querystring' in params) else None
     user = User(event['sunrise-user'])
-    response = False
+    response = None
 
     if (action == "test"):
         response = user.get_all_tags()
@@ -22,14 +22,14 @@ def lambda_handler(event, context):
         opt = querystring['optionalTagUUIDs'].split(',')
 
         response = user.get_noteset_by_tag_uuids(base_tags, req, opt)
-    if(action == "note-GET"):
+    if (action == "note-GET"):
         return user.get_tagged_note(querystring['UUID'])
     # if(action == "note-DELETE"):
     #     return Actions.delete_note_by_uuid(querystring['UUID'])
     # if (action == "note-POST"):
     #     return Actions.post_note(body)
 
-    if response:
+    if response is not None:
         user.save_permissions()
         return response
     return "action not supported: " + action
