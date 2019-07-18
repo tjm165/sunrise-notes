@@ -29,7 +29,12 @@ class User():
         return self.__secure_user_object['tagUUIDs']
 
     def get_secure_junctions(self):
-        return self.__secure_user_object['junctionUUIDs']
+        junctions = {}
+
+        for junction_uuid in self.__secure_user_object['junctionUUIDs']:
+            junctions[junction_uuid] = self.junction_table.get_item(
+                junction_uuid)
+        return junctions
 
     def save_permissions(self):
         return self.user_table.put_item(self.__secure_user_object)
@@ -68,6 +73,7 @@ class User():
     def get_tagged_note(self, uuid):
         self.is_note_secure(uuid)
         note = self.get_note(uuid)
+        note['tagUUIDs'] = []
         junctions = self.get_junctions_where_note_uuid_is(uuid)
         for junction in junctions:
             note['tagUUIDs'].append(junction['tagUUID'])
@@ -128,9 +134,9 @@ class User():
     def get_junctions_where_tag_uuid_is(self, tag_uuid):
         self.is_tag_secure(tag_uuid)
         junctions = []
-        for junction in self.get_secure_junctions():
+        for uuid, junction in self.get_secure_junctions().items():
             if junction['tagUUID'] == tag_uuid:
-                junctions.append(junction['UUID'])
+                junctions.append(junction)
         return junctions
 
     def delete_junction(self, uuid):
@@ -142,9 +148,9 @@ class User():
     def get_junctions_where_note_uuid_is(self, note_uuid):
         self.is_note_secure(note_uuid)
         junctions = []
-        for junction in self.get_secure_junctions():
+        for uuid, junction in self.get_secure_junctions().items():
             if junction['noteUUID'] == note_uuid:
-                junctions.append(junction['UUID'])
+                junctions.append(junction)
         return junctions
 
     def delete_junctions_where_note_uuid_is(self, note_uuid):
@@ -152,18 +158,19 @@ class User():
 
     # returns a set of colored notes
     # IS using junctions
-    def get_noteset_by_tag_uuids(self, base_noteset, must_tag_uuids, can_tag_uuids):
-        dict = base_noteset
+    def get_noteset_by_tag_uuids(self, base_tag_uuids, required_tag_uuids, optional_tag_uuids):
+        noteset = {}
 
-        for tag_uuid in must_tag_uuids:
-            # checks if tag_uuid is secure
-            for junction in self.get_junctions_where_tag_uuid_is(tag_uuid):
-                note_uuid = junction['noteUUID']
-                tag_rgb = self.get_tag(tag_uuid)['rgb']
-                if note_uuid in dict:
-                    dict[note_uuid]['rgb'] = mix_colors(
-                        dict[note_uuid]['rgb'], tag_rgb)
-                else:
-                    dict[note_uuid] = self.get_note(note_uuid)
-                    dict[note_uuid]['rgb'] = tag_rgb
-        return dict
+        for tag_uuid in required_tag_uuids:
+            if tag_uuid not in base_tag_uuids:
+                # checks if tag_uuid is secure
+                for junction in self.get_junctions_where_tag_uuid_is(tag_uuid):
+                    note_uuid = junction['noteUUID']
+                    tag_rgb = self.get_tag(tag_uuid)['rgb']
+                    if note_uuid in noteset:
+                        noteset[note_uuid]['rgb'] = mix_colors(
+                            noteset[note_uuid]['rgb'], tag_rgb)
+                    else:
+                        noteset[note_uuid] = self.get_note(note_uuid)
+                        noteset[note_uuid]['rgb'] = tag_rgb
+        return noteset

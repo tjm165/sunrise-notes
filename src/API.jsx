@@ -16,26 +16,22 @@ function getCookie(name) {
       .shift();
 }
 
-export function fetchNoteSet(tags) {
+export function fetchNoteSet(baseTagUUIDs, requiredTagUUIDs, optionalTagUUIDs) {
   var noteset = new Map();
 
-  return GET(`note-set`, `?UUIDs=${tags}`)
-    .then(response => response.json())
-    .then(notes => {
-      Object.entries(notes).forEach(([key, note]) => {
-        noteset.set(key, Note.deserialize(note));
-      });
-      return noteset;
+  return GET(
+    `note-set`,
+    `?baseTagUUIDs=${baseTagUUIDs}&requiredTagUUIDs=${requiredTagUUIDs}&optionalTagUUIDs=${optionalTagUUIDs}`
+  ).then(notes => {
+    Object.entries(notes).forEach(([key, note]) => {
+      noteset.set(key, Note.deserialize(note));
     });
+    return noteset;
+  });
 }
 
 export function signin(username, password) {
-  return Auth.signIn(username, password).then(user => {
-    console.log(user);
-    document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
-
-    return true;
-  });
+  return Auth.signIn(username, password);
 }
 
 //need to unhard code this soon!
@@ -51,15 +47,9 @@ export function fetchUserTags() {
 }
 
 export function fetchNote(UUID) {
-  const ask =
-    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note?UUID=" +
-    UUID;
-
-  return fetch(ask)
-    .then(response => response.json())
-    .then(json => {
-      return Note.deserialize(json);
-    });
+  return GET(`note`, `?UUID=${UUID}`).then(json => {
+    return Note.deserialize(json);
+  });
 }
 
 export function deleteNote(UUID) {
