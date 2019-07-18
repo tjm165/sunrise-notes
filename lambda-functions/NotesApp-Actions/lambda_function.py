@@ -22,8 +22,8 @@ def lambda_handler(event, context):
         opt = querystring['optionalTagUUIDs'].split(',')
 
         response = user.get_noteset_by_tag_uuids(base_tags, req, opt)
-    # if(action == "note-GET"):
-    #     return Actions.get_note_by_uuid(querystring['UUID'])
+    if(action == "note-GET"):
+        return user.get_tagged_note(querystring['UUID'])
     # if(action == "note-DELETE"):
     #     return Actions.delete_note_by_uuid(querystring['UUID'])
     # if (action == "note-POST"):

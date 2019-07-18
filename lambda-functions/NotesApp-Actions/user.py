@@ -73,6 +73,7 @@ class User():
     def get_tagged_note(self, uuid):
         self.is_note_secure(uuid)
         note = self.get_note(uuid)
+        note['tagUUIDs'] = []
         junctions = self.get_junctions_where_note_uuid_is(uuid)
         for junction in junctions:
             note['tagUUIDs'].append(junction['tagUUID'])
@@ -147,9 +148,9 @@ class User():
     def get_junctions_where_note_uuid_is(self, note_uuid):
         self.is_note_secure(note_uuid)
         junctions = []
-        for junction in self.get_secure_junctions():
+        for uuid, junction in self.get_secure_junctions().items():
             if junction['noteUUID'] == note_uuid:
-                junctions.append(junction['UUID'])
+                junctions.append(junction)
         return junctions
 
     def delete_junctions_where_note_uuid_is(self, note_uuid):
