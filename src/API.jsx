@@ -63,16 +63,13 @@ export function deleteNote(UUID) {
 export function deleteTag(UUID) {}
 
 export function postNote(noteObject, tagsToInsert, tagsToRemove) {
-  const ask =
-    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note";
-
-  return post(ask, { noteObject, tagsToInsert, tagsToRemove })
+  return POST(`note`, { noteObject })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
 }
 
-export function postTag(tagObject, userUUID) {
-  return POST(`tag`, { tagObject, userUUID })
+export function postTag(tagObject) {
+  return POST(`tag`, { tagObject })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
 }
@@ -97,10 +94,6 @@ function GET(resource, querystring = null) {
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client
   }).then(response => response.json()); // parses JSON response into native Javascript objects
-}
-
-function post() {
-  return "depreciated";
 }
 
 function POST(resource, data = {}) {
