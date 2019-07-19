@@ -1,22 +1,20 @@
 import React from "react";
-import { Menu, Button, Icon } from "semantic-ui-react";
+import { Menu, Button, Icon, Dropdown } from "semantic-ui-react";
 import { TagDropdown } from "../implementations/Tag/TagDropdown";
 import { NEW_INSTANCE_UUID } from "../../API";
 
 function Controls({ tagMap, functions }) {
   return (
-    <Menu>
-      <Menu.Item>
-        <TagDropdown
-          placeholder="Use me to select tags..."
-          tagMap={tagMap}
-          item
-          setAsActiveTag={functions.setAsActiveTag}
-          onChange={(e, DropdownProps) =>
-            functions.fetchNoteSet(DropdownProps.value)
-          }
-        />
-      </Menu.Item>
+    <Menu inverted fluid>
+      <TagDropdown
+        text="Use me to select tags..."
+        tagMap={tagMap}
+        item
+        setAsActiveTag={functions.setAsActiveTag}
+        onChange={(e, DropdownProps) =>
+          functions.fetchNoteSet(DropdownProps.value)
+        }
+      />
       <Menu.Item>
         <Button
           positive
