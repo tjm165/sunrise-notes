@@ -4,48 +4,17 @@ import { TagDropdown } from "../Tag/TagDropdown";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
 const NoteEditor = ({ note, tagMap, onSubmit, onDelete, setAsActiveTag }) => {
-  const defaultTags = note.insertTags ? note.insertTags : note.tagUUIDs;
-  const [tagsToInsert, setTagsToInsert] = useState(note.insertTags || []);
-  const [tagsToRemove, setTagsToRemove] = useState([]);
-  const [previousTags, setPreviousTags] = useState(note.tagUUIDs || []);
-
   const isPreexisting = note["UUID"] !== NEW_INSTANCE_UUID;
+  const [tagUUIDs, setTagUUIDs] = useState(note.tagUUIDs || []);
 
   const handleSubmit = event => {
     event.preventDefault();
-    onSubmit(
-      {
-        UUID: note.UUID,
-        title: event.currentTarget.title.value,
-        content: event.currentTarget.content.value
-      },
-      tagsToInsert,
-      tagsToRemove
-    );
-  };
-
-  const handleTagChange = ({ value }) => {
-    const isInserting = value.length > previousTags.length;
-
-    if (isInserting) {
-      const toInsert = value[value.length - 1];
-
-      if (tagsToRemove.includes(toInsert)) {
-      } else {
-        tagsToInsert.push(toInsert); //can probably set state here
-      }
-    } else {
-      const toRemove = previousTags.filter(x => !value.includes(x))[0]; //perhaps we can make one variable for isInserting and !isInserting and call it difference
-      if (tagsToInsert.includes(toRemove)) {
-      } else {
-        tagsToRemove.push(toRemove); //can probably set state here
-      }
-    }
-
-    setTagsToInsert(tagsToInsert); //instead of setting state here
-    setTagsToRemove(tagsToRemove); //instead of setting state here
-
-    setPreviousTags(previousTags);
+    onSubmit({
+      UUID: note.UUID,
+      title: event.currentTarget.title.value,
+      content: event.currentTarget.content.value,
+      tagUUIDs
+    });
   };
 
   return (
@@ -58,8 +27,8 @@ const NoteEditor = ({ note, tagMap, onSubmit, onDelete, setAsActiveTag }) => {
       <TagDropdown
         placeholder="Add tags to your note"
         tagMap={tagMap}
-        defaultValue={defaultTags}
-        onChange={(e, DropdownProps) => handleTagChange(DropdownProps)}
+        defaultValue={tagUUIDs}
+        onChange={(e, DropdownProps) => setTagUUIDs(DropdownProps.value)}
         setAsActiveTag={setAsActiveTag}
       />
       <TextArea

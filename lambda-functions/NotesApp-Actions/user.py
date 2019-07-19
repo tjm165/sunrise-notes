@@ -22,9 +22,13 @@ class User():
         self.__secure_user_object = self.user_table.get_item(user_uuid)
 
     def get_secure_note_uuids(self):
+        if "noteUUIDs" not in self.__secure_user_object:
+            self.__secure_user_object['noteUUIDs'] = set()
         return self.__secure_user_object['noteUUIDs']
 
     def get_secure_tag_uuids(self):
+        if "tagUUIDs" not in self.__secure_user_object:
+            self.__secure_user_object['tagUUIDs'] = set()
         return self.__secure_user_object['tagUUIDs']
 
     def save_permissions(self):
@@ -64,14 +68,18 @@ class User():
         self.is_tag_secure(tag_object['UUID'])
         if ('UUID' not in tag_object) or tag_object['UUID'] is -1:
             tag_object['UUID'] = uuid4().hex
-        if tag_object['UUID'] not in self.get_secure_tag_uuids():
             self.get_secure_tag_uuids().add(tag_object['UUID'])
 
         return self.tags_table.put_item(tag_object)
 
     # puts the note object in the table
-    def put_note(self, note_object, add_tags, remove_tags):
-        return note_object
+    def put_note(self, note_object):
+        self.is_note_secure(note_object['UUID'])
+        if ('UUID' not in note_object) or note_object['UUID'] is -1:
+            note_object['UUID'] = uuid4().hex
+            self.get_secure_note_uuids().add(note_object['UUID'])
+
+        return self.notes_table.put_item(note_object)
 
     # TODO
     # deletes the tag and removes itself from any notes
