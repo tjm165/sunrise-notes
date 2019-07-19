@@ -65,11 +65,12 @@ class SmartDashboard extends Component {
     if (noteUUID === NO_INSTANCE_UUID) {
       this.setState({ activeNote: NO_INSTANCE_UUID });
     }
-    if (noteUUID === NEW_INSTANCE_UUID) {
+    else if (noteUUID === NEW_INSTANCE_UUID) {
       const note = new Note();
       note.insertTags = this.state.context.tags;
       this.setState({ activeNote: note });
-    } else {
+    } 
+    else {
       fetchNote(noteUUID).then(note => {
         this.setState({ activeNote: note });
       });
