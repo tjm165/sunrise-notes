@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import NoteEditor from "../implementations/Note/NoteEditor";
-import ControlGrid from "./ControlGrid";
-import { Button, Segment, Sidebar, Modal } from "semantic-ui-react";
+import Controls from "./Controls";
+import { Button, Container, Modal, Segment } from "semantic-ui-react";
 import TagEditor from "../implementations/Tag/TagEditor";
+import NoteEditor from "../implementations/Note/NoteEditor";
+import NoteMenu from "../implementations/Note/NoteMenu";
 import { NO_INSTANCE_UUID } from "../../API";
 
 function Dashboard({ state, functions }) {
@@ -12,36 +13,36 @@ function Dashboard({ state, functions }) {
 
   const notes = state.context.notes;
   const activeTag = state.activeTag;
+  const activeNote = state.activeNote;
   const tagMap = state.tagMap;
-  const [isExpanded, setExpanded] = useState(false);
 
   return (
     <>
-      <Sidebar.Pushable as={Segment} style={{ height: "900px" }}>
-        <Sidebar
-          animation="push"
-          icon="labeled"
-          visible={!isExpanded}
-          width="very wide"
-        >
-          <ControlGrid notes={notes} tagMap={tagMap} functions={functions} />
-        </Sidebar>
+      <Controls tagMap={tagMap} functions={functions} />
 
-        <Sidebar.Pusher>
-          <Button
-            icon={isExpanded ? "expand" : "expand arrows alternate"}
-            onClick={() => setExpanded(!isExpanded)}
-          />
-          <NoteEditor
-            key={JSON.stringify(state.activeNote)}
+      <Container>
+        {activeNote ? (
+          <Segment stacked={notes.size > 0}>
+            <Button onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}>
+              back
+            </Button>
+            <NoteEditor
+              key={JSON.stringify(state.activeNote)}
+              tagMap={tagMap}
+              note={activeNote}
+              onSubmit={functions.submitNote}
+              onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
+              setAsActiveTag={functions.setAsActiveTag}
+            />
+          </Segment>
+        ) : (
+          <NoteMenu
+            functions={functions}
+            notes={Array.from(notes)}
             tagMap={tagMap}
-            note={state.activeNote}
-            onSubmit={functions.submitNote}
-            onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
-            setAsActiveTag={functions.setAsActiveTag}
           />
-        </Sidebar.Pusher>
-      </Sidebar.Pushable>
+        )}
+      </Container>
 
       {activeTag && (
         <Modal

@@ -32,7 +32,6 @@ export class TagDropdown extends Component {
 
     return (
       <Dropdown
-        fluid
         search
         multiple
         clearable
