@@ -23,6 +23,9 @@ function Dashboard({ state, functions }) {
       <Container>
         {activeNote ? (
           <Segment stacked={notes.size > 0}>
+            <Button onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}>
+              back
+            </Button>
             <NoteEditor
               key={JSON.stringify(state.activeNote)}
               tagMap={tagMap}

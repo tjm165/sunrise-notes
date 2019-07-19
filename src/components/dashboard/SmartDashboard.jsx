@@ -20,8 +20,8 @@ class SmartDashboard extends Component {
     this.state = {
       context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
-      activeNote: false,
-      activeTag: false
+      activeNote: NO_INSTANCE_UUID,
+      activeTag: NO_INSTANCE_UUID
     };
 
     this.functions = {
@@ -62,6 +62,9 @@ class SmartDashboard extends Component {
 
   ///Work on making this one set the active as a UUID
   setAsActiveNote(noteUUID) {
+    if (noteUUID === NO_INSTANCE_UUID) {
+      this.setState({ activeNote: NO_INSTANCE_UUID });
+    }
     if (noteUUID === NEW_INSTANCE_UUID) {
       const note = new Note();
       note.insertTags = this.state.context.tags;
