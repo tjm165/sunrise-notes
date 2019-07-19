@@ -4,7 +4,7 @@ import Signin from "./Signin";
 import { Button, Container } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 
-function Auth() {
+function Landing() {
   const [isRegistering, setRegistering] = useState(true);
 
   return (
@@ -21,4 +21,4 @@ function Auth() {
   );
 }
 
-export default withRouter(Auth);
+export default withRouter(Landing);
