@@ -61,16 +61,20 @@ class SmartDashboard extends Component {
   }
 
   ///Work on making this one set the active as a UUID
-  setAsActiveNote(noteUUID) {
+  setAsActiveNote(noteUUID, version = "withNoTags") {
     if (noteUUID === NO_INSTANCE_UUID) {
       this.setState({ activeNote: NO_INSTANCE_UUID });
-    }
-    else if (noteUUID === NEW_INSTANCE_UUID) {
+    } else if (noteUUID === NEW_INSTANCE_UUID && version === "withNoTags") {
       const note = new Note();
-      note.insertTags = this.state.context.tags;
       this.setState({ activeNote: note });
-    } 
-    else {
+    } else if (
+      noteUUID === NEW_INSTANCE_UUID &&
+      version === "withContextTags"
+    ) {
+      const note = new Note();
+      note.tagUUIDs = this.state.context.tags;
+      this.setState({ activeNote: note });
+    } else {
       fetchNote(noteUUID).then(note => {
         this.setState({ activeNote: note });
       });
@@ -81,8 +85,7 @@ class SmartDashboard extends Component {
   setAsActiveTag(tagUUID) {
     if (tagUUID === NO_INSTANCE_UUID) {
       this.setState({ activeTag: NO_INSTANCE_UUID });
-    }
-    if (tagUUID === NEW_INSTANCE_UUID) {
+    } else if (tagUUID === NEW_INSTANCE_UUID) {
       this.setState({ activeTag: new Tag() });
     } else {
       const tag = this.state.tagMap.get(tagUUID);
