@@ -1,7 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
-
-import { Button, Container, Header, Icon } from "semantic-ui-react";
+import { Container, Header } from "semantic-ui-react";
 
 function Heading({ className, mobile, h1, h2, misc }) {
   return (
