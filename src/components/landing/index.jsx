@@ -13,7 +13,6 @@ import {
   Menu,
   Responsive,
   Segment,
-  Sidebar,
   Visibility
 } from "semantic-ui-react";
 
@@ -35,7 +34,6 @@ const HomepageHeading = ({ mobile }) => (
     <Header
       as="h1"
       content="You've Never Seen Note Taking Like This."
-      inverted
       style={{
         fontSize: mobile ? "2em" : "4em",
         fontWeight: "normal",
@@ -81,21 +79,23 @@ class DesktopContainer extends Component {
     const { fixed } = this.state;
 
     return (
-      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+      <Responsive
+        getWidth={getWidth}
+        minWidth={Responsive.onlyTablet.minWidth}
+        style={{ backgroundColor: "red" }}
+      >
         <Visibility
           once={false}
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
         >
           <Segment
-            inverted
             textAlign="center"
             style={{ minHeight: 700, padding: "1em 0em" }}
             vertical
           >
             <Menu
               fixed={fixed ? "top" : null}
-              inverted={!fixed}
               pointing={!fixed}
               secondary={!fixed}
               size="large"
@@ -154,7 +154,11 @@ ResponsiveContainer.propTypes = {
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
-    <Segment style={{ padding: "8em 0em" }} vertical>
+    <Segment
+      style={{ padding: "8em 0em" }}
+      vertical
+      style={{ backgroundColor: "white" }}
+    >
       <Grid container stackable verticalAlign="middle">
         <Grid.Row>
           <Grid.Column width={8}>
@@ -190,7 +194,11 @@ const HomepageLayout = () => (
         </Grid.Row>
       </Grid>
     </Segment>
-    <Segment style={{ padding: "0em" }} vertical>
+    <Segment
+      style={{ padding: "0em" }}
+      vertical
+      style={{ backgroundColor: "white" }}
+    >
       <Grid celled="internally" columns="equal" stackable>
         <Grid.Row textAlign="center">
           <Grid.Column style={{ paddingBottom: "5em", paddingTop: "5em" }}>
@@ -213,7 +221,11 @@ const HomepageLayout = () => (
         </Grid.Row>
       </Grid>
     </Segment>
-    <Segment style={{ padding: "8em 0em" }} vertical>
+    <Segment
+      style={{ padding: "8em 0em" }}
+      vertical
+      style={{ backgroundColor: "white" }}
+    >
       <Container text>
         <Header as="h3" style={{ fontSize: "2em" }}>
           Breaking The Grid, Grabs Your Attention
