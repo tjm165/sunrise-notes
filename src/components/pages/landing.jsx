@@ -34,7 +34,7 @@ const getWidth = () => {
 
 const HomepageHeading = ({ mobile }) => (
   <Heading
-    h1="You've Never Seen Note Taking Like This Before."
+    h1="You've Never Seen Note-Taking Like This Before."
     h2="Created by students for students"
     misc={
       <Link to="/signup">
