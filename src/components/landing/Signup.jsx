@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Auth } from "aws-amplify";
 import { Form, Button, Header } from "semantic-ui-react";
 
-class Signin extends Component {
+class Signup extends Component {
   constructor() {
     super();
     this.state = {
@@ -95,4 +95,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin;
+export default Signup;
