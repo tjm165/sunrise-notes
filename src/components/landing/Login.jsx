@@ -3,7 +3,7 @@ import { signin } from "../../API";
 import { Form, Button, Header } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
 
-const Signin = props => {
+const Login = props => {
   const [email, setEmail] = useState([""]);
   const [password, setPassword] = useState([""]);
   const [error, setError] = useState(null);
@@ -48,4 +48,4 @@ const Signin = props => {
   );
 };
 
-export default withRouter(Signin);
+export default withRouter(Login);

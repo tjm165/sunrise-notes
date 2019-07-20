@@ -3,6 +3,8 @@ import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
 import SmartDashboard from "./components/dashboard/SmartDashboard";
 import Landing from "./components/landing/index";
+import Login from "./components/landing/Login";
+import Signup from "./components/landing/Signup";
 
 class App extends Component {
   render() {
@@ -20,6 +22,8 @@ class App extends Component {
           path="/dashboard"
           render={props => <SmartDashboard {...props} />}
         />
+        <Route exact path="/signup" render={props => <Signup {...props} />} />
+        <Route exact path="/login" render={props => <Login {...props} />} />
       </BrowserRouter>
     );
   }
