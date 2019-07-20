@@ -104,6 +104,7 @@ class DesktopContainer extends Component {
                 <Menu.Item as="a" active>
                   Home
                 </Menu.Item>
+                <Menu.Item as="a">Features</Menu.Item>
                 <Menu.Item as="a">Contribute</Menu.Item>
                 <Menu.Item as="a">About</Menu.Item>
                 <Menu.Item position="right">
@@ -112,6 +113,8 @@ class DesktopContainer extends Component {
                       Sign in
                     </Button>
                   </Link>
+                  <Button.Or />
+
                   <Link to="/signup">
                     <Button
                       as="a"
