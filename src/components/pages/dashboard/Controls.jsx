@@ -1,7 +1,7 @@
 import React from "react";
-import { Menu, Button, Icon, Dropdown } from "semantic-ui-react";
-import { TagDropdown } from "../implementations/Tag/TagDropdown";
-import { NEW_INSTANCE_UUID } from "../../API";
+import { Menu, Button, Dropdown } from "semantic-ui-react";
+import { TagDropdown } from "../../implementations/Tag/TagDropdown";
+import { NEW_INSTANCE_UUID } from "../../../API";
 
 function Controls({ tagMap, functions }) {
   const otherNewOptions = [

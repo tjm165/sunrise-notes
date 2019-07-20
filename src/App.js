@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import "./App.css";
 import { BrowserRouter, Route } from "react-router-dom";
-import SmartDashboard from "./components/dashboard/SmartDashboard";
-import Landing from "./components/landing/index";
-import Login from "./components/landing/Login";
-import Signup from "./components/landing/Signup";
+import SmartDashboard from "./components/pages/dashboard/index";
+import Landing from "./components/pages/landing";
+import Login from "./components/pages/login";
+import Signup from "./components/pages/signup";
 
 class App extends Component {
   render() {

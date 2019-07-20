@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Controls from "./Controls";
 import { Button, Container, Modal, Segment } from "semantic-ui-react";
-import TagEditor from "../implementations/Tag/TagEditor";
-import NoteEditor from "../implementations/Note/NoteEditor";
-import NoteMenu from "../implementations/Note/NoteMenu";
-import { NO_INSTANCE_UUID } from "../../API";
+import TagEditor from "../../implementations/Tag/TagEditor";
+import NoteEditor from "../../implementations/Note/NoteEditor";
+import NoteMenu from "../../implementations/Note/NoteMenu";
+import { NO_INSTANCE_UUID } from "../../../API";
 
 function Dashboard({ state, functions }) {
   useEffect(() => {
