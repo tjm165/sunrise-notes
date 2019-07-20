@@ -4,6 +4,22 @@ import { TagDropdown } from "../implementations/Tag/TagDropdown";
 import { NEW_INSTANCE_UUID } from "../../API";
 
 function Controls({ tagMap, functions }) {
+  const otherNewOptions = [
+    {
+      key: "newContextNote",
+      icon: "sticky note",
+      text: "New Note with Tags",
+      onClick: () =>
+        functions.setAsActiveNote(NEW_INSTANCE_UUID, "withContextTags")
+    },
+
+    {
+      key: "newTag",
+      icon: "tag",
+      text: "New Tag",
+      onClick: () => functions.setAsActiveTag(NEW_INSTANCE_UUID)
+    }
+  ];
   return (
     <Menu inverted fluid>
       <TagDropdown
@@ -15,24 +31,17 @@ function Controls({ tagMap, functions }) {
           functions.fetchNoteSet(DropdownProps.value)
         }
       />
-      <Menu.Item>
-        <Button
-          positive
-          onClick={() => functions.setAsActiveTag(NEW_INSTANCE_UUID)}
-        >
-          <Icon name="pencil" />
-          New Tag
+      <Button.Group color="green">
+        <Button onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}>
+          New Note
         </Button>
-      </Menu.Item>
-      <Menu.Item>
-        <Button
-          positive
-          onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}
-        >
-          <Icon name="pencil" />
-          New note
-        </Button>
-      </Menu.Item>
+        <Dropdown
+          className="button icon"
+          floating
+          options={otherNewOptions}
+          trigger={<React.Fragment />}
+        />
+      </Button.Group>
     </Menu>
   );
 }
