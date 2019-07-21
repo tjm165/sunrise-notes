@@ -21,23 +21,19 @@ export default class Desktop extends Component {
   render() {
     const { children, fixed, activeItem } = this.props;
     const {} = this.state;
-    const height = this.props.heading ? 700 : 0;
+    const minHeight = this.props.heading ? 700 : 0;
 
     return (
-      <Responsive
-        getWidth={getWidth}
-        minWidth={Responsive.onlyTablet.minWidth}
-        className="gradient"
-      >
+      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
         <Visibility
           once={false}
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
+          className="gradient"
+          style={{ minHeight }}
         >
-          <Segment textAlign="center" style={{ minHeight: height }} vertical>
-            <NavBar fixed={fixed} fixed={fixed} activeItem={activeItem} />
-            {this.props.heading}
-          </Segment>
+          <NavBar fixed={fixed} fixed={fixed} activeItem={activeItem} />
+          {this.props.heading}
         </Visibility>
         <Segment
           style={{ padding: "8em 0em", backgroundColor: "white" }}

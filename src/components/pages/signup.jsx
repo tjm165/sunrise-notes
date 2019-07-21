@@ -48,38 +48,40 @@ class Signup extends Component {
   }
 
   render() {
-    const signupPassed = this.state.signupPassed;
+    const { signupPassed, email, password, confirmPassword } = this.state;
+    const passwordError =
+      password.length === 0 || password === confirmPassword
+        ? false
+        : { content: "Passwords do not match" };
 
     return (
       <Desktop hideFooter activeItem="Signup">
         {!signupPassed ? (
           <>
-            <Header as="h2">We're really excited for you!</Header>
+            <Header as="h2">We're really excited that you're joining!</Header>
             <Form>
               <Form.Input
                 label="Email"
                 placeholder="Email"
-                value={this.state.email}
+                value={email}
                 onChange={event => this.setEmail(event.target.value)}
               />
               <Form.Input
                 label="Password"
                 type="password"
                 placeholder="Password"
-                value={this.state.password}
+                value={password}
                 onChange={event => this.setPassword(event.target.value)}
               />
-              Password rules:
               <Form.Input
+                error={passwordError}
                 label="Confirm password"
                 type="password"
                 placeholder="Confirm password"
-                value={this.state.confirmPassword}
+                value={confirmPassword}
                 onChange={event => this.setConfirmPassword(event.target.value)}
               />
-              {this.state.password === this.state.confirmPassword
-                ? "passwords match"
-                : "passwords do not match"}
+
               <Button positive onClick={e => this.handleSubmit(e)}>
                 Register
               </Button>
@@ -88,7 +90,7 @@ class Signup extends Component {
         ) : (
           <div>
             <Header as="h1">Thank you for chosing Sunrise Notes!</Header>A
-            verification link has been sent to {this.state.email}
+            verification link has been sent to {email}
             <br />
             Please click the link to finish the registration process!
           </div>
