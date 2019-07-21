@@ -7,11 +7,12 @@ import {
   postNote,
   deleteNote,
   postTag,
-  deleteTag
-} from "../../API";
-import Note from "../../objects/Note";
-import { NEW_INSTANCE_UUID, NO_INSTANCE_UUID } from "../../API";
-import Tag from "../../objects/Tag";
+  deleteTag,
+  NEW_INSTANCE_UUID,
+  NO_INSTANCE_UUID
+} from "../../../API";
+import Note from "../../../objects/Note";
+import Tag from "../../../objects/Tag";
 
 class SmartDashboard extends Component {
   constructor() {

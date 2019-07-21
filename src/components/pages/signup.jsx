@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
 import { Form, Button, Header } from "semantic-ui-react";
+import Desktop from "../implementations/Layout/Desktop";
 
 class Signup extends Component {
   constructor() {
@@ -50,21 +51,21 @@ class Signup extends Component {
     const signupPassed = this.state.signupPassed;
 
     return (
-      <>
+      <Desktop hideFooter activeItem="Signup">
         {!signupPassed ? (
           <>
-            <Header as="h2">Register</Header>
+            <Header as="h2">We're really excited for you!</Header>
             <Form>
               <Form.Input
                 label="Email"
-                placeholder="email"
+                placeholder="Email"
                 value={this.state.email}
                 onChange={event => this.setEmail(event.target.value)}
               />
               <Form.Input
-                label="Create a Password"
+                label="Password"
                 type="password"
-                placeholder="Create a Password"
+                placeholder="Password"
                 value={this.state.password}
                 onChange={event => this.setPassword(event.target.value)}
               />
@@ -79,7 +80,9 @@ class Signup extends Component {
               {this.state.password === this.state.confirmPassword
                 ? "passwords match"
                 : "passwords do not match"}
-              <Button onClick={e => this.handleSubmit(e)}>Register</Button>
+              <Button positive onClick={e => this.handleSubmit(e)}>
+                Register
+              </Button>
             </Form>
           </>
         ) : (
@@ -90,7 +93,7 @@ class Signup extends Component {
             Please click the link to finish the registration process!
           </div>
         )}
-      </>
+      </Desktop>
     );
   }
 }

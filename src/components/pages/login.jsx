@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { signin } from "../../API";
 import { Form, Button, Header } from "semantic-ui-react";
+import { signin } from "../../API";
+import Desktop from "../implementations/Layout/Desktop";
 import { withRouter } from "react-router-dom";
 
 const Login = props => {
@@ -24,7 +25,7 @@ const Login = props => {
   };
 
   return (
-    <>
+    <Desktop hideFooter activeItem="Login">
       <Header as="h2">Sign in</Header>
       {error && <Header as="h4">{error}</Header>}
 
@@ -42,9 +43,11 @@ const Login = props => {
           value={password}
           onChange={event => setPassword(event.target.value)}
         />
-        <Button onClick={e => handleSubmit(e)}>Sign in</Button>
+        <Button positive onClick={e => handleSubmit(e)}>
+          Sign in
+        </Button>
       </Form>
-    </>
+    </Desktop>
   );
 };
 
