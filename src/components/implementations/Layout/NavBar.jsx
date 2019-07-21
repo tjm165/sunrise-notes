@@ -9,6 +9,7 @@ function NavBar({ fixed, activeItem, history }) {
       fixed={fixed ? "top" : null}
       pointing={!fixed}
       secondary={!fixed}
+      className="navBar"
       size="large"
     >
       <Container>

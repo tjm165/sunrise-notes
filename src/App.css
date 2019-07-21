@@ -10,3 +10,7 @@
     rgba(255, 20, 147, 1) 100%
   );
 }
+
+.navBar {
+  border-bottom: 0px solid rgba(34, 36, 38, 0.15) !important;
+}
