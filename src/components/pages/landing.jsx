@@ -35,6 +35,34 @@ const LandingPageLayout = () => (
       headerText="Auto-Colored Notes"
       text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
     />
+    <Paragraph
+      headerText="Auto-Colored Notes"
+      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
+    />
+    <Paragraph
+      headerText="Auto-Colored Notes"
+      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
+    />
+    <Paragraph
+      headerText="Auto-Colored Notes"
+      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
+    />
+    <Paragraph
+      headerText="Auto-Colored Notes"
+      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
+    />
+    <Paragraph
+      headerText="Auto-Colored Notes"
+      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
+    />
+    <Paragraph
+      headerText="Auto-Colored Notes"
+      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
+    />
+    <Paragraph
+      headerText="Auto-Colored Notes"
+      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
+    />
   </Desktop>
 );
 export default LandingPageLayout;

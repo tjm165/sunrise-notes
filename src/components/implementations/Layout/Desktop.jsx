@@ -19,21 +19,25 @@ export default class Desktop extends Component {
   showFixedMenu = () => this.setState({ fixed: true });
 
   render() {
-    const { children, fixed, activeItem } = this.props;
-    const {} = this.state;
+    const { children, activeItem } = this.props;
+    const { fixed } = this.state;
     const minHeight = this.props.heading ? 700 : 0;
 
     return (
-      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
+      <Responsive
+        getWidth={getWidth}
+        minWidth={Responsive.onlyTablet.minWidth}
+        className="gradient"
+      >
         <Visibility
           once={false}
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
-          className="gradient"
-          style={{ minHeight }}
         >
-          <NavBar fixed={fixed} fixed={fixed} activeItem={activeItem} />
-          {this.props.heading}
+          <Segment textAlign="center" style={{ minHeight }} vertical>
+            <NavBar fixed={fixed} activeItem={activeItem} />
+            {this.props.heading}
+          </Segment>
         </Visibility>
         <Segment
           style={{ padding: "8em 0em", backgroundColor: "white" }}
