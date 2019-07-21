@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Dropdown, Header, Icon } from "semantic-ui-react";
+import { Dropdown, Header, Icon, Segment } from "semantic-ui-react";
 import TagSegment from "./TagSegment";
 
 export class TagDropdown extends Component {
@@ -18,8 +18,12 @@ export class TagDropdown extends Component {
         rgb: rgb,
         content: (
           <Header size="tiny">
-            <Icon name="write" onClick={() => setAsActiveTag(key)} />
             <TagSegment text={text} rgb={rgb} />
+
+            <Icon
+              name="ellipsis vertical"
+              onClick={() => setAsActiveTag(key)}
+            />
           </Header>
         )
       };
