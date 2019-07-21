@@ -19,8 +19,9 @@ export default class Desktop extends Component {
   showFixedMenu = () => this.setState({ fixed: true });
 
   render() {
-    const { children } = this.props;
-    const { fixed } = this.state;
+    const { children, fixed, activeItem } = this.props;
+    const {} = this.state;
+    const height = this.props.heading ? 700 : 0;
 
     return (
       <Responsive
@@ -33,13 +34,9 @@ export default class Desktop extends Component {
           onBottomPassed={this.showFixedMenu}
           onBottomPassedReverse={this.hideFixedMenu}
         >
-          <Segment
-            textAlign="center"
-            style={{ minHeight: 700, padding: "1em 0em" }}
-            vertical
-          >
-            <NavBar fixed={fixed} />
-            {this.props.heading || ""}
+          <Segment textAlign="center" style={{ minHeight: height }} vertical>
+            <NavBar fixed={fixed} fixed={fixed} activeItem={activeItem} />
+            {this.props.heading}
           </Segment>
         </Visibility>
         <Segment
@@ -51,7 +48,7 @@ export default class Desktop extends Component {
           </Container>
         </Segment>
 
-        <Footer />
+        {this.props.hideFooter || <Footer />}
       </Responsive>
     );
   }

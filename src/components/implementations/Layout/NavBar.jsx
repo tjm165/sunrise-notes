@@ -1,8 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+
 import { Button, Container, Menu } from "semantic-ui-react";
 
-export default function NavBar({ fixed, hideSignIn, hideLogin }) {
+function NavBar({ fixed, activeItem, history }) {
   return (
     <Menu
       fixed={fixed ? "top" : null}
@@ -11,35 +12,48 @@ export default function NavBar({ fixed, hideSignIn, hideLogin }) {
       size="large"
     >
       <Container>
-        <Menu.Item as="a" active>
+        <Menu.Item
+          as="a"
+          active={activeItem === "Home"}
+          onClick={() => history.push("/")}
+        >
           Home
         </Menu.Item>
-        <Menu.Item as="a">Features</Menu.Item>
-        <Menu.Item as="a">Contribute</Menu.Item>
-        <Menu.Item as="a">About</Menu.Item>
+        <Menu.Item as="a" active={activeItem === "Features"}>
+          Features
+        </Menu.Item>
+        <Menu.Item as="a" active={activeItem === "Contribute"}>
+          Contribute
+        </Menu.Item>
+        <Menu.Item as="a" active={activeItem === "About"}>
+          About
+        </Menu.Item>
         <Menu.Item position="right">
-          {hideLogin || (
-            <Link to="/login">
-              <Button as="a" inverted={!fixed}>
-                Sign in
-              </Button>
-            </Link>
+          {activeItem === "Login" || (
+            <Button
+              as="a"
+              inverted={!fixed}
+              onClick={() => history.push("/login")}
+            >
+              Sign in
+            </Button>
           )}
 
-          {hideSignIn || (
-            <Link to="/signup">
-              <Button
-                as="a"
-                inverted={!fixed}
-                primary={fixed}
-                style={{ marginLeft: "0.5em" }}
-              >
-                Sign Up
-              </Button>
-            </Link>
+          {activeItem === "Signup" || (
+            <Button
+              as="a"
+              inverted={!fixed}
+              primary={fixed}
+              style={{ marginLeft: "0.5em" }}
+              onClick={() => history.push("/signup")}
+            >
+              Sign Up
+            </Button>
           )}
         </Menu.Item>
       </Container>
     </Menu>
   );
 }
+
+export default withRouter(NavBar);

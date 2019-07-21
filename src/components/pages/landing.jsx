@@ -1,15 +1,15 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Container, Header, Icon } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import Heading from "../implementations/Layout/Heading";
 import Desktop from "../implementations/Layout/Desktop";
 import Divider from "../implementations/Layout/Divider";
 import Paragraph from "../implementations/Layout/Paragraph";
 
-const HomepageHeading = ({ mobile }) => (
+const HomepageHeading = () => (
   <Heading
-    h1="You've Never Seen Note-Taking Like This Before."
-    h2="Created by students for students"
+    h1="Created by students for students"
+    h2="You've never used note-taking like this before."
     misc={
       <Link to="/signup">
         <Button primary size="huge">
@@ -22,14 +22,8 @@ const HomepageHeading = ({ mobile }) => (
 );
 
 const LandingPageLayout = () => (
-  <Desktop heading={<HomepageHeading />}>
-    <Paragraph
-      headerText="Breaking The Grid, Grabs Your Attention"
-      text="Instead of focusing on content creation and hard work, we have learned
-        how to master the art of doing nothing by providing massive amounts of
-        whitespace and generic content that can seem massive, monolithic and
-        worth your attention."
-    >
+  <Desktop activeItem="Home" heading={<HomepageHeading />}>
+    <Paragraph headerText="Multi-Tag Search" text="It's really cool!">
       <Button as="a" size="large">
         Read More
       </Button>
@@ -38,15 +32,9 @@ const LandingPageLayout = () => (
     <Divider />
 
     <Paragraph
-      headerText="Did We Tell You About Our Bananas?"
-      text="Yes I know you probably disregarded the earlier boasts as non-sequitur
-        filler content, but it's really true. It took years of gene splicing and
-        combinatory DNA research, but our bananas can really dance."
-    >
-      <Button as="a" size="large">
-        Read More
-      </Button>
-    </Paragraph>
+      headerText="Auto-Colored Notes"
+      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
+    />
   </Desktop>
 );
 export default LandingPageLayout;
