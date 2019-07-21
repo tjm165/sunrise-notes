@@ -80,7 +80,9 @@ class Signup extends Component {
               {this.state.password === this.state.confirmPassword
                 ? "passwords match"
                 : "passwords do not match"}
-              <Button onClick={e => this.handleSubmit(e)}>Register</Button>
+              <Button positive onClick={e => this.handleSubmit(e)}>
+                Register
+              </Button>
             </Form>
           </>
         ) : (

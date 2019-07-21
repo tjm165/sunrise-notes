@@ -43,7 +43,9 @@ const Login = props => {
           value={password}
           onChange={event => setPassword(event.target.value)}
         />
-        <Button onClick={e => handleSubmit(e)}>Sign in</Button>
+        <Button positive onClick={e => handleSubmit(e)}>
+          Sign in
+        </Button>
       </Form>
     </Desktop>
   );
