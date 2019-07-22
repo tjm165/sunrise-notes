@@ -3,7 +3,7 @@ import { Menu, Button, Dropdown } from "semantic-ui-react";
 import { TagDropdown } from "../../implementations/Tag/TagDropdown";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
-function Controls({ tagMap, functions }) {
+function ControlMenu({ tagMap, functions }) {
   const otherNewOptions = [
     {
       key: "newContextNote",
@@ -21,7 +21,7 @@ function Controls({ tagMap, functions }) {
     }
   ];
   return (
-    <Menu inverted fluid>
+    <Menu vertical>
       <TagDropdown
         text="Use me to select tags..."
         tagMap={tagMap}
@@ -46,4 +46,4 @@ function Controls({ tagMap, functions }) {
   );
 }
 
-export default Controls;
+export default ControlMenu;

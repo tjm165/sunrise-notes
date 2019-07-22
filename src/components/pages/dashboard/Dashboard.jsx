@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import Controls from "./Controls";
 import { Button, Container, Modal, Segment } from "semantic-ui-react";
+import ControlBar from "./ControlBar";
+import ControlMenu from "./ControlMenu";
 import TagEditor from "../../implementations/Tag/TagEditor";
 import NoteEditor from "../../implementations/Note/NoteEditor";
 import NoteMenu from "../../implementations/Note/NoteMenu";
@@ -18,7 +19,8 @@ function Dashboard({ state, functions }) {
 
   return (
     <>
-      <Controls tagMap={tagMap} functions={functions} />
+      <ControlBar />
+      <ControlMenu tagMap={tagMap} functions={functions} />
 
       <Container>
         {activeNote ? (
