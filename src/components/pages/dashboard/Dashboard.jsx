@@ -22,11 +22,11 @@ function Dashboard({ state, functions }) {
       <TopPannel />
 
       <Grid>
-        <Grid.Column width={4}>
+        <Grid.Column width={3}>
           <VerticalPannel tagMap={tagMap} functions={functions} />
         </Grid.Column>
 
-        <Grid.Column width={12}>
+        <Grid.Column width={13}>
           {activeNote ? (
             <Segment stacked={notes.size > 0}>
               <Button
