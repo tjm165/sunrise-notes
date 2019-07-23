@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import Controls from "./Controls";
-import { Button, Container, Modal, Segment } from "semantic-ui-react";
+import { Button, Container, Modal, Segment, Grid } from "semantic-ui-react";
+import TopPannel from "./TopPannel";
+import VerticalPannel from "./VerticalPannel";
 import TagEditor from "../../implementations/Tag/TagEditor";
 import NoteEditor from "../../implementations/Note/NoteEditor";
 import NoteMenu from "../../implementations/Note/NoteMenu";
@@ -18,32 +19,39 @@ function Dashboard({ state, functions }) {
 
   return (
     <>
-      <Controls tagMap={tagMap} functions={functions} />
+      <TopPannel />
 
-      <Container>
-        {activeNote ? (
-          <Segment stacked={notes.size > 0}>
-            <Button onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}>
-              back
-            </Button>
-            <NoteEditor
-              key={JSON.stringify(state.activeNote)}
+      <Grid>
+        <Grid.Column width={3}>
+          <VerticalPannel tagMap={tagMap} functions={functions} />
+        </Grid.Column>
+
+        <Grid.Column width={13}>
+          {activeNote ? (
+            <Segment stacked={notes.size > 0}>
+              <Button
+                onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
+              >
+                back
+              </Button>
+              <NoteEditor
+                key={JSON.stringify(state.activeNote)}
+                tagMap={tagMap}
+                note={activeNote}
+                onSubmit={functions.submitNote}
+                onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
+                setAsActiveTag={functions.setAsActiveTag}
+              />
+            </Segment>
+          ) : (
+            <NoteMenu
+              functions={functions}
+              notes={Array.from(notes)}
               tagMap={tagMap}
-              note={activeNote}
-              onSubmit={functions.submitNote}
-              onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
-              setAsActiveTag={functions.setAsActiveTag}
             />
-          </Segment>
-        ) : (
-          <NoteMenu
-            functions={functions}
-            notes={Array.from(notes)}
-            tagMap={tagMap}
-          />
-        )}
-      </Container>
-
+          )}
+        </Grid.Column>
+      </Grid>
       {activeTag && (
         <Modal
           open={activeTag}
