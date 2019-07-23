@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Button, Container, Modal, Segment } from "semantic-ui-react";
+import { Button, Container, Modal, Segment, Grid } from "semantic-ui-react";
 import TopPannel from "./TopPannel";
 import VerticalPannel from "./VerticalPannel";
 import TagEditor from "../../implementations/Tag/TagEditor";
@@ -20,32 +20,38 @@ function Dashboard({ state, functions }) {
   return (
     <>
       <TopPannel />
-      <VerticalPannel tagMap={tagMap} functions={functions} />
 
-      <Container>
-        {activeNote ? (
-          <Segment stacked={notes.size > 0}>
-            <Button onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}>
-              back
-            </Button>
-            <NoteEditor
-              key={JSON.stringify(state.activeNote)}
+      <Grid>
+        <Grid.Column width={4}>
+          <VerticalPannel tagMap={tagMap} functions={functions} />
+        </Grid.Column>
+
+        <Grid.Column width={12}>
+          {activeNote ? (
+            <Segment stacked={notes.size > 0}>
+              <Button
+                onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
+              >
+                back
+              </Button>
+              <NoteEditor
+                key={JSON.stringify(state.activeNote)}
+                tagMap={tagMap}
+                note={activeNote}
+                onSubmit={functions.submitNote}
+                onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
+                setAsActiveTag={functions.setAsActiveTag}
+              />
+            </Segment>
+          ) : (
+            <NoteMenu
+              functions={functions}
+              notes={Array.from(notes)}
               tagMap={tagMap}
-              note={activeNote}
-              onSubmit={functions.submitNote}
-              onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
-              setAsActiveTag={functions.setAsActiveTag}
             />
-          </Segment>
-        ) : (
-          <NoteMenu
-            functions={functions}
-            notes={Array.from(notes)}
-            tagMap={tagMap}
-          />
-        )}
-      </Container>
-
+          )}
+        </Grid.Column>
+      </Grid>
       {activeTag && (
         <Modal
           open={activeTag}

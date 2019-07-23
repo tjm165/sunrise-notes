@@ -9,24 +9,8 @@ export default function VerticalPannel({ tagMap, functions }) {
 
   const [active, setActive] = useState(ALL_NOTES);
 
-  const otherNewOptions = [
-    {
-      key: "newContextNote",
-      icon: "sticky note",
-      text: "New Note with Tags",
-      onClick: () =>
-        functions.setAsActiveNote(NEW_INSTANCE_UUID, "withContextTags")
-    },
-
-    {
-      key: "newTag",
-      icon: "tag",
-      text: "New Tag",
-      onClick: () => functions.setAsActiveTag(NEW_INSTANCE_UUID)
-    }
-  ];
   return (
-    <Menu pointing secondary vertical>
+    <Menu pointing secondary vertical fluid>
       <Menu.Item
         active={active === ALL_NOTES}
         onClick={() => setActive(ALL_NOTES)}
@@ -41,9 +25,8 @@ export default function VerticalPannel({ tagMap, functions }) {
       >
         <Header as="h4">Must have</Header>
         <TagDropdown
-          text="Notes must have these tags"
+          placeholder="Notes must have these tags"
           tagMap={tagMap}
-          item
           setAsActiveTag={functions.setAsActiveTag}
           onChange={(e, DropdownProps) =>
             functions.fetchNoteSet(DropdownProps.value)
@@ -54,13 +37,29 @@ export default function VerticalPannel({ tagMap, functions }) {
           placeholder="Notes can have at least one of these tags"
           fluid
           selection
+          multiple
+          search
         />
       </Menu.Item>
     </Menu>
   );
 }
-{
-  /* <Button onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}>
-          New Note
-        </Button> */
-}
+
+// const otherNewOptions = [
+//   {
+//     key: "newContextNote",
+//     icon: "sticky note",
+//     text: "New Note with Tags",
+//     onClick: () =>
+//       functions.setAsActiveNote(NEW_INSTANCE_UUID, "withContextTags")
+//   },
+//   {
+//     key: "newTag",
+//     icon: "tag",
+//     text: "New Tag",
+//     onClick: () => functions.setAsActiveTag(NEW_INSTANCE_UUID)
+//   }
+// ];
+// <Button onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}>
+//        New Note
+//      </Button>
