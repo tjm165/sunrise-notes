@@ -26,6 +26,7 @@ const NoteEditor = ({ note, tagMap, onSubmit, onDelete, setAsActiveTag }) => {
       />
       <TagDropdown
         placeholder="Add tags to your note"
+        fluid
         tagMap={tagMap}
         defaultValue={tagUUIDs}
         onChange={(e, DropdownProps) => setTagUUIDs(DropdownProps.value)}

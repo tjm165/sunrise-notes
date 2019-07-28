@@ -60,6 +60,7 @@ function Dashboard({ state, functions }) {
                   Search for notes that have all of the following tags:{" "}
                 </Header>
                 <TagDropdown
+                  defaultValue={state.context.tags}
                   placeholder="Notes must have these tags"
                   tagMap={tagMap}
                   fluid
