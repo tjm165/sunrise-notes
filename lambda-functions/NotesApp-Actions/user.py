@@ -87,15 +87,20 @@ class User():
     def delete_tag(self, uuid):
         self.is_tag_secure(uuid)
         self.tags_table.delete_item(uuid)
+        self.get_secure_tag_uuids().remove(uuid)
         for note in self.get_all_notes():
             if uuid in note['tagUUIDs']:
                 note['tagUUIDs'].remove(uuid)
             self.notes_table.put_item(note)
+        if len(self.get_secure_tag_uuids()) == 0:
+            del self.__secure_user_object['tagUUIDs']
 
     def delete_note(self, uuid):
         self.is_note_secure(uuid)
         self.notes_table.delete_item(uuid)
-        self.get_secure_note_uuids().removes(uuid)
+        self.get_secure_note_uuids().remove(uuid)
+        if len(self.get_secure_note_uuids()) == 0:
+            del self.__secure_user_object['noteUUIDs']
 
     # returns a set of colored notes
     # This is the only function that is O(Junctions)
@@ -110,6 +115,6 @@ class User():
                         noteset[note['UUID']]['rgb'] = mix_colors(
                             noteset[note['UUID']]['rgb'], tag_rgb)
                     else:
-                        noteset[note['UUID']] = self.get_note(note['UUID'])
+                        noteset[note['UUID']] = note
                         noteset[note['UUID']]['rgb'] = tag_rgb
         return noteset

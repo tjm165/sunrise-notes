@@ -36,18 +36,14 @@ function NoteCard({ note, onEdit, onDelete }) {
           inverted
           position="bottom left"
           content="Edit"
-          trigger={<Icon name="pencil" />}
+          trigger={<Icon link name="pencil" onClick={() => onEdit()} />}
         />
         <Popup
           size="mini"
           inverted
           position="bottom left"
           content="Delete"
-          trigger={
-            <Button icon="trash" onClick={() => onDelete}>
-              {" "}
-            </Button>
-          }
+          trigger={<Icon link name="trash" onClick={() => onDelete()} />}
         />
       </Card.Content>
     </Card>

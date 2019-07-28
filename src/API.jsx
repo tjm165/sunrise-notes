@@ -51,14 +51,16 @@ export function fetchNote(UUID) {
 }
 
 export function deleteNote(UUID) {
-  const ask =
-    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note?UUID=" +
-    UUID;
-
-  return DELETE(ask);
+  return DELETE(`note`, `?UUID=${UUID}`).then(response => {
+    return response;
+  });
 }
 
-export function deleteTag(UUID) {}
+export function deleteTag(UUID) {
+  return DELETE(`tag`, `?UUID=${UUID}`).then(response => {
+    return response;
+  });
+}
 
 export function postNote(noteObject, tagsToInsert, tagsToRemove) {
   return POST(`note`, { noteObject })
@@ -94,6 +96,28 @@ function GET(resource, querystring = null) {
   }).then(response => response.json()); // parses JSON response into native Javascript objects
 }
 
+function DELETE(resource, querystring = null) {
+  let ask = `${api}/${resource}/${querystring}`;
+
+  // Default options are marked with *
+  if (querystring === null) {
+    ask = `${api}/${resource}`;
+  }
+
+  return fetch(ask, {
+    method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, cors, *same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getCookie("idToken")
+    },
+    redirect: "follow", // manual, *follow, error
+    referrer: "no-referrer" // no-referrer, *client
+  }).then(response => response.json()); // parses JSON response into native Javascript objects
+}
+
 function POST(resource, data = {}) {
   const ask = `${api}/${resource}`;
 
@@ -111,10 +135,4 @@ function POST(resource, data = {}) {
     referrer: "no-referrer", // no-referrer, *client
     body: JSON.stringify(data) // body data type must match "Content-Type" header
   }).then(response => response.json()); // parses JSON response into native Javascript objects
-}
-
-function DELETE(url = "", params = "") {
-  return fetch(url + params, { method: "DELETE" }).then(response =>
-    response.json()
-  );
 }
