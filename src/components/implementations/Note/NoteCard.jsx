@@ -4,7 +4,6 @@ import { Icon, Card, Popup, Grid } from "semantic-ui-react";
 function NoteCard({ note, onClick }) {
   const title = note.title;
   const content = note.content;
-  const isPinned = note.isPinned;
   const rgb = note.rgb;
   const rgbstring = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2`;
   const [shouldHideOptions, hideOptions] = useState(true);
@@ -23,17 +22,7 @@ function NoteCard({ note, onClick }) {
               {title}
             </Grid.Column>
 
-            <Grid.Column floated="right" width={3}>
-              <Popup
-                size="mini"
-                inverted
-                position="top left"
-                content={isPinned ? "Unpin from favorites" : "Pin to favorites"}
-                trigger={
-                  <Icon color={isPinned ? "black" : "grey"} name="pin" />
-                }
-              />
-            </Grid.Column>
+            <Grid.Column floated="right" width={3} />
           </Grid>
         </Card.Header>
 
@@ -47,13 +36,6 @@ function NoteCard({ note, onClick }) {
           position="bottom left"
           content="Edit"
           trigger={<Icon name="pencil" />}
-        />
-        <Popup
-          size="mini"
-          inverted
-          position="bottom left"
-          content="Duplicate"
-          trigger={<Icon name="copy" />}
         />
         <Popup
           size="mini"

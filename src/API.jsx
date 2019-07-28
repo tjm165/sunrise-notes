@@ -1,5 +1,3 @@
-import Note from "./objects/Note";
-import Tag from "./objects/Tag";
 import { Auth } from "aws-amplify";
 import config from "./config";
 export const NEW_INSTANCE_UUID = -1;
@@ -24,7 +22,7 @@ export function fetchNoteSet(baseTagUUIDs, requiredTagUUIDs, optionalTagUUIDs) {
     `?baseTagUUIDs=${baseTagUUIDs}&requiredTagUUIDs=${requiredTagUUIDs}&optionalTagUUIDs=${optionalTagUUIDs}`
   ).then(notes => {
     Object.entries(notes).forEach(([key, note]) => {
-      noteset.set(key, Note.deserialize(note));
+      noteset.set(key, note);
     });
     return noteset;
   });
@@ -39,16 +37,16 @@ export function fetchUserTags() {
   var tagMap = new Map();
 
   return GET(`tags`).then(json => {
-    json.forEach(json => {
-      tagMap.set(json["UUID"], Tag.deserialize(json));
+    json.forEach(tag => {
+      tagMap.set(tag["UUID"], tag);
     });
     return tagMap;
   });
 }
 
 export function fetchNote(UUID) {
-  return GET(`note`, `?UUID=${UUID}`).then(json => {
-    return Note.deserialize(json);
+  return GET(`note`, `?UUID=${UUID}`).then(note => {
+    return note;
   });
 }
 

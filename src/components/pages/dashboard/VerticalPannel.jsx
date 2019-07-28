@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Menu, Header, Divider, Dropdown } from "semantic-ui-react";
-import { TagDropdown } from "../../implementations/Tag/TagDropdown";
+import { Menu, Header, Divider, Button } from "semantic-ui-react";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
 export default function VerticalPannel({ tagMap, functions }) {
@@ -11,35 +10,13 @@ export default function VerticalPannel({ tagMap, functions }) {
 
   return (
     <Menu pointing secondary vertical fluid>
-      <Menu.Item
-        active={active === ALL_NOTES}
-        onClick={() => setActive(ALL_NOTES)}
-      >
-        <Header as="h4">All notes</Header>
+      <Menu.Item>
+        <Button icon="plus" />
       </Menu.Item>
-      <Divider />
-
-      <Menu.Item
-        active={active === TAG_SELECTORS}
-        onClick={() => setActive(TAG_SELECTORS)}
-      >
-        <Header as="h4">Must have</Header>
-        <TagDropdown
-          placeholder="Notes must have these tags"
-          tagMap={tagMap}
-          setAsActiveTag={functions.setAsActiveTag}
-          onChange={(e, DropdownProps) =>
-            functions.fetchNoteSet(DropdownProps.value)
-          }
-        />
-        <Header as="h4">Can have</Header>
-        <Dropdown
-          placeholder="Notes can have at least one of these tags"
-          fluid
-          selection
-          multiple
-          search
-        />
+      <Menu.Item>
+        <Button onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}>
+          Create Note
+        </Button>
       </Menu.Item>
     </Menu>
   );
