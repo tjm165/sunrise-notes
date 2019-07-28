@@ -72,7 +72,7 @@ class SmartDashboard extends Component {
     ) {
       const note = { UUID: noteUUID };
       note.tagUUIDs = this.state.context.tags;
-      this.setState({ activeNote: note });
+      this.setState({ activeNote: note, tagUUIDs: this.state.tags });
     } else {
       fetchNote(noteUUID).then(note => {
         this.setState({ activeNote: note });
@@ -85,7 +85,9 @@ class SmartDashboard extends Component {
     if (tagUUID === NO_INSTANCE_UUID) {
       this.setState({ activeTag: NO_INSTANCE_UUID });
     } else if (tagUUID === NEW_INSTANCE_UUID) {
-      this.setState({ activeTag: { UUID: tagUUID } });
+      this.setState({
+        activeTag: { UUID: tagUUID, rgb: { r: 255, g: 105, b: 0 } }
+      });
     } else {
       const tag = this.state.tagMap.get(tagUUID);
       this.setState({ activeTag: tag }); //get the tag here
