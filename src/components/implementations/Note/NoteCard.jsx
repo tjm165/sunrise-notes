@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Icon, Card, Popup, Grid } from "semantic-ui-react";
+import { Icon, Card, Popup, Grid, Button } from "semantic-ui-react";
 
-function NoteCard({ note, onClick }) {
+function NoteCard({ note, onEdit, onDelete }) {
   const title = note.title;
   const content = note.content;
   const rgb = note.rgb;
@@ -10,7 +10,6 @@ function NoteCard({ note, onClick }) {
 
   return (
     <Card
-      onClick={onClick}
       style={{ backgroundColor: rgbstring }}
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}
@@ -28,7 +27,9 @@ function NoteCard({ note, onClick }) {
 
         <Card.Description>{content}</Card.Description>
       </Card.Content>
-
+      <Card.Content extra hidden={!shouldHideOptions}>
+        {" "}
+      </Card.Content>
       <Card.Content extra hidden={shouldHideOptions}>
         <Popup
           size="mini"
@@ -42,7 +43,11 @@ function NoteCard({ note, onClick }) {
           inverted
           position="bottom left"
           content="Delete"
-          trigger={<Icon name="trash" />}
+          trigger={
+            <Button icon="trash" onClick={() => onDelete}>
+              {" "}
+            </Button>
+          }
         />
       </Card.Content>
     </Card>
