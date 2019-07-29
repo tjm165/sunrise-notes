@@ -30,7 +30,7 @@ def lambda_handler(event, context):
 
     if (action == "tag-DELETE"):
         response = user.delete_tag(querystring['UUID'])
-        return user.save_permissions()
+        user.save_permissions()
         return response
 
     if (action == "note-DELETE"):

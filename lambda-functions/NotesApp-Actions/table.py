@@ -13,7 +13,13 @@ class Table():
         return self.table.get_item(Key={'UUID': UUID})['Item']
 
     def put_item(self, item):
-        return self.table.put_item(Item=item)
+        clone = item.copy()
+
+        for key, val in item.items():
+            if val == set():
+                del clone[key]
+
+        return self.table.put_item(Item=clone)
 
     def delete_item(self, UUID):
         return self.table.delete_item(Key={'UUID': UUID})

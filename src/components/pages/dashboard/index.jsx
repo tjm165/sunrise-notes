@@ -105,10 +105,10 @@ class SmartDashboard extends Component {
   }
 
   deleteTag(tagUUID) {
-    deleteTag(tagUUID);
     const tagMap = this.state.tagMap;
     tagMap.delete(tagUUID);
     this.setState({ tagMap: tagMap });
+    deleteTag(tagUUID);
   }
 
   deleteNote(noteUUID) {

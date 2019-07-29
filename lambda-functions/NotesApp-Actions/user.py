@@ -92,15 +92,11 @@ class User():
             if uuid in note['tagUUIDs']:
                 note['tagUUIDs'].remove(uuid)
             self.notes_table.put_item(note)
-        if len(self.get_secure_tag_uuids()) == 0:
-            del self.__secure_user_object['tagUUIDs']
 
     def delete_note(self, uuid):
         self.is_note_secure(uuid)
         self.notes_table.delete_item(uuid)
         self.get_secure_note_uuids().remove(uuid)
-        if len(self.get_secure_note_uuids()) == 0:
-            del self.__secure_user_object['noteUUIDs']
 
     # returns a set of colored notes
     # This is the only function that is O(Junctions)
