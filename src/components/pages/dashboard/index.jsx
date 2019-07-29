@@ -11,8 +11,6 @@ import {
   NEW_INSTANCE_UUID,
   NO_INSTANCE_UUID
 } from "../../../API";
-import Note from "../../../objects/Note";
-import Tag from "../../../objects/Tag";
 
 class SmartDashboard extends Component {
   constructor() {
@@ -66,15 +64,15 @@ class SmartDashboard extends Component {
     if (noteUUID === NO_INSTANCE_UUID) {
       this.setState({ activeNote: NO_INSTANCE_UUID });
     } else if (noteUUID === NEW_INSTANCE_UUID && version === "withNoTags") {
-      const note = new Note();
+      const note = { UUID: noteUUID };
       this.setState({ activeNote: note });
     } else if (
       noteUUID === NEW_INSTANCE_UUID &&
       version === "withContextTags"
     ) {
-      const note = new Note();
+      const note = { UUID: noteUUID };
       note.tagUUIDs = this.state.context.tags;
-      this.setState({ activeNote: note });
+      this.setState({ activeNote: note, tagUUIDs: this.state.tags });
     } else {
       fetchNote(noteUUID).then(note => {
         this.setState({ activeNote: note });
@@ -87,7 +85,9 @@ class SmartDashboard extends Component {
     if (tagUUID === NO_INSTANCE_UUID) {
       this.setState({ activeTag: NO_INSTANCE_UUID });
     } else if (tagUUID === NEW_INSTANCE_UUID) {
-      this.setState({ activeTag: new Tag() });
+      this.setState({
+        activeTag: { UUID: tagUUID, rgb: { r: 255, g: 105, b: 0 } }
+      });
     } else {
       const tag = this.state.tagMap.get(tagUUID);
       this.setState({ activeTag: tag }); //get the tag here
@@ -105,10 +105,10 @@ class SmartDashboard extends Component {
   }
 
   deleteTag(tagUUID) {
-    deleteTag(tagUUID);
     const tagMap = this.state.tagMap;
     tagMap.delete(tagUUID);
     this.setState({ tagMap: tagMap });
+    deleteTag(tagUUID);
   }
 
   deleteNote(noteUUID) {

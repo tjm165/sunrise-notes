@@ -24,9 +24,20 @@ def lambda_handler(event, context):
 
         return user.get_noteset_by_tag_uuids(base_tags, req, opt)
     if (action == "note-GET"):
+        if querystring['UUID'] == "all":
+            return user.get_all_notes()
         return user.get_note(querystring['UUID'])
-    # if(action == "note-DELETE"):
-    #     return Actions.delete_note_by_uuid(querystring['UUID'])
+
+    if (action == "tag-DELETE"):
+        response = user.delete_tag(querystring['UUID'])
+        user.save_permissions()
+        return response
+
+    if (action == "note-DELETE"):
+        response = user.delete_note(querystring['UUID'])
+        user.save_permissions()
+        return response
+
     if (action == "note-POST"):
         response = user.put_note(body['noteObject'])
         user.save_permissions()

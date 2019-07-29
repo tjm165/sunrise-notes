@@ -1,5 +1,3 @@
-import Note from "./objects/Note";
-import Tag from "./objects/Tag";
 import { Auth } from "aws-amplify";
 import config from "./config";
 export const NEW_INSTANCE_UUID = -1;
@@ -24,7 +22,7 @@ export function fetchNoteSet(baseTagUUIDs, requiredTagUUIDs, optionalTagUUIDs) {
     `?baseTagUUIDs=${baseTagUUIDs}&requiredTagUUIDs=${requiredTagUUIDs}&optionalTagUUIDs=${optionalTagUUIDs}`
   ).then(notes => {
     Object.entries(notes).forEach(([key, note]) => {
-      noteset.set(key, Note.deserialize(note));
+      noteset.set(key, note);
     });
     return noteset;
   });
@@ -39,28 +37,30 @@ export function fetchUserTags() {
   var tagMap = new Map();
 
   return GET(`tags`).then(json => {
-    json.forEach(json => {
-      tagMap.set(json["UUID"], Tag.deserialize(json));
+    json.forEach(tag => {
+      tagMap.set(tag["UUID"], tag);
     });
     return tagMap;
   });
 }
 
 export function fetchNote(UUID) {
-  return GET(`note`, `?UUID=${UUID}`).then(json => {
-    return Note.deserialize(json);
+  return GET(`note`, `?UUID=${UUID}`).then(note => {
+    return note;
   });
 }
 
 export function deleteNote(UUID) {
-  const ask =
-    "https://e2y5q3r1l1.execute-api.us-east-2.amazonaws.com/production/note?UUID=" +
-    UUID;
-
-  return DELETE(ask);
+  return DELETE(`note`, `?UUID=${UUID}`).then(response => {
+    return response;
+  });
 }
 
-export function deleteTag(UUID) {}
+export function deleteTag(UUID) {
+  return DELETE(`tag`, `?UUID=${UUID}`).then(response => {
+    return response;
+  });
+}
 
 export function postNote(noteObject, tagsToInsert, tagsToRemove) {
   return POST(`note`, { noteObject })
@@ -96,6 +96,28 @@ function GET(resource, querystring = null) {
   }).then(response => response.json()); // parses JSON response into native Javascript objects
 }
 
+function DELETE(resource, querystring = null) {
+  let ask = `${api}/${resource}/${querystring}`;
+
+  // Default options are marked with *
+  if (querystring === null) {
+    ask = `${api}/${resource}`;
+  }
+
+  return fetch(ask, {
+    method: "DELETE", // *GET, POST, PUT, DELETE, etc.
+    mode: "cors", // no-cors, cors, *same-origin
+    cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
+    credentials: "same-origin", // include, *same-origin, omit
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getCookie("idToken")
+    },
+    redirect: "follow", // manual, *follow, error
+    referrer: "no-referrer" // no-referrer, *client
+  }).then(response => response.json()); // parses JSON response into native Javascript objects
+}
+
 function POST(resource, data = {}) {
   const ask = `${api}/${resource}`;
 
@@ -113,10 +135,4 @@ function POST(resource, data = {}) {
     referrer: "no-referrer", // no-referrer, *client
     body: JSON.stringify(data) // body data type must match "Content-Type" header
   }).then(response => response.json()); // parses JSON response into native Javascript objects
-}
-
-function DELETE(url = "", params = "") {
-  return fetch(url + params, { method: "DELETE" }).then(response =>
-    response.json()
-  );
 }

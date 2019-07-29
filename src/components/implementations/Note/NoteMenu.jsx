@@ -6,7 +6,11 @@ function NoteMenu({ notes, functions }) {
   return (
     <Card.Group>
       {notes.map(([key, note]) => (
-        <NoteCard note={note} onClick={() => functions.setAsActiveNote(key)} />
+        <NoteCard
+          note={note}
+          onEdit={() => functions.setAsActiveNote(key)}
+          onDelete={() => functions.deleteNote(key)}
+        />
       ))}
     </Card.Group>
   );

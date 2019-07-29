@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { Form, TextArea, Button, Label, Icon } from "semantic-ui-react";
 import { NEW_INSTANCE_UUID } from "../../../API";
-import Tag from "../../../objects/Tag";
 import { TwitterPicker } from "react-color";
 
 const TagEditor = ({ tag, onSubmit, onDelete }) => {
   const handleSubmit = event => {
-    onSubmit(
-      new Tag(event.currentTarget.title.value, tag.noteUUIDs, rgb, tag.UUID)
-    );
+    onSubmit({
+      title: event.currentTarget.title.value,
+      rgb: rgb,
+      UUID: tag.UUID
+    });
 
     event.preventDefault();
   };
