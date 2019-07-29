@@ -81,9 +81,7 @@ class User():
 
         return self.notes_table.put_item(note_object)
 
-    # TODO
     # deletes the tag and removes itself from any notes
-
     def delete_tag(self, uuid):
         self.is_tag_secure(uuid)
         self.tags_table.delete_item(uuid)
