@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Button, Icon } from "semantic-ui-react";
+import { Button, Icon, Grid, Header } from "semantic-ui-react";
 import Heading from "../implementations/Layout/Heading";
 import Desktop from "../implementations/Layout/Desktop";
 import Divider from "../implementations/Layout/Divider";
@@ -23,46 +23,26 @@ const HomepageHeading = () => (
 
 const LandingPageLayout = () => (
   <Desktop activeItem="Home" heading={<HomepageHeading />}>
-    <Paragraph headerText="Multi-Tag Search" text="It's really cool!">
-      <Button as="a" size="large">
-        Read More
-      </Button>
+    <Paragraph headerText="How It Works">
+      <Grid columns="equal">
+        <Grid.Column>
+          <Header>Create it</Header>
+        </Grid.Column>
+        <Grid.Column>
+          <Header>Tag it</Header>
+        </Grid.Column>
+        <Grid.Column>
+          <Header>Search it</Header>
+        </Grid.Column>
+      </Grid>
     </Paragraph>
-
     <Divider />
 
-    <Paragraph
-      headerText="Auto-Colored Notes"
-      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
-    />
-    <Paragraph
-      headerText="Auto-Colored Notes"
-      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
-    />
-    <Paragraph
-      headerText="Auto-Colored Notes"
-      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
-    />
-    <Paragraph
-      headerText="Auto-Colored Notes"
-      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
-    />
-    <Paragraph
-      headerText="Auto-Colored Notes"
-      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
-    />
-    <Paragraph
-      headerText="Auto-Colored Notes"
-      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
-    />
-    <Paragraph
-      headerText="Auto-Colored Notes"
-      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
-    />
-    <Paragraph
-      headerText="Auto-Colored Notes"
-      text="t's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolIt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly coolt's reallllly cool"
-    />
+    <Paragraph headerText="Multi-Tag Search" text="It's really cool" />
+    <Divider />
+
+    <Paragraph headerText="Auto-Colored Notes" text="It's super cool" />
+    <Divider />
   </Desktop>
 );
 export default LandingPageLayout;
