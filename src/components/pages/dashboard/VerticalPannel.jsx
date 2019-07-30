@@ -12,17 +12,10 @@ import { NEW_INSTANCE_UUID } from "../../../API";
 export default function VerticalPannel({ tagMap, functions }) {
   const createOptions = [
     {
-      key: "newContextNote",
+      key: "blank note",
       icon: "sticky note",
-      text: "New Note with Tags",
-      onClick: () =>
-        functions.setAsActiveNote(NEW_INSTANCE_UUID, "withContextTags")
-    },
-    {
-      key: "newTag",
-      icon: "tag",
-      text: "New Tag",
-      onClick: () => functions.setAsActiveTag(NEW_INSTANCE_UUID)
+      text: "Create a Blank Note",
+      onClick: () => functions.setAsActiveNote(NEW_INSTANCE_UUID)
     }
   ];
 
@@ -30,7 +23,11 @@ export default function VerticalPannel({ tagMap, functions }) {
     <Menu pointing secondary vertical fluid>
       <Menu.Item>
         <Button.Group color="green">
-          <Button onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}>
+          <Button
+            onClick={() =>
+              functions.setAsActiveNote(NEW_INSTANCE_UUID, "withContextTags")
+            }
+          >
             Create Note
           </Button>
           <Dropdown
@@ -40,6 +37,14 @@ export default function VerticalPannel({ tagMap, functions }) {
             trigger={<React.Fragment />}
           />
         </Button.Group>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          positive
+          onClick={() => functions.setAsActiveTag(NEW_INSTANCE_UUID)}
+        >
+          Create Tag
+        </Button>
       </Menu.Item>
     </Menu>
   );

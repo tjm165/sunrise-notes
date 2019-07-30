@@ -4,7 +4,13 @@ import TagSegment from "./TagSegment";
 
 export class TagDropdown extends Component {
   render() {
-    const { tagMap, defaultValue, setAsActiveTag, ...rest } = this.props;
+    const {
+      tagMap,
+      defaultValue,
+      setAsActiveTag,
+      isLoading,
+      ...rest
+    } = this.props;
     const tagKeys = [...tagMap.keys()];
 
     //the choices
@@ -36,6 +42,7 @@ export class TagDropdown extends Component {
 
     return (
       <Dropdown
+        loading={isLoading.fetchUserTags}
         search
         multiple
         clearable

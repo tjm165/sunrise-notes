@@ -8,8 +8,11 @@ const Login = props => {
   const [email, setEmail] = useState([""]);
   const [password, setPassword] = useState([""]);
   const [error, setError] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = event => {
+    setLoading(true);
+
     event.preventDefault();
     console.log("hey");
 
@@ -21,7 +24,8 @@ const Login = props => {
       .catch(error => {
         console.log(error);
         setError(error.message);
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (
@@ -43,7 +47,7 @@ const Login = props => {
           value={password}
           onChange={event => setPassword(event.target.value)}
         />
-        <Button positive onClick={e => handleSubmit(e)}>
+        <Button positive onClick={e => handleSubmit(e)} loading={isLoading}>
           Sign in
         </Button>
       </Form>
