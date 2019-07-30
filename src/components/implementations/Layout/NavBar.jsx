@@ -1,7 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 
-import { Button, Container, Menu } from "semantic-ui-react";
+import { Button, Container, Menu, Image } from "semantic-ui-react";
 
 function NavBar({ fixed, activeItem, history }) {
   return (
@@ -11,8 +11,12 @@ function NavBar({ fixed, activeItem, history }) {
       secondary={!fixed}
       className="navBar"
       size="large"
+      fluid
     >
       <Container>
+        <Menu.Item as="a" onClick={() => history.push("/")}>
+          <Image src="/logo.png" size="mini" />
+        </Menu.Item>
         <Menu.Item
           as="a"
           active={activeItem === "Home"}
