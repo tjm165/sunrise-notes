@@ -91,7 +91,6 @@ class SmartDashboard extends Component {
 
     if (noteUUID === NO_INSTANCE_UUID) {
       this.setState({ activeNote: NO_INSTANCE_UUID });
-      this.fetchNoteSet(this.state.context.tags);
     } else if (noteUUID === NEW_INSTANCE_UUID && version === "withNoTags") {
       const note = { UUID: noteUUID };
       this.setState({ activeNote: note });
@@ -135,6 +134,7 @@ class SmartDashboard extends Component {
       this.setState(prevState => ({
         isLoading: { ...prevState.isLoading, submitNote: false }
       }));
+      this.fetchNoteSet(this.state.context.tags);
     });
   }
 
