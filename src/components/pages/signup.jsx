@@ -10,7 +10,8 @@ class Signup extends Component {
       email: "",
       password: "",
       confirmPassword: "",
-      signupPassed: false
+      signupPassed: false,
+      isLoading: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,6 +19,8 @@ class Signup extends Component {
   }
 
   handleSubmit = async event => {
+    this.setState({ isLoading: true });
+
     event.preventDefault();
     console.log("hey");
     const { email, password } = this.state;
@@ -32,6 +35,8 @@ class Signup extends Component {
       this.setState({ signupPassed: true });
     } catch (error) {
       console.log(error); //more info in part 2 at 8:15
+    } finally {
+      this.setState({ isLoading: false });
     }
   };
 
@@ -82,7 +87,11 @@ class Signup extends Component {
                 onChange={event => this.setConfirmPassword(event.target.value)}
               />
 
-              <Button positive onClick={e => this.handleSubmit(e)}>
+              <Button
+                positive
+                onClick={e => this.handleSubmit(e)}
+                loading={this.state.isLoading}
+              >
                 Register
               </Button>
             </Form>
