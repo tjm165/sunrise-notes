@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Dropdown, Header, Icon, Segment } from "semantic-ui-react";
+import { Dropdown, Header, Icon } from "semantic-ui-react";
 import TagSegment from "./TagSegment";
+import { NEW_INSTANCE_UUID } from "../../../API";
 
 export class TagDropdown extends Component {
   render() {
@@ -40,16 +41,22 @@ export class TagDropdown extends Component {
       onClick: () => setAsActiveTag(label.value)
     });
 
+    const activateNewTag = value => {
+      setAsActiveTag(NEW_INSTANCE_UUID, value);
+    };
+
     return (
       <Dropdown
         loading={isLoading.fetchUserTags}
         search
         multiple
         clearable
+        allowAdditions
         selection
         options={options}
         renderLabel={renderLabel}
         defaultValue={defaultValue}
+        onAddItem={(e, { value }) => activateNewTag(value)}
         {...rest}
       />
     );

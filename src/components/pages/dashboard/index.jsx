@@ -113,12 +113,16 @@ class SmartDashboard extends Component {
   }
 
   //this one is going to set the active as a UUID
-  setAsActiveTag(tagUUID) {
+  setAsActiveTag(tagUUID, newTitle = null) {
     if (tagUUID === NO_INSTANCE_UUID) {
       this.setState({ activeTag: NO_INSTANCE_UUID });
     } else if (tagUUID === NEW_INSTANCE_UUID) {
       this.setState({
-        activeTag: { UUID: tagUUID, rgb: { r: 255, g: 105, b: 0 } }
+        activeTag: {
+          UUID: tagUUID,
+          title: newTitle,
+          rgb: { r: 255, g: 105, b: 0 }
+        }
       });
     } else {
       const tag = this.state.tagMap.get(tagUUID);

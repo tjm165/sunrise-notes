@@ -1,10 +1,12 @@
 import React from "react";
-import { Button, Container, Menu, Segment } from "semantic-ui-react";
+import { Header, Segment, Image } from "semantic-ui-react";
 
 export default function TopPannel({ fixed, activeItem, history }) {
   return (
-    <Menu secondary={!fixed}>
-      <Menu.Item>Sunrise Notes</Menu.Item>
-    </Menu>
+    <Segment>
+      <Header as="h3">
+        <Image circular src="/images/logo.png" /> Sunrise Notes
+      </Header>
+    </Segment>
   );
 }
