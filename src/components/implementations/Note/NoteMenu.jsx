@@ -1,18 +1,21 @@
 import React from "react";
-import { Card } from "semantic-ui-react";
+import { Card, Segment, Loader } from "semantic-ui-react";
 import NoteCard from "./NoteCard";
 
-function NoteMenu({ notes, functions }) {
+function NoteMenu({ notes, functions, isLoading }) {
   return (
-    <Card.Group>
-      {notes.map(([key, note]) => (
-        <NoteCard
-          note={note}
-          onEdit={() => functions.setAsActiveNote(key)}
-          onDelete={() => functions.deleteNote(key)}
-        />
-      ))}
-    </Card.Group>
+    <Segment>
+      <Loader active={isLoading.fetchNoteSet} />
+      <Card.Group>
+        {notes.map(([key, note]) => (
+          <NoteCard
+            note={note}
+            onEdit={() => functions.setAsActiveNote(key)}
+            onDelete={() => functions.deleteNote(key)}
+          />
+        ))}
+      </Card.Group>
+    </Segment>
   );
 }
 
