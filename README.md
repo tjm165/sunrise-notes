@@ -21,6 +21,7 @@ $ npm start
 __Problem:__ Suppose a student is in three classes. ECON 101, MATH 111 and CHEM 121. The student uses Sunrise Notes to store lecture notes, study guides and to do lists for each class.
 
 __Solution:__ The student can make a tag for each class and each document type. Now the student can perform the following searches to get the following results. Additionally, the real results are color coded for a more understandable experience.
+
 | Intent | Search Tags | Resulting Notes |
 | ------ |  ------ | ------ |
 | Get ECON 101 notes | ECON 101 | All Econ 101 notes |
