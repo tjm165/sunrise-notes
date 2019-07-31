@@ -18,11 +18,11 @@ $ npm start
 ```
 
 ## Example Case
-__Problem:__ Suppose a student is in three classes. ECON 101, MATH 111 and CHEM 121. The student uses Sunrise Notes to store lecture notes, study guides and to do lists for each class.
+__Problem:__ Suppose Alfred, a student is in three classes. ECON 101, MATH 111 and CHEM 121. Alfred uses Sunrise Notes to store lecture notes, study guides and to do lists for each class.
 
-__Solution:__ The student can make a tag for each class and each document type. Now the student can perform the following searches to get the following results. Additionally, the real results are color coded for a more understandable experience.
+__Solution:__ Alfred can make a tag for each class and each document type. Now he can perform the following searches to get the following results. Additionally, the real results are color coded for a more understandable experience.
 
-| Intent | Search Tags | Resulting Notes |
+| Alfred's Intent | Search Tags | Resulting Notes |
 | ------ |  ------ | ------ |
 | Get ECON 101 notes | ECON 101 | All Econ 101 notes |
 | Get the MATH 111 to do list | MATH 111, To Do Lists | All MATH 111 notes & to do lists (color coded)  |
