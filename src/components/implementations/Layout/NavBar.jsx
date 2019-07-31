@@ -14,9 +14,6 @@ function NavBar({ fixed, activeItem, history }) {
       fluid
     >
       <Container>
-        <Menu.Item as="a" onClick={() => history.push("/")}>
-          <Image src="/logo.png" size="mini" />
-        </Menu.Item>
         <Menu.Item
           as="a"
           active={activeItem === "Home"}
@@ -24,14 +21,12 @@ function NavBar({ fixed, activeItem, history }) {
         >
           Home
         </Menu.Item>
-        <Menu.Item as="a" active={activeItem === "Features"}>
-          Features
-        </Menu.Item>
-        <Menu.Item as="a" active={activeItem === "Contribute"}>
+        <Menu.Item
+          as="a"
+          onClick={() => history.push("/contribute")}
+          active={activeItem === "Contribute"}
+        >
           Contribute
-        </Menu.Item>
-        <Menu.Item as="a" active={activeItem === "About"}>
-          About
         </Menu.Item>
         <Menu.Item position="right">
           {activeItem === "Login" || (

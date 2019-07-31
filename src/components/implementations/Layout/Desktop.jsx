@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Responsive, Segment, Visibility, Container } from "semantic-ui-react";
 import Footer from "./Footer";
 import NavBar from "./NavBar";
+import Paragraph from "./Paragraph";
 
 // Heads up!
 // We using React Static to prerender our docs with server side rendering, this is a quite simple solution.
@@ -39,15 +40,30 @@ export default class Desktop extends Component {
             {this.props.heading}
           </Segment>
         </Visibility>
-        <Segment
-          style={{ padding: "8em 0em", backgroundColor: "white" }}
-          vertical
-        >
-          <Container text style={{ backgroundColor: "white" }}>
-            {children}
-          </Container>
-        </Segment>
-
+        {Array.isArray(children) ? (
+          children.map((child, i) => (
+            <Segment
+              key={i}
+              style={{
+                padding: "8em 0em",
+                backgroundColor: i % 2 === 0 ? "white" : "azure"
+              }}
+              vertical
+            >
+              <Container text>{child}</Container>
+            </Segment>
+          ))
+        ) : (
+          <Segment
+            style={{
+              padding: "8em 0em",
+              backgroundColor: "white"
+            }}
+            vertical
+          >
+            <Container text>{children}</Container>
+          </Segment>
+        )}
         {this.props.hideFooter || <Footer />}
       </Responsive>
     );
