@@ -12,7 +12,7 @@ import Paragraph from "../implementations/Layout/Paragraph";
 
 export default function Contribute() {
   return (
-    <Desktop>
+    <Desktop activeItem="Contribute">
       <Paragraph headerText="All Help Is Appreciated!">
         <Grid columns="equal">
           <Grid.Column>
@@ -20,7 +20,7 @@ export default function Contribute() {
           </Grid.Column>
           <Grid.Column>
             <Container>
-              <Header as="h2">Here's what you need to know</Header>
+              <Header as="h2">You Can Make a Difference</Header>
               Whether you're a beginner or a master at coding, you have
               potential to help!
             </Container>

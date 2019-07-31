@@ -14,12 +14,16 @@ function NavBar({ fixed, activeItem, history }) {
       fluid
     >
       <Container>
+        <Menu.Item as="a" onClick={() => history.push("/")}>
+          <Image size="mini" src="/images/logo.png" />
+        </Menu.Item>
+
         <Menu.Item
           as="a"
           active={activeItem === "Home"}
           onClick={() => history.push("/")}
         >
-          Home
+          Sunrise Notes
         </Menu.Item>
         <Menu.Item
           as="a"
