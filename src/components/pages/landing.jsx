@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Signup from "./signup";
+import { withRouter } from "react-router-dom";
 import {
   Button,
   Icon,
@@ -29,7 +29,7 @@ const HomepageHeading = () => (
   />
 );
 
-const LandingPageLayout = () => (
+const LandingPageLayout = props => (
   <Desktop activeItem="Home" heading={<HomepageHeading />}>
     <Paragraph headerText="How It Works">
       <Grid columns="equal">
@@ -93,6 +93,11 @@ const LandingPageLayout = () => (
             <li>Deep Tags</li>
             <li>Create Notes Through SMS</li>
           </ul>
+          Interested in contributing?
+          <br />
+          <Button positive onClick={() => props.history.push("/contribute")}>
+            More Info!
+          </Button>
         </Grid.Column>
         <Grid.Column>
           <Image size="medium" src="/images/future.png" />
@@ -101,4 +106,4 @@ const LandingPageLayout = () => (
     </Paragraph>
   </Desktop>
 );
-export default LandingPageLayout;
+export default withRouter(LandingPageLayout);
