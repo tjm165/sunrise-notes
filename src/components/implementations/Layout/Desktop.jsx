@@ -25,11 +25,7 @@ export default class Desktop extends Component {
     const minHeight = this.props.heading ? 700 : 0;
 
     return (
-      <Responsive
-        getWidth={getWidth}
-        minWidth={Responsive.onlyTablet.minWidth}
-        className="gradient"
-      >
+      <Responsive getWidth={getWidth} className="gradient">
         <Visibility
           once={false}
           onBottomPassed={this.showFixedMenu}
