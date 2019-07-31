@@ -21,6 +21,7 @@ function Dashboard({ state, functions }) {
     functions.fetchUserTags();
   }, []);
 
+  const isLoading = state.isLoading;
   const notes = state.context.notes;
   const activeTag = state.activeTag;
   const activeNote = state.activeNote;
@@ -52,29 +53,37 @@ function Dashboard({ state, functions }) {
                     functions.deleteNote(state.activeNote["UUID"])
                   }
                   setAsActiveTag={functions.setAsActiveTag}
+                  isLoading={isLoading}
                 />
               </Segment>
             ) : (
               <>
                 <Header>
-                  Search for notes that have all of the following tags:{" "}
+                  Search for notes that have any of the following tags:{" "}
                 </Header>
                 <TagDropdown
                   defaultValue={state.context.tags}
                   placeholder="Notes must have these tags"
                   tagMap={tagMap}
                   fluid
+                  isLoading={isLoading}
                   setAsActiveTag={functions.setAsActiveTag}
                   onChange={(e, DropdownProps) =>
                     functions.fetchNoteSet(DropdownProps.value)
                   }
                 />
                 <Divider as="br" />
-                <NoteMenu
-                  functions={functions}
-                  notes={Array.from(notes)}
-                  tagMap={tagMap}
-                />
+
+                {notes.size > 0 ? (
+                  <NoteMenu
+                    functions={functions}
+                    notes={Array.from(notes)}
+                    tagMap={tagMap}
+                    isLoading={isLoading}
+                  />
+                ) : (
+                  <>There are no notes that have any of the selected tags </>
+                )}
               </>
             )}
           </Container>
@@ -92,13 +101,8 @@ function Dashboard({ state, functions }) {
             userUUID={state.userUUID}
             onSubmit={functions.submitTag}
             onDelete={() => functions.deleteTag(activeTag["UUID"])}
+            isLoading={isLoading}
           />
-          <Button
-            positive
-            onClick={() => functions.setAsActiveTag(NO_INSTANCE_UUID)}
-          >
-            Close
-          </Button>
         </Modal>
       )}
     </>
