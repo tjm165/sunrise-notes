@@ -30,27 +30,29 @@ const Login = props => {
 
   return (
     <Desktop hideFooter activeItem="Login">
-      <Header as="h2">Sign in</Header>
-      {error && <Header as="h4">{error}</Header>}
+      <>
+        <Header as="h2">Sign in</Header>
+        {error && <Header as="h4">{error}</Header>}
 
-      <Form>
-        <Form.Input
-          label="Email"
-          placeholder="email"
-          value={email}
-          onChange={event => setEmail(event.target.value)}
-        />
-        <Form.Input
-          label="Enter Password"
-          type="password"
-          placeholder="password"
-          value={password}
-          onChange={event => setPassword(event.target.value)}
-        />
-        <Button positive onClick={e => handleSubmit(e)} loading={isLoading}>
-          Sign in
-        </Button>
-      </Form>
+        <Form>
+          <Form.Input
+            label="Email"
+            placeholder="email"
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+          <Form.Input
+            label="Enter Password"
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={event => setPassword(event.target.value)}
+          />
+          <Button positive onClick={e => handleSubmit(e)} loading={isLoading}>
+            Sign in
+          </Button>
+        </Form>
+      </>
     </Desktop>
   );
 };
