@@ -1,9 +1,18 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
-import { Form, Button, Header } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
 import Desktop from "../implementations/Layout/Desktop";
+import Paragraph from "../implementations/Layout/Paragraph";
 
-class Signup extends Component {
+export default function Signup() {
+  return (
+    <Desktop hideFooter activeItem="Signup">
+      <SignupComponent />
+    </Desktop>
+  );
+}
+
+export class SignupComponent extends Component {
   constructor() {
     super();
     this.state = {
@@ -60,10 +69,9 @@ class Signup extends Component {
         : { content: "Passwords do not match" };
 
     return (
-      <Desktop hideFooter activeItem="Signup">
+      <>
         {!signupPassed ? (
-          <>
-            <Header as="h2">We're really excited that you're joining!</Header>
+          <Paragraph headerText="We're really excited that you're joining!">
             <Form>
               <Form.Input
                 label="Email"
@@ -95,18 +103,15 @@ class Signup extends Component {
                 Register
               </Button>
             </Form>
-          </>
+          </Paragraph>
         ) : (
-          <div>
-            <Header as="h1">Thank you for chosing Sunrise Notes!</Header>A
+          <Paragraph headerText="Thank you for chosing Sunrise Notes!">
             verification link has been sent to {email}
             <br />
             Please click the link to finish the registration process!
-          </div>
+          </Paragraph>
         )}
-      </Desktop>
+      </>
     );
   }
 }
-
-export default Signup;

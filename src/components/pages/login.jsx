@@ -3,6 +3,7 @@ import { Form, Button, Header } from "semantic-ui-react";
 import { signin } from "../../API";
 import Desktop from "../implementations/Layout/Desktop";
 import { withRouter } from "react-router-dom";
+import Paragraph from "../implementations/Layout/Paragraph";
 
 const Login = props => {
   const [email, setEmail] = useState([""]);
@@ -30,8 +31,7 @@ const Login = props => {
 
   return (
     <Desktop hideFooter activeItem="Login">
-      <>
-        <Header as="h2">Sign in</Header>
+      <Paragraph headerText="Sign In">
         {error && <Header as="h4">{error}</Header>}
 
         <Form>
@@ -52,7 +52,7 @@ const Login = props => {
             Sign in
           </Button>
         </Form>
-      </>
+      </Paragraph>
     </Desktop>
   );
 };
