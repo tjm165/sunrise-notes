@@ -47,8 +47,7 @@ function AboutTeam({ history }) {
       contacts: [
         {
           label: "Email",
-          username: "tjm165@case.edu",
-          link: "tjm165@case.edu"
+          username: "tjm165@case.edu"
         },
         {
           label: "GitHub",
