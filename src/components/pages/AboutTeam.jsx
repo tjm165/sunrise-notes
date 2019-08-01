@@ -13,16 +13,16 @@ function ContactLink({ label, link, username }) {
   );
 }
 
-function MemberCard({ name, imgSrc, title, contacts }) {
+function MemberCard({ name, imgSrc, title, contacts, description }) {
   return (
     <Card fluid>
       <Card.Content>
-        <Image floated="right" size="mini" src={imgSrc} />
+        <Image floated="left" size="small" src={imgSrc} />
         <Card.Header>{name}</Card.Header>
-        <Card.Meta>{title}</Card.Meta>
-        <Card.Description>
-          Steve wants to add you to the group <strong>best friends</strong>
-        </Card.Description>
+        <Card.Meta>
+          {title}
+          {description && <Card.Description>{description}</Card.Description>}
+        </Card.Meta>
       </Card.Content>
       <Card.Content extra>
         {contacts.map((contact, i) => (
@@ -39,6 +39,8 @@ function AboutTeam({ history }) {
   const teamMembers = [
     {
       name: "Tommy M",
+      description:
+        "Passionate about designing software while keeping users in mind. Known for being a positive and organized co-op and RA.",
       imgSrc:
         "https://media.licdn.com/dms/image/C4E03AQFBnrrNJec94Q/profile-displayphoto-shrink_200_200/0?e=1570060800&v=beta&t=89rglocPy-tBoI-L3qp6fAKuODvULgGTJHexqG264d0",
       title: "Owner/Creator",
