@@ -32,28 +32,31 @@ function NavBar({ fixed, activeItem, history }) {
         >
           Contribute
         </Menu.Item>
+        <Menu.Item
+          as="a"
+          onClick={() => history.push("/about-team")}
+          active={activeItem === "About Team"}
+        >
+          About Team
+        </Menu.Item>
         <Menu.Item position="right">
-          {activeItem === "Login" || (
-            <Button
-              as="a"
-              inverted={!fixed}
-              onClick={() => history.push("/login")}
-            >
-              Sign in
-            </Button>
-          )}
+          <Button
+            as="a"
+            inverted={!fixed}
+            onClick={() => history.push("/login")}
+          >
+            Sign in
+          </Button>
 
-          {activeItem === "Signup" || (
-            <Button
-              as="a"
-              inverted={!fixed}
-              primary={fixed}
-              style={{ marginLeft: "0.5em" }}
-              onClick={() => history.push("/signup")}
-            >
-              Sign Up
-            </Button>
-          )}
+          <Button
+            as="a"
+            inverted={!fixed}
+            primary={fixed}
+            style={{ marginLeft: "0.5em" }}
+            onClick={() => history.push("/signup")}
+          >
+            Sign Up
+          </Button>
         </Menu.Item>
       </Container>
     </Menu>

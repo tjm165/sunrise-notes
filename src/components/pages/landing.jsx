@@ -97,7 +97,7 @@ const LandingPageLayout = props => (
           Interested in contributing?
           <br />
           <Button positive onClick={() => props.history.push("/contribute")}>
-            More Info!
+            Learn More
           </Button>
         </Grid.Column>
         <Grid.Column>

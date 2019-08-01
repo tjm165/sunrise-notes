@@ -7,10 +7,12 @@ import {
   Icon,
   Container
 } from "semantic-ui-react";
+import { withRouter } from "react-router-dom";
+
 import Desktop from "../implementations/Layout/Desktop";
 import Paragraph from "../implementations/Layout/Paragraph";
 
-export default function Contribute() {
+function Contribute({ history }) {
   return (
     <Desktop activeItem="Contribute">
       <Paragraph headerText="All Help Is Appreciated!">
@@ -41,6 +43,16 @@ export default function Contribute() {
           Github
         </Button>
       </Paragraph>
+      <Paragraph headerText="Meet The Team">
+        <Container>
+          Want to learn more about the team?
+          <br />
+          <Button primary onClick={() => history.push("/about-team")}>
+            <Icon name="group" />
+            About Team
+          </Button>
+        </Container>
+      </Paragraph>
       <Paragraph headerText="What Resources Do You Use?">
         <Container>
           The main resources used for this application are AWS, Google Cloud
@@ -51,3 +63,5 @@ export default function Contribute() {
     </Desktop>
   );
 }
+
+export default withRouter(Contribute);
