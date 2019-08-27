@@ -22,8 +22,8 @@ function Dashboard({ state, functions }) {
   }, []);
 
   const isLoading = state.isLoading;
-  const notes = state.context.notes;
   const activeTag = state.activeTag;
+  const notes = state.tagMap.get(activeTag).noteUUIDs; //TODO: Change database for LAST TIME
   const activeNote = state.activeNote;
   const tagMap = state.tagMap;
 

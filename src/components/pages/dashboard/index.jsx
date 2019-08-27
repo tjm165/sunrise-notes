@@ -17,10 +17,10 @@ class SmartDashboard extends Component {
     super();
 
     this.state = {
-      context: { operation: 0, tags: [], notes: new Map() }, //note previews
       tagMap: new Map(),
+      noteMap: new Map(),
       activeNote: NO_INSTANCE_UUID,
-      activeTag: NO_INSTANCE_UUID,
+      activeTag: NO_INSTANCE_UUID, //now it's the tag that's open
       isLoading: {
         fetchUserTags: false,
         fetchNoteSet: false,
