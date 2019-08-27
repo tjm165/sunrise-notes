@@ -20,32 +20,28 @@ export default function VerticalPannel({ tagMap, functions }) {
   ];
 
   return (
-    <Menu pointing secondary vertical fluid>
-      <Menu.Item>
-        <Button.Group color="green">
-          <Button
-            onClick={() =>
-              functions.setAsActiveNote(NEW_INSTANCE_UUID, "withContextTags")
-            }
-          >
-            Create Note
-          </Button>
-          <Dropdown
-            className="button icon"
-            floating
-            options={createOptions}
-            trigger={<React.Fragment />}
-          />
-        </Button.Group>
-      </Menu.Item>
-      <Menu.Item>
+    <>
+      <Button.Group color="green">
         <Button
-          positive
-          onClick={() => functions.setAsActiveTag(NEW_INSTANCE_UUID)}
+          onClick={() =>
+            functions.setAsActiveNote(NEW_INSTANCE_UUID, "withContextTags")
+          }
         >
-          Create Tag
+          Create Note
         </Button>
-      </Menu.Item>
-    </Menu>
+        <Dropdown
+          className="button icon"
+          floating
+          options={createOptions}
+          trigger={<React.Fragment />}
+        />
+      </Button.Group>
+
+      <Menu pointing vertical fluid>
+        {Array.from(tagMap.keys()).map((key, index) => (
+          <Menu.Item>{tagMap.get(key).title}</Menu.Item>
+        ))}
+      </Menu>
+    </>
   );
 }

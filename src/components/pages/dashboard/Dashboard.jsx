@@ -61,18 +61,6 @@ function Dashboard({ state, functions }) {
                 <Header>
                   Search for notes that have any of the following tags:{" "}
                 </Header>
-                <TagDropdown
-                  defaultValue={state.context.tags}
-                  placeholder="Notes must have these tags"
-                  tagMap={tagMap}
-                  fluid
-                  isLoading={isLoading}
-                  setAsActiveTag={functions.setAsActiveTag}
-                  onChange={(e, DropdownProps) =>
-                    functions.fetchNoteSet(DropdownProps.value)
-                  }
-                />
-                <Divider as="br" />
 
                 {notes.size > 0 ? (
                   <NoteMenu
