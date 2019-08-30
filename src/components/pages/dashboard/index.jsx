@@ -17,10 +17,12 @@ class SmartDashboard extends Component {
     super();
 
     this.state = {
-      tagMap: new Map(),
-      noteMap: new Map(),
-      activeNote: NO_INSTANCE_UUID,
-      activeTag: NO_INSTANCE_UUID, //now it's the tag that's open
+      tags: new Map(), //all of the user's tags
+      context: {
+        activeNote: NO_INSTANCE_UUID,
+        activeTag: NO_INSTANCE_UUID,
+        notes: []
+      },
       isLoading: {
         fetchUserTags: false,
         fetchNoteSet: false,
@@ -52,7 +54,7 @@ class SmartDashboard extends Component {
     }));
 
     fetchUserTags().then(tagMap => {
-      this.setState({ tagMap: tagMap });
+      this.setState({ tags: tagMap });
 
       this.setState(prevState => ({
         isLoading: { ...prevState.isLoading, fetchUserTags: false }

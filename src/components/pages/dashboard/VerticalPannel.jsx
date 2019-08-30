@@ -8,6 +8,7 @@ import {
   Icon
 } from "semantic-ui-react";
 import { NEW_INSTANCE_UUID } from "../../../API";
+import TagExplorer from "../../implementations/Tag/TagExplorer";
 
 export default function VerticalPannel({ tagMap, functions }) {
   const createOptions = [
@@ -36,12 +37,7 @@ export default function VerticalPannel({ tagMap, functions }) {
           trigger={<React.Fragment />}
         />
       </Button.Group>
-
-      <Menu pointing vertical fluid>
-        {Array.from(tagMap.keys()).map((key, index) => (
-          <Menu.Item>{tagMap.get(key).title}</Menu.Item>
-        ))}
-      </Menu>
+      <TagExplorer tagMap={tagMap} functions={functions} />
     </>
   );
 }

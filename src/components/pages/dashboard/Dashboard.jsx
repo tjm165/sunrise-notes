@@ -5,7 +5,6 @@ import {
   Modal,
   Segment,
   Header,
-  Divider,
   Grid
 } from "semantic-ui-react";
 import TopPannel from "./TopPannel";
@@ -21,11 +20,13 @@ function Dashboard({ state, functions }) {
     functions.fetchUserTags();
   }, []);
 
+  const context = state.context;
+
   const isLoading = state.isLoading;
-  const activeTag = state.activeTag;
-  const notes = state.tagMap.get(activeTag).noteUUIDs; //TODO: Change database for LAST TIME
-  const activeNote = state.activeNote;
-  const tagMap = state.tagMap;
+  const activeTag = context.activeTag;
+  const notes = context.notes;
+  const activeNote = context.activeNote;
+  const tagMap = state.tags;
 
   return (
     <>
