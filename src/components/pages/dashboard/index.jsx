@@ -17,12 +17,12 @@ class SmartDashboard extends Component {
     super();
 
     this.state = {
-      tags: new Map(), //all of the user's tags
+      tagMap: new Map(), //all of the user's tags
       context: {
         activeNote: NO_INSTANCE_UUID,
         activeTag: NO_INSTANCE_UUID,
         notes: [],
-        tags: []
+        tags: new Set()
       },
       isLoading: {
         fetchUserTags: false,
@@ -56,7 +56,7 @@ class SmartDashboard extends Component {
     }));
 
     fetchUserTags().then(tagMap => {
-      this.setState({ tags: tagMap });
+      this.setState({ tagMap: tagMap });
 
       this.setState(prevState => ({
         isLoading: { ...prevState.isLoading, fetchUserTags: false }
@@ -64,8 +64,15 @@ class SmartDashboard extends Component {
     });
   }
 
-  toggleTag(selected) {
-    alert(selected);
+  toggleTag(tagUUID) {
+    const context = this.state.context;
+    if (context.tags.has(tagUUID)) {
+      context.tags.delete(tagUUID);
+    } else {
+      context.tags.add(tagUUID);
+    }
+
+    this.setState(context);
   }
 
   //name?

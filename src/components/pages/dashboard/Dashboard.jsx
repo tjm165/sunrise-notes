@@ -8,7 +8,6 @@ import {
   Grid
 } from "semantic-ui-react";
 import TopPannel from "./TopPannel";
-import { TagDropdown } from "../../implementations/Tag/TagDropdown";
 import TagEditor from "../../implementations/Tag/TagEditor";
 import NoteEditor from "../../implementations/Note/NoteEditor";
 import NoteMenu from "../../implementations/Note/NoteMenu";
@@ -26,7 +25,7 @@ function Dashboard({ state, functions }) {
   const activeTag = context.activeTag;
   const notes = context.notes;
   const activeNote = context.activeNote;
-  const tagMap = state.tags;
+  const tagMap = state.tagMap;
 
   return (
     <>
@@ -63,19 +62,13 @@ function Dashboard({ state, functions }) {
               </Segment>
             ) : (
               <>
-                <Header>
-                  Search for notes that have any of the following tags:{" "}
-                </Header>
-
-                {notes.size > 0 ? (
+                {notes.size > 0 && (
                   <NoteMenu
                     functions={functions}
                     notes={Array.from(notes)}
                     tagMap={tagMap}
                     isLoading={isLoading}
                   />
-                ) : (
-                  <>There are no notes that have any of the selected tags </>
                 )}
               </>
             )}
