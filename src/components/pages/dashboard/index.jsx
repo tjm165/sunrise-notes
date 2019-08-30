@@ -73,22 +73,23 @@ class SmartDashboard extends Component {
     }
 
     this.setState(context);
+    this.fetchNoteSet();
   }
 
   //name?
-  fetchNoteSet(tags) {
+  fetchNoteSet() {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, fetchNoteSet: true }
     }));
 
     var context = this.state.context;
-    context.tags = tags;
+    var tags = context.tags;
     context.notes = new Map();
 
     if (tags.length === 0) {
       this.setState({ context: context });
     } else {
-      fetchNoteSet(null, tags, null).then(notes => {
+      fetchNoteSet(null, Array.from(tags), null).then(notes => {
         context.notes = notes;
         this.setState({ context: context });
         this.setState(prevState => ({
