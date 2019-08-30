@@ -34,7 +34,11 @@ function Dashboard({ state, functions }) {
 
       <Grid>
         <Grid.Column width={2}>
-          <VerticalPannel tagMap={tagMap} functions={functions} />
+          <VerticalPannel
+            tagMap={tagMap}
+            context={context}
+            functions={functions}
+          />
         </Grid.Column>
         <Grid.Column width={14}>
           <Container>

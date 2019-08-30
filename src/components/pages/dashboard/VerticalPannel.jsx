@@ -10,7 +10,7 @@ import {
 import { NEW_INSTANCE_UUID } from "../../../API";
 import TagExplorer from "../../implementations/Tag/TagExplorer";
 
-export default function VerticalPannel({ tagMap, functions }) {
+export default function VerticalPannel({ tagMap, context, functions }) {
   const createOptions = [
     {
       key: "blank note",
@@ -37,7 +37,11 @@ export default function VerticalPannel({ tagMap, functions }) {
           trigger={<React.Fragment />}
         />
       </Button.Group>
-      <TagExplorer tagMap={tagMap} functions={functions} />
+      <TagExplorer
+        tagMap={tagMap}
+        selectedTags={context.tags}
+        functions={functions}
+      />
     </>
   );
 }

@@ -21,7 +21,8 @@ class SmartDashboard extends Component {
       context: {
         activeNote: NO_INSTANCE_UUID,
         activeTag: NO_INSTANCE_UUID,
-        notes: []
+        notes: [],
+        tags: []
       },
       isLoading: {
         fetchUserTags: false,
@@ -38,6 +39,7 @@ class SmartDashboard extends Component {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
+      toggleTagIntoContext: this.toggleTagIntoContext.bind(this),
       setAsActiveTag: this.setAsActiveTag.bind(this),
       submitNote: this.submitNote.bind(this),
       deleteNote: this.deleteNote.bind(this),
@@ -60,6 +62,10 @@ class SmartDashboard extends Component {
         isLoading: { ...prevState.isLoading, fetchUserTags: false }
       }));
     });
+  }
+
+  toggleTagIntoContext(selected) {
+    alert(selected);
   }
 
   //name?
