@@ -39,7 +39,7 @@ class SmartDashboard extends Component {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
-      toggleTagIntoContext: this.toggleTagIntoContext.bind(this),
+      toggleTag: this.toggleTag.bind(this),
       setAsActiveTag: this.setAsActiveTag.bind(this),
       submitNote: this.submitNote.bind(this),
       deleteNote: this.deleteNote.bind(this),
@@ -64,7 +64,7 @@ class SmartDashboard extends Component {
     });
   }
 
-  toggleTagIntoContext(selected) {
+  toggleTag(selected) {
     alert(selected);
   }
 
