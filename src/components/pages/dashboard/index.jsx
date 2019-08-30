@@ -92,20 +92,14 @@ class SmartDashboard extends Component {
   }
 
   ///Work on making this one set the active as a UUID
-  setAsActiveNote(noteUUID, version = "withNoTags") {
+  setAsActiveNote(noteUUID) {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, setAsActiveNote: true }
     }));
 
     if (noteUUID === NO_INSTANCE_UUID) {
       this.setState({ activeNote: NO_INSTANCE_UUID });
-    } else if (noteUUID === NEW_INSTANCE_UUID && version === "withNoTags") {
-      const note = { UUID: noteUUID };
-      this.setState({ activeNote: note });
-    } else if (
-      noteUUID === NEW_INSTANCE_UUID &&
-      version === "withContextTags"
-    ) {
+    } else if (noteUUID === NEW_INSTANCE_UUID) {
       const note = { UUID: noteUUID };
       note.tagUUIDs = this.state.context.tags;
       this.setState({ activeNote: note, tagUUIDs: this.state.tags });
