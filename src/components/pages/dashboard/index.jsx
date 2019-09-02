@@ -89,7 +89,7 @@ class SmartDashboard extends Component {
     if (tags.length === 0) {
       this.setState({ context: context });
     } else {
-      fetchNoteSet(null, Array.from(tags), null).then(notes => {
+      fetchNoteSet(Array.from(tags), null).then(notes => {
         context.notes = notes;
         this.setState({ context: context });
         this.setState(prevState => ({

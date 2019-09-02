@@ -99,13 +99,32 @@ class User():
     # returns a set of colored notes
     # This is the only function that is O(Junctions)
 
-    def get_noteset_by_tag_uuids(self, base_tag_uuids, required_tag_uuids, optional_tag_uuids):
+    def get_noteset_by_tag_uuids(self, tag_uuids, intersection):
+        if (len(tag_uuids) == 0):
+            return self.get_notes_with_no_tags()
+        if intersection:
+            return self.get_notes_with_all_tags(tag_uuids)
+
+        return self.get_notes_with_any_tags(tag_uuids)
+
+    def get_notes_with_no_tags(self):
+        notes = {}
+        for note in self.get_all_notes():
+            if (len(note['tagUUIDs']) == 0):
+                notes[note['UUID']] = note
+                notes[note['UUID']]['rgb'] = {'r': 255, 'g': 255, 'b': 255}
+        return notes
+
+    def get_notes_with_all_tags(self, tag_uuids):
+        return "not supported"
+
+    def get_notes_with_any_tags(self, tag_uuids):
         noteset = {}
         for note in self.get_all_notes():
             for tag_uuid in note['tagUUIDs']:
-                if tag_uuid in required_tag_uuids:
+                if tag_uuid in tag_uuids:
                     tag_rgb = self.get_tag(tag_uuid)['rgb']
-                    if note['UUID'] in noteset:
+                    if note['UUID'] in tag_uuids:
                         noteset[note['UUID']]['rgb'] = mix_colors(
                             noteset[note['UUID']]['rgb'], tag_rgb)
                     else:
