@@ -106,14 +106,21 @@ class SmartDashboard extends Component {
     }));
 
     if (noteUUID === NO_INSTANCE_UUID) {
-      this.setState({ activeNote: NO_INSTANCE_UUID });
+      this.setState(prevState => ({
+        context: { ...prevState.context, activeNote: NO_INSTANCE_UUID }
+      }));
     } else if (noteUUID === NEW_INSTANCE_UUID) {
       const note = { UUID: noteUUID };
       note.tagUUIDs = this.state.context.tags;
-      this.setState({ activeNote: note, tagUUIDs: this.state.tags });
+
+      this.setState(prevState => ({
+        context: { ...prevState.context, activeNote: note }
+      }));
     } else {
       fetchNote(noteUUID).then(note => {
-        this.setState({ activeNote: note });
+        this.setState(prevState => ({
+          context: { ...prevState.context, activeNote: note }
+        }));
       });
     }
 
