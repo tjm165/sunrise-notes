@@ -76,7 +76,6 @@ class SmartDashboard extends Component {
     this.fetchNoteSet();
   }
 
-  //name?
   fetchNoteSet() {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, fetchNoteSet: true }
@@ -99,7 +98,7 @@ class SmartDashboard extends Component {
     }
   }
 
-  ///Work on making this one set the active as a UUID
+  //Should set the active note to either be a clone of the real note, a blank note or NO_ACTIVE_INSTANCE
   setAsActiveNote(noteUUID) {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, setAsActiveNote: true }
