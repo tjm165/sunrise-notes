@@ -98,7 +98,6 @@ class SmartDashboard extends Component {
     }
   }
 
-  //Should set the active note to either be a clone of the real note, a blank note or NO_ACTIVE_INSTANCE
   setAsActiveNote(noteUUID) {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, setAsActiveNote: true }
@@ -110,7 +109,7 @@ class SmartDashboard extends Component {
       }));
     } else if (noteUUID === NEW_INSTANCE_UUID) {
       const note = { UUID: noteUUID };
-      note.tagUUIDs = this.state.context.tags;
+      note.tagUUIDs = Array.from(this.state.context.tags);
 
       this.setState(prevState => ({
         context: { ...prevState.context, activeNote: note }
