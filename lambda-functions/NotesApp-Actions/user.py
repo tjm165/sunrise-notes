@@ -116,7 +116,13 @@ class User():
         return notes
 
     def get_notes_with_all_tags(self, tag_uuids):
-        return "not supported"
+        noteset = self.get_all_notes().copy()
+        for note in noteset:
+            for tag in tag_uuids:
+                if tag not in note[tagUUIDs]:
+                    del noteset[note['UUID']]
+        return noteset
+
 
     def get_notes_with_any_tags(self, tag_uuids):
         noteset = {}
