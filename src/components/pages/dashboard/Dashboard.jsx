@@ -17,6 +17,7 @@ import VerticalPannel from "./VerticalPannel";
 function Dashboard({ state, functions }) {
   useEffect(() => {
     functions.fetchUserTags();
+    functions.fetchNoteSet();
   }, []);
 
   const context = state.context;
