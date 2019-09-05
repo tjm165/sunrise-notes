@@ -17,10 +17,13 @@ class SmartDashboard extends Component {
     super();
 
     this.state = {
-      context: { operation: 0, tags: [], notes: new Map() }, //note previews
-      tagMap: new Map(),
-      activeNote: NO_INSTANCE_UUID,
-      activeTag: NO_INSTANCE_UUID,
+      tagMap: new Map(), //all of the user's tags
+      context: {
+        activeNote: NO_INSTANCE_UUID,
+        activeTag: NO_INSTANCE_UUID,
+        notes: [],
+        tags: new Set()
+      },
       isLoading: {
         fetchUserTags: false,
         fetchNoteSet: false,
@@ -36,6 +39,7 @@ class SmartDashboard extends Component {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
 
+      toggleTag: this.toggleTag.bind(this),
       setAsActiveTag: this.setAsActiveTag.bind(this),
       submitNote: this.submitNote.bind(this),
       deleteNote: this.deleteNote.bind(this),
@@ -60,20 +64,31 @@ class SmartDashboard extends Component {
     });
   }
 
-  //name?
-  fetchNoteSet(tags) {
+  toggleTag(tagUUID) {
+    const context = this.state.context;
+    if (context.tags.has(tagUUID)) {
+      context.tags.delete(tagUUID);
+    } else {
+      context.tags.add(tagUUID);
+    }
+
+    this.setState(context);
+    this.fetchNoteSet();
+  }
+
+  fetchNoteSet() {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, fetchNoteSet: true }
     }));
 
     var context = this.state.context;
-    context.tags = tags;
+    var tags = context.tags;
     context.notes = new Map();
 
     if (tags.length === 0) {
       this.setState({ context: context });
     } else {
-      fetchNoteSet(null, tags, null).then(notes => {
+      fetchNoteSet(Array.from(tags), null).then(notes => {
         context.notes = notes;
         this.setState({ context: context });
         this.setState(prevState => ({
@@ -83,27 +98,27 @@ class SmartDashboard extends Component {
     }
   }
 
-  ///Work on making this one set the active as a UUID
-  setAsActiveNote(noteUUID, version = "withNoTags") {
+  setAsActiveNote(noteUUID) {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, setAsActiveNote: true }
     }));
 
     if (noteUUID === NO_INSTANCE_UUID) {
-      this.setState({ activeNote: NO_INSTANCE_UUID });
-    } else if (noteUUID === NEW_INSTANCE_UUID && version === "withNoTags") {
+      this.setState(prevState => ({
+        context: { ...prevState.context, activeNote: NO_INSTANCE_UUID }
+      }));
+    } else if (noteUUID === NEW_INSTANCE_UUID) {
       const note = { UUID: noteUUID };
-      this.setState({ activeNote: note });
-    } else if (
-      noteUUID === NEW_INSTANCE_UUID &&
-      version === "withContextTags"
-    ) {
-      const note = { UUID: noteUUID };
-      note.tagUUIDs = this.state.context.tags;
-      this.setState({ activeNote: note, tagUUIDs: this.state.tags });
+      note.tagUUIDs = Array.from(this.state.context.tags);
+
+      this.setState(prevState => ({
+        context: { ...prevState.context, activeNote: note }
+      }));
     } else {
       fetchNote(noteUUID).then(note => {
-        this.setState({ activeNote: note });
+        this.setState(prevState => ({
+          context: { ...prevState.context, activeNote: note }
+        }));
       });
     }
 

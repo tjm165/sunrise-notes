@@ -14,12 +14,12 @@ function getCookie(name) {
       .shift();
 }
 
-export function fetchNoteSet(baseTagUUIDs, requiredTagUUIDs, optionalTagUUIDs) {
+export function fetchNoteSet(tagUUIDs, intersection) {
   var noteset = new Map();
 
   return GET(
     `note-set`,
-    `?baseTagUUIDs=${baseTagUUIDs}&requiredTagUUIDs=${requiredTagUUIDs}&optionalTagUUIDs=${optionalTagUUIDs}`
+    `?tagUUIDs=${tagUUIDs}&intersection=${intersection}`
   ).then(notes => {
     Object.entries(notes).forEach(([key, note]) => {
       noteset.set(key, note);

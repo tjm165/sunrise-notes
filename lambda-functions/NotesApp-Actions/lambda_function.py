@@ -18,11 +18,12 @@ def lambda_handler(event, context):
         user.save_permissions()
         return response
     if (action == "note-set-GET"):
-        base_tags = querystring['baseTagUUIDs'].split(',')
-        req = querystring['requiredTagUUIDs'].split(',')
-        opt = querystring['optionalTagUUIDs'].split(',')
+        tag_uuids = querystring['tagUUIDs'].split(',')
+        if tag_uuids == [""]:
+            tag_uuids = []
+        intersection = querystring['intersection'] == "true"
 
-        return user.get_noteset_by_tag_uuids(base_tags, req, opt)
+        return user.get_noteset_by_tag_uuids(tag_uuids, intersection)
     if (action == "note-GET"):
         if querystring['UUID'] == "all":
             return user.get_all_notes()

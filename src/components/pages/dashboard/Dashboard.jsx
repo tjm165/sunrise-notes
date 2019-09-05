@@ -5,11 +5,9 @@ import {
   Modal,
   Segment,
   Header,
-  Divider,
   Grid
 } from "semantic-ui-react";
 import TopPannel from "./TopPannel";
-import { TagDropdown } from "../../implementations/Tag/TagDropdown";
 import TagEditor from "../../implementations/Tag/TagEditor";
 import NoteEditor from "../../implementations/Note/NoteEditor";
 import NoteMenu from "../../implementations/Note/NoteMenu";
@@ -19,12 +17,15 @@ import VerticalPannel from "./VerticalPannel";
 function Dashboard({ state, functions }) {
   useEffect(() => {
     functions.fetchUserTags();
+    functions.fetchNoteSet();
   }, []);
 
+  const context = state.context;
+
   const isLoading = state.isLoading;
-  const notes = state.context.notes;
-  const activeTag = state.activeTag;
-  const activeNote = state.activeNote;
+  const activeTag = context.activeTag;
+  const notes = context.notes;
+  const activeNote = context.activeNote;
   const tagMap = state.tagMap;
 
   return (
@@ -33,7 +34,11 @@ function Dashboard({ state, functions }) {
 
       <Grid>
         <Grid.Column width={2}>
-          <VerticalPannel tagMap={tagMap} functions={functions} />
+          <VerticalPannel
+            tagMap={tagMap}
+            context={context}
+            functions={functions}
+          />
         </Grid.Column>
         <Grid.Column width={14}>
           <Container>
@@ -58,31 +63,13 @@ function Dashboard({ state, functions }) {
               </Segment>
             ) : (
               <>
-                <Header>
-                  Search for notes that have any of the following tags:{" "}
-                </Header>
-                <TagDropdown
-                  defaultValue={state.context.tags}
-                  placeholder="Notes must have these tags"
-                  tagMap={tagMap}
-                  fluid
-                  isLoading={isLoading}
-                  setAsActiveTag={functions.setAsActiveTag}
-                  onChange={(e, DropdownProps) =>
-                    functions.fetchNoteSet(DropdownProps.value)
-                  }
-                />
-                <Divider as="br" />
-
-                {notes.size > 0 ? (
+                {notes.size > 0 && (
                   <NoteMenu
                     functions={functions}
                     notes={Array.from(notes)}
                     tagMap={tagMap}
                     isLoading={isLoading}
                   />
-                ) : (
-                  <>There are no notes that have any of the selected tags </>
                 )}
               </>
             )}
