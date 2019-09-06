@@ -9,8 +9,14 @@ import {
 } from "semantic-ui-react";
 import { NEW_INSTANCE_UUID } from "../../../API";
 import TagExplorer from "../../implementations/Tag/TagExplorer";
+import OperationSelector from "./OperationSelector";
 
-export default function VerticalPannel({ tagMap, context, functions }) {
+export default function VerticalPannel({
+  operation,
+  tagMap,
+  context,
+  functions
+}) {
   return (
     <>
       <Button
@@ -19,7 +25,10 @@ export default function VerticalPannel({ tagMap, context, functions }) {
       >
         Create Note
       </Button>
+
+      <OperationSelector operation={operation} functions={functions} />
       <TagExplorer
+        operation={operation}
         tagMap={tagMap}
         selectedTags={context.tags}
         functions={functions}

@@ -17,6 +17,7 @@ class SmartDashboard extends Component {
     super();
 
     this.state = {
+      operation: "intersection",
       tagMap: new Map(), //all of the user's tags
       context: {
         activeNote: NO_INSTANCE_UUID,
@@ -38,6 +39,8 @@ class SmartDashboard extends Component {
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
+
+      setOperation: this.setOperation.bind(this),
 
       toggleTag: this.toggleTag.bind(this),
       setAsActiveTag: this.setAsActiveTag.bind(this),
@@ -76,6 +79,11 @@ class SmartDashboard extends Component {
     this.fetchNoteSet();
   }
 
+  setOperation(operation) {
+    this.setState({ operation });
+    this.fetchNoteSet();
+  }
+
   fetchNoteSet() {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, fetchNoteSet: true }
@@ -88,7 +96,7 @@ class SmartDashboard extends Component {
     if (tags.length === 0) {
       this.setState({ context: context });
     } else {
-      fetchNoteSet(Array.from(tags), null).then(notes => {
+      fetchNoteSet(Array.from(tags), this.state.operation).then(notes => {
         context.notes = notes;
         this.setState({ context: context });
         this.setState(prevState => ({
