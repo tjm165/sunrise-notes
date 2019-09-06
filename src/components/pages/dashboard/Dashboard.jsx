@@ -21,6 +21,7 @@ function Dashboard({ state, functions }) {
   }, []);
 
   const context = state.context;
+  const operation = state.operation;
 
   const isLoading = state.isLoading;
   const activeTag = context.activeTag;
@@ -35,6 +36,7 @@ function Dashboard({ state, functions }) {
       <Grid>
         <Grid.Column width={2}>
           <VerticalPannel
+            operation={operation}
             tagMap={tagMap}
             context={context}
             functions={functions}

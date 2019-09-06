@@ -99,13 +99,15 @@ class User():
     # returns a set of colored notes
     # This is the only function that is O(Junctions)
 
-    def get_noteset_by_tag_uuids(self, tag_uuids, intersection):
+    def get_noteset_by_tag_uuids(self, tag_uuids, operation):
         if (len(tag_uuids) == 0):
             return self.get_notes_with_no_tags()
-        if intersection:
+        if operation == "union":
             return self.get_notes_with_all_tags(tag_uuids)
-
-        return self.get_notes_with_any_tags(tag_uuids)
+        if operation == "intersection":
+            return self.get_notes_with_any_tags(tag_uuids)
+        if operation == "complement":
+            return self.get_notes_without_any_of(tag_uuids)
 
     def get_notes_with_no_tags(self):
         notes = {}
@@ -116,7 +118,21 @@ class User():
         return notes
 
     def get_notes_with_all_tags(self, tag_uuids):
-        return "not supported"
+        noteset = self.get_all_notes().copy()
+
+        notedict = {}
+        for note in noteset:
+            notedict[note['UUID']] = note
+
+        for note in noteset:
+            for tag in tag_uuids:
+                if note['UUID'] in notedict:
+                    if tag not in note['tagUUIDs']:
+                        del notedict[note['UUID']]
+                    else:
+                        notedict[note['UUID']]['rgb'] = {'r': 255, 'g': 255, 'b': 255}
+
+        return notedict
 
     def get_notes_with_any_tags(self, tag_uuids):
         noteset = {}
@@ -131,3 +147,21 @@ class User():
                         noteset[note['UUID']] = note
                         noteset[note['UUID']]['rgb'] = tag_rgb
         return noteset
+
+    def get_notes_without_any_of(self, tag_uuids):
+        noteset = self.get_all_notes().copy()
+
+        notedict = {}
+        for note in noteset:
+            notedict[note['UUID']] = note
+
+        for note in noteset:
+            for tag in tag_uuids:
+                if note['UUID'] in notedict:
+                    if tag in note['tagUUIDs']:
+                        del notedict[note['UUID']]
+                    else:
+                        notedict[note['UUID']]['rgb'] = {'r': 255, 'g': 255, 'b': 255}
+
+        return notedict
+

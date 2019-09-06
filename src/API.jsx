@@ -14,18 +14,17 @@ function getCookie(name) {
       .shift();
 }
 
-export function fetchNoteSet(tagUUIDs, intersection) {
+export function fetchNoteSet(tagUUIDs, operation) {
   var noteset = new Map();
 
-  return GET(
-    `note-set`,
-    `?tagUUIDs=${tagUUIDs}&intersection=${intersection}`
-  ).then(notes => {
-    Object.entries(notes).forEach(([key, note]) => {
-      noteset.set(key, note);
-    });
-    return noteset;
-  });
+  return GET(`note-set`, `?tagUUIDs=${tagUUIDs}&operation=${operation}`).then(
+    notes => {
+      Object.entries(notes).forEach(([key, note]) => {
+        noteset.set(key, note);
+      });
+      return noteset;
+    }
+  );
 }
 
 export function signin(username, password) {

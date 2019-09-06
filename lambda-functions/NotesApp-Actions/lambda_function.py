@@ -21,9 +21,9 @@ def lambda_handler(event, context):
         tag_uuids = querystring['tagUUIDs'].split(',')
         if tag_uuids == [""]:
             tag_uuids = []
-        intersection = querystring['intersection'] == "true"
+        operation = querystring['operation']
 
-        return user.get_noteset_by_tag_uuids(tag_uuids, intersection)
+        return user.get_noteset_by_tag_uuids(tag_uuids, operation)
     if (action == "note-GET"):
         if querystring['UUID'] == "all":
             return user.get_all_notes()
