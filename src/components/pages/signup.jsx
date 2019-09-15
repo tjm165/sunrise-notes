@@ -27,7 +27,7 @@ export class SignupComponent extends Component {
     this.setEmail = this.setEmail.bind(this);
 
     this.check = { name: "check", color: "green" };
-    this.x = { name: "x", color: "red" };
+    this.x = { name: "minus" };
   }
 
   handleSubmit = async event => {
@@ -66,24 +66,16 @@ export class SignupComponent extends Component {
   render() {
     const { signupPassed, email, password, confirmPassword } = this.state;
     const doPasswordsMatch = password === confirmPassword;
-    const passwordHasUppercase = password.toLowerCase() !== password;
-    const passwordHasLowercase = password.toUpperCase() !== password;
     const passwordHasNumber = /\d/.test(password);
     const passwordIsMinLength = password.length >= 8;
+    const error =
+      !passwordHasNumber || !passwordIsMinLength || !doPasswordsMatch;
 
     return (
       <>
         {!signupPassed ? (
-          <Paragraph headerText="We're really excited that you're joining!">
-            <Form
-              error={
-                !passwordHasUppercase ||
-                !passwordHasLowercase ||
-                !passwordHasNumber ||
-                !passwordIsMinLength ||
-                !doPasswordsMatch
-              }
-            >
+          <Paragraph headerText="We're so excited that you're signing up!">
+            <Form error={error}>
               <Form.Input
                 label="Email"
                 placeholder="Email"
@@ -104,40 +96,36 @@ export class SignupComponent extends Component {
                 value={confirmPassword}
                 onChange={event => this.setConfirmPassword(event.target.value)}
               />
-              <Message error>
-                <List>
-                  Passwords must:
-                  <List.Item
-                    icon={
-                      password.length > 0 && doPasswordsMatch
-                        ? this.check
-                        : this.x
-                    }
-                    content="Match"
-                  />
-                  <List.Item
-                    icon={passwordIsMinLength ? this.check : this.x}
-                    content="Be at least 8 characters"
-                  />
-                  <List.Item
-                    icon={passwordHasUppercase ? this.check : this.x}
-                    content="Contain an uppercase letter"
-                  />
-                  <List.Item
-                    icon={passwordHasLowercase ? this.check : this.x}
-                    content="Contain a lowercase letter"
-                  />
-                  <List.Item
-                    icon={passwordHasNumber ? this.check : this.x}
-                    content="Contain a number"
-                  />
-                </List>
-              </Message>
+
+              {error && (
+                <Message>
+                  <List>
+                    Passwords must:
+                    <List.Item
+                      icon={
+                        password.length > 0 && doPasswordsMatch
+                          ? this.check
+                          : this.x
+                      }
+                      content="Match"
+                    />
+                    <List.Item
+                      icon={passwordIsMinLength ? this.check : this.x}
+                      content="Be at least 8 characters"
+                    />
+                    <List.Item
+                      icon={passwordHasNumber ? this.check : this.x}
+                      content="Contain a number"
+                    />
+                  </List>
+                </Message>
+              )}
 
               <Button
                 positive
                 onClick={e => this.handleSubmit(e)}
                 loading={this.state.isLoading}
+                disabled={error}
               >
                 Register
               </Button>
