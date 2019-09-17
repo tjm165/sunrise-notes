@@ -103,9 +103,9 @@ class User():
         if (len(tag_uuids) == 0):
             return self.get_notes_with_no_tags()
         if operation == "union":
-            return self.get_notes_with_all_tags(tag_uuids)
-        if operation == "intersection":
             return self.get_notes_with_any_tags(tag_uuids)
+        if operation == "intersection":
+            return self.get_notes_with_all_tags(tag_uuids)
         if operation == "complement":
             return self.get_notes_without_any_of(tag_uuids)
 
