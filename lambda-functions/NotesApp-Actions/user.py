@@ -103,9 +103,9 @@ class User():
         if (len(tag_uuids) == 0):
             return self.get_notes_with_no_tags()
         if operation == "union":
-            return self.get_notes_with_all_tags(tag_uuids)
-        if operation == "intersection":
             return self.get_notes_with_any_tags(tag_uuids)
+        if operation == "intersection":
+            return self.get_notes_with_all_tags(tag_uuids)
         if operation == "complement":
             return self.get_notes_without_any_of(tag_uuids)
 
@@ -120,6 +120,13 @@ class User():
     def get_notes_with_all_tags(self, tag_uuids):
         noteset = self.get_all_notes().copy()
 
+        mixed_colors = self.get_tag(tag_uuids[0])['rgb']
+        iter_tags = iter(tag_uuids)
+        next(iter_tags)
+
+        for tag_uuid in iter_tags:
+            mixed_colors = mix_colors(mixed_colors, self.get_tag(tag_uuid)['rgb'])
+
         notedict = {}
         for note in noteset:
             notedict[note['UUID']] = note
@@ -130,7 +137,7 @@ class User():
                     if tag not in note['tagUUIDs']:
                         del notedict[note['UUID']]
                     else:
-                        notedict[note['UUID']]['rgb'] = {'r': 255, 'g': 255, 'b': 255}
+                        notedict[note['UUID']]['rgb'] = mixed_colors
 
         return notedict
 
@@ -140,9 +147,9 @@ class User():
             for tag_uuid in note['tagUUIDs']:
                 if tag_uuid in tag_uuids:
                     tag_rgb = self.get_tag(tag_uuid)['rgb']
-                    if note['UUID'] in tag_uuids:
-                        noteset[note['UUID']]['rgb'] = mix_colors(
-                            noteset[note['UUID']]['rgb'], tag_rgb)
+                    if note['UUID'] in noteset:
+                        noteset[note['UUID']]['rgb'] = mix_colors(tag_rgb,
+                            noteset[note['UUID']]['rgb'])
                     else:
                         noteset[note['UUID']] = note
                         noteset[note['UUID']]['rgb'] = tag_rgb

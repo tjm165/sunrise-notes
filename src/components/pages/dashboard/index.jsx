@@ -80,11 +80,11 @@ class SmartDashboard extends Component {
   }
 
   setOperation(operation) {
-    this.setState({ operation });
-    this.fetchNoteSet();
+    this.setState({ operation: operation });
+    this.fetchNoteSet(operation);
   }
 
-  fetchNoteSet() {
+  fetchNoteSet(operation) {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, fetchNoteSet: true }
     }));
@@ -96,13 +96,15 @@ class SmartDashboard extends Component {
     if (tags.length === 0) {
       this.setState({ context: context });
     } else {
-      fetchNoteSet(Array.from(tags), this.state.operation).then(notes => {
-        context.notes = notes;
-        this.setState({ context: context });
-        this.setState(prevState => ({
-          isLoading: { ...prevState.isLoading, fetchNoteSet: false }
-        }));
-      });
+      fetchNoteSet(Array.from(tags), operation || this.state.operation).then(
+        notes => {
+          context.notes = notes;
+          this.setState({ context: context });
+          this.setState(prevState => ({
+            isLoading: { ...prevState.isLoading, fetchNoteSet: false }
+          }));
+        }
+      );
     }
   }
 
