@@ -1,13 +1,6 @@
-import React, { useState } from "react";
-import {
-  Menu,
-  Header,
-  Divider,
-  Button,
-  Dropdown,
-  Icon
-} from "semantic-ui-react";
+import React from "react";
 import { NEW_INSTANCE_UUID } from "../../../API";
+import NoteCreateButton from "../../implementations/Note/NoteCreateButton";
 import TagExplorer from "../../implementations/Tag/TagExplorer";
 import OperationSelector from "./OperationSelector";
 
@@ -19,13 +12,7 @@ export default function VerticalPannel({
 }) {
   return (
     <>
-      <Button
-        positive
-        onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}
-      >
-        Create Note
-      </Button>
-
+      <NoteCreateButton positive functions={functions} />
       <OperationSelector operation={operation} functions={functions} />
       <TagExplorer
         operation={operation}

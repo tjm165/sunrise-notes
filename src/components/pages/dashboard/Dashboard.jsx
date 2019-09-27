@@ -10,7 +10,7 @@ import {
 import TopPannel from "./TopPannel";
 import TagEditor from "../../implementations/Tag/TagEditor";
 import NoteEditor from "../../implementations/Note/NoteEditor";
-import NoteMenu from "../../implementations/Note/NoteMenu";
+import NoteSelector from "../../implementations/Note/NotesSelector";
 import { NO_INSTANCE_UUID } from "../../../API";
 import VerticalPannel from "./VerticalPannel";
 
@@ -64,16 +64,12 @@ function Dashboard({ state, functions }) {
                 />
               </Segment>
             ) : (
-              <>
-                {notes.size > 0 && (
-                  <NoteMenu
-                    functions={functions}
-                    notes={Array.from(notes)}
-                    tagMap={tagMap}
-                    isLoading={isLoading}
-                  />
-                )}
-              </>
+              <NoteSelector
+                functions={functions}
+                notes={Array.from(notes)}
+                tagMap={tagMap}
+                isLoading={isLoading}
+              />
             )}
           </Container>
         </Grid.Column>
