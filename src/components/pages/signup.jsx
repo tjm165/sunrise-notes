@@ -132,10 +132,11 @@ export class SignupComponent extends Component {
             </Form>
           </Paragraph>
         ) : (
-          <Paragraph headerText="Thank you for chosing Sunrise Notes!">
-            verification link has been sent to {email}
+          <Paragraph headerText="Welcome!">
+            You have successfully registered a new account.
             <br />
-            Please click the link to finish the registration process!
+            We've sent you an email. Please click the link to verify your
+            account.
           </Paragraph>
         )}
       </>
