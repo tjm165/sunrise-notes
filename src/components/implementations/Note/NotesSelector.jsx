@@ -13,7 +13,7 @@ export default function NoteSelector({ notes, functions, isLoading }) {
       {notes.length > 0 ? (
         <NotesMenu notes={notes} functions={functions} />
       ) : (
-        <NoNotesFound />
+        <NoNotesFound functions={functions} />
       )}
     </Segment>
   );
