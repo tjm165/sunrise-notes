@@ -5,30 +5,25 @@ function OperationSelector({ operation, functions }) {
   const options = [
     {
       key: "union",
-      text: "Any",
+      text: "or",
       value: "union",
       image: { avatar: true, src: "/images/avatar/small/jenny.jpg" }
     },
     {
       key: "intersection",
-      text: "all",
+      text: "and",
       value: "intersection",
       image: { avatar: true, src: "/images/avatar/small/elliot.jpg" }
     }
   ];
   return (
     <>
-      <span>
-        Show me posts by{" "}
-        <Dropdown inline options={options} defaultValue={options[0].value} />
-      </span>
-
       <Form>
-        <Form.Field>Show notes with</Form.Field>
+        <Form.Field>Filter:</Form.Field>
         <Form.Field>
           <Radio
             toggle
-            label="any"
+            label="or"
             name="radioGroup"
             checked={operation === "union"}
             onChange={() => functions.setOperation("union")}
@@ -37,13 +32,12 @@ function OperationSelector({ operation, functions }) {
         <Form.Field>
           <Radio
             toggle
-            label="all"
+            label="and"
             name="radioGroup"
             checked={operation === "intersection"}
             onChange={() => functions.setOperation("intersection")}
           />
         </Form.Field>
-        <Form.Field>selected tags</Form.Field>
       </Form>
     </>
   );
