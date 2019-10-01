@@ -4,9 +4,12 @@ This is a notes application built by students for students. What makes this appl
 ## Production Website
 The best way to learn about Sunrise Notes is to [take a look for yourself](https://www.sunrisenotes.com/). Take note of what you like and what you'd be interested in improving. Your feedback is valued!
 
-__Website:__ [https://www.sunrisenotes.com/](https://www.sunrisenotes.com/)
+__Website:__ [https://sunrisenotes.com/](https://sunrisenotes.com/)
 
+## Development Website
+Branches merged into the /dev branch are automatically reflected on [the dev version](https://dev.sunrisenotes.com/). Take a look at what we're working on. You'll be contributing too in no time!
 
+__Website:__ [https://dev.sunrisenotes.com/](https://dev.sunrisenotes.com/)
 
 ## Installation
 Step 1. Clone Repository

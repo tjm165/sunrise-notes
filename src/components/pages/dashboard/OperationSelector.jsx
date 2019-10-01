@@ -1,38 +1,45 @@
 import React from "react";
-import { Form, Radio } from "semantic-ui-react";
+import { Dropdown, Form, Radio } from "semantic-ui-react";
 
 function OperationSelector({ operation, functions }) {
+  const options = [
+    {
+      key: "union",
+      text: "or",
+      value: "union",
+      image: { avatar: true, src: "/images/avatar/small/jenny.jpg" }
+    },
+    {
+      key: "intersection",
+      text: "and",
+      value: "intersection",
+      image: { avatar: true, src: "/images/avatar/small/elliot.jpg" }
+    }
+  ];
   return (
-    <Form>
-      <Form.Field>Operation:</Form.Field>
-      <Form.Field>
-        <Radio
-          toggle
-          label="Union"
-          name="radioGroup"
-          checked={operation === "union"}
-          onChange={() => functions.setOperation("union")}
-        />
-      </Form.Field>
-      <Form.Field>
-        <Radio
-          toggle
-          label="Intersection"
-          name="radioGroup"
-          checked={operation === "intersection"}
-          onChange={() => functions.setOperation("intersection")}
-        />
-      </Form.Field>
-      <Form.Field>
-        <Radio
-          toggle
-          label="Complement"
-          name="radioGroup"
-          checked={operation === "complement"}
-          onChange={() => functions.setOperation("complement")}
-        />
-      </Form.Field>
-    </Form>
+    <>
+      <Form>
+        <Form.Field>Filter:</Form.Field>
+        <Form.Field>
+          <Radio
+            toggle
+            label="or"
+            name="radioGroup"
+            checked={operation === "union"}
+            onChange={() => functions.setOperation("union")}
+          />
+        </Form.Field>
+        <Form.Field>
+          <Radio
+            toggle
+            label="and"
+            name="radioGroup"
+            checked={operation === "intersection"}
+            onChange={() => functions.setOperation("intersection")}
+          />
+        </Form.Field>
+      </Form>
+    </>
   );
 }
 
