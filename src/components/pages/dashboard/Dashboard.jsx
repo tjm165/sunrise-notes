@@ -33,10 +33,13 @@ function Dashboard({ state, functions }) {
     <>
       <TopPannel />
 
-      <Grid divided>
+      <Grid divided style={{ height: "100vh" }}>
         <Grid.Column
           width={2}
-          style={{ borderRadius: "0px", backgroundColor: "#EEEEEE" }}
+          style={{
+            borderRadius: "0px",
+            backgroundColor: "#EEEEEE"
+          }}
         >
           <Segment>
             <VerticalPannel
