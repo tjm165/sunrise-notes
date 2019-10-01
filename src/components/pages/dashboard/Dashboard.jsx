@@ -33,19 +33,27 @@ function Dashboard({ state, functions }) {
     <>
       <TopPannel />
 
-      <Grid>
-        <Grid.Column width={2}>
-          <VerticalPannel
-            operation={operation}
-            tagMap={tagMap}
-            context={context}
-            functions={functions}
-          />
+      <Grid divided>
+        <Grid.Column
+          width={2}
+          style={{ borderRadius: "0px", backgroundColor: "#EEEEEE" }}
+        >
+          <Segment>
+            <VerticalPannel
+              operation={operation}
+              tagMap={tagMap}
+              context={context}
+              functions={functions}
+            />
+          </Segment>
         </Grid.Column>
-        <Grid.Column width={14}>
-          <Container>
+        <Grid.Column
+          width={14}
+          style={{ borderRadius: "0px", backgroundColor: "#EEEEEE" }}
+        >
+          <Segment>
             {activeNote ? (
-              <Segment stacked={notes.size > 0}>
+              <>
                 <Button
                   onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
                 >
@@ -62,7 +70,7 @@ function Dashboard({ state, functions }) {
                   setAsActiveTag={functions.setAsActiveTag}
                   isLoading={isLoading}
                 />
-              </Segment>
+              </>
             ) : (
               <NoteSelector
                 functions={functions}
@@ -71,7 +79,7 @@ function Dashboard({ state, functions }) {
                 isLoading={isLoading}
               />
             )}
-          </Container>
+          </Segment>
         </Grid.Column>
       </Grid>
 

@@ -3,6 +3,7 @@ import { NEW_INSTANCE_UUID } from "../../../API";
 import NoteCreateButton from "../../implementations/Note/NoteCreateButton";
 import TagExplorer from "../../implementations/Tag/TagExplorer";
 import OperationSelector from "./OperationSelector";
+import { Segment } from "semantic-ui-react";
 
 export default function VerticalPannel({
   operation,

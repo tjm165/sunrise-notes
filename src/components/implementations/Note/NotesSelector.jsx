@@ -9,13 +9,13 @@ export default function NoteSelector({ notes, functions, isLoading }) {
   return isLoadingNotes ? (
     <Loader active={isLoading} inline="centered" />
   ) : (
-    <Segment>
+    <>
       {notes.length > 0 ? (
         <NotesMenu notes={notes} functions={functions} />
       ) : (
         <NoNotesFound functions={functions} />
       )}
-    </Segment>
+    </>
   );
 }
 
