@@ -3,7 +3,7 @@ import { NEW_INSTANCE_UUID } from "../../../API";
 import NoteCreateButton from "../../implementations/Note/NoteCreateButton";
 import TagExplorer from "../../implementations/Tag/TagExplorer";
 import OperationSelector from "./OperationSelector";
-import { Segment } from "semantic-ui-react";
+import { Divider } from "semantic-ui-react";
 
 export default function VerticalPannel({
   operation,
@@ -14,6 +14,8 @@ export default function VerticalPannel({
   return (
     <>
       <NoteCreateButton positive functions={functions} />
+      <Divider></Divider>
+
       <OperationSelector operation={operation} functions={functions} />
       <TagExplorer
         operation={operation}
