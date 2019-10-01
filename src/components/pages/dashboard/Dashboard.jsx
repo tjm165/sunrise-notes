@@ -32,59 +32,60 @@ function Dashboard({ state, functions }) {
   return (
     <>
       <TopPannel />
+      <Container style={{ width: "98%" }}>
+        <Grid columns="equal" divided style={{ height: "100vh" }}>
+          <Grid.Column
+            width={2}
+            style={{
+              borderRadius: "0px",
+              backgroundColor: "#EEEEEE"
+            }}
+          >
+            <Segment secondary>
+              <VerticalPannel
+                operation={operation}
+                tagMap={tagMap}
+                context={context}
+                functions={functions}
+              />
+            </Segment>
+          </Grid.Column>
 
-      <Grid divided style={{ height: "100vh" }}>
-        <Grid.Column
-          width={2}
-          style={{
-            borderRadius: "0px",
-            backgroundColor: "#EEEEEE"
-          }}
-        >
-          <Segment>
-            <VerticalPannel
-              operation={operation}
-              tagMap={tagMap}
-              context={context}
-              functions={functions}
-            />
-          </Segment>
-        </Grid.Column>
-        <Grid.Column
-          width={14}
-          style={{ borderRadius: "0px", backgroundColor: "#EEEEEE" }}
-        >
-          <Segment>
-            {activeNote ? (
-              <>
-                <Button
-                  onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
-                >
-                  back
-                </Button>
-                <NoteEditor
-                  key={JSON.stringify(state.activeNote)}
+          <Grid.Column
+            style={{ borderRadius: "0px", backgroundColor: "#EEEEEE" }}
+          >
+            <Segment>
+              {activeNote ? (
+                <>
+                  <Button
+                    onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
+                  >
+                    back
+                  </Button>
+                  <NoteEditor
+                    key={JSON.stringify(state.activeNote)}
+                    tagMap={tagMap}
+                    note={activeNote}
+                    onSubmit={functions.submitNote}
+                    onDelete={() =>
+                      functions.deleteNote(state.activeNote["UUID"])
+                    }
+                    setAsActiveTag={functions.setAsActiveTag}
+                    isLoading={isLoading}
+                  />
+                </>
+              ) : (
+                <NoteSelector
+                  functions={functions}
+                  notes={Array.from(notes)}
                   tagMap={tagMap}
-                  note={activeNote}
-                  onSubmit={functions.submitNote}
-                  onDelete={() =>
-                    functions.deleteNote(state.activeNote["UUID"])
-                  }
-                  setAsActiveTag={functions.setAsActiveTag}
                   isLoading={isLoading}
                 />
-              </>
-            ) : (
-              <NoteSelector
-                functions={functions}
-                notes={Array.from(notes)}
-                tagMap={tagMap}
-                isLoading={isLoading}
-              />
-            )}
-          </Segment>
-        </Grid.Column>
-      </Grid>
+              )}
+            </Segment>
+          </Grid.Column>
+        </Grid>
+      </Container>
 
       {activeTag && (
         <Modal
