@@ -32,16 +32,16 @@ function Dashboard({ state, functions }) {
   return (
     <>
       <TopPannel />
-      <Container style={{ width: "98%" }}>
-        <Grid columns="equal" divided style={{ height: "100vh" }}>
+
+      <div style={{ height: "100vh", backgroundColor: "#EEEEEE" }}>
+        <Grid container columns="equal">
           <Grid.Column
-            width={2}
+            width={4}
             style={{
-              borderRadius: "0px",
-              backgroundColor: "#EEEEEE"
+              borderRadius: "0px"
             }}
           >
-            <Segment secondary>
+            <Segment raised>
               <VerticalPannel
                 operation={operation}
                 tagMap={tagMap}
@@ -51,9 +51,7 @@ function Dashboard({ state, functions }) {
             </Segment>
           </Grid.Column>
 
-          <Grid.Column
-            style={{ borderRadius: "0px", backgroundColor: "#EEEEEE" }}
-          >
+          <Grid.Column>
             <Segment>
               {activeNote ? (
                 <>
@@ -85,7 +83,7 @@ function Dashboard({ state, functions }) {
             </Segment>
           </Grid.Column>
         </Grid>
-      </Container>
+      </div>
 
       {activeTag && (
         <Modal
