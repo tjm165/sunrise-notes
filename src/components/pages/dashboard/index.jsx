@@ -17,7 +17,7 @@ class SmartDashboard extends Component {
     super();
 
     this.state = {
-      operation: "intersection",
+      operation: "union",
       tagMap: new Map(), //all of the user's tags
       context: {
         activeNote: NO_INSTANCE_UUID,
