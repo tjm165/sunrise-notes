@@ -17,6 +17,7 @@ export default function VerticalPannel({
       <Divider></Divider>
 
       <OperationSelector operation={operation} functions={functions} />
+      <br />
       <TagExplorer
         operation={operation}
         tagMap={tagMap}

@@ -26,11 +26,6 @@ export class TagDropdown extends Component {
         content: (
           <Header size="tiny">
             <TagSegment text={text} rgb={rgb} />
-
-            <Icon
-              name="ellipsis vertical"
-              onClick={() => setAsActiveTag(key)}
-            />
           </Header>
         )
       };
