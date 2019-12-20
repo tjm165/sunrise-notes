@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextArea, Icon, Button, Form, Card } from "semantic-ui-react";
 import { TagDropdown } from "../Tag/TagDropdown";
-import NoteCard from "./NoteCard";
+import NoteCard from "./NoteSegment";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
 const NoteEditor = ({

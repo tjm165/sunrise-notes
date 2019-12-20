@@ -1,6 +1,6 @@
 import React from "react";
-import { Loader, Card, Segment, Header, Icon } from "semantic-ui-react";
-import NoteCard from "./NoteCard";
+import { Loader, Menu, Segment, Header, Icon } from "semantic-ui-react";
+import NoteSegment from "./NoteSegment";
 import NoteCreateButton from "./NoteCreateButton";
 
 export default function NoteSelector({ notes, functions, isLoading }) {
@@ -21,15 +21,15 @@ export default function NoteSelector({ notes, functions, isLoading }) {
 
 function NotesMenu({ notes, functions }) {
   return (
-    <Card.Group>
+    <Menu pointing vertical fluid>
       {notes.map(([key, note]) => (
-        <NoteCard
+        <NoteSegment
           note={note}
           onEdit={() => functions.setAsActiveNote(key)}
           onDelete={() => functions.deleteNote(key)}
         />
       ))}
-    </Card.Group>
+    </Menu>
   );
 }
 

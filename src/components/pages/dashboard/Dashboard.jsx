@@ -53,14 +53,10 @@ function Dashboard({ state, functions }) {
 
           <Grid.Column>
             <Segment>
-              <NoteEditor
+              <NoteSelector
+                functions={functions}
                 notes={Array.from(notes)}
-                key={JSON.stringify(state.activeNote)}
                 tagMap={tagMap}
-                note={activeNote}
-                onSubmit={functions.submitNote}
-                onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
-                setAsActiveTag={functions.setAsActiveTag}
                 isLoading={isLoading}
               />
             </Segment>
