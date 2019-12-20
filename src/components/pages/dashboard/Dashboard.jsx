@@ -53,33 +53,16 @@ function Dashboard({ state, functions }) {
 
           <Grid.Column>
             <Segment>
-              {activeNote ? (
-                <>
-                  <Button
-                    onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
-                  >
-                    back
-                  </Button>
-                  <NoteEditor
-                    key={JSON.stringify(state.activeNote)}
-                    tagMap={tagMap}
-                    note={activeNote}
-                    onSubmit={functions.submitNote}
-                    onDelete={() =>
-                      functions.deleteNote(state.activeNote["UUID"])
-                    }
-                    setAsActiveTag={functions.setAsActiveTag}
-                    isLoading={isLoading}
-                  />
-                </>
-              ) : (
-                <NoteSelector
-                  functions={functions}
-                  notes={Array.from(notes)}
-                  tagMap={tagMap}
-                  isLoading={isLoading}
-                />
-              )}
+              <NoteEditor
+                notes={Array.from(notes)}
+                key={JSON.stringify(state.activeNote)}
+                tagMap={tagMap}
+                note={activeNote}
+                onSubmit={functions.submitNote}
+                onDelete={() => functions.deleteNote(state.activeNote["UUID"])}
+                setAsActiveTag={functions.setAsActiveTag}
+                isLoading={isLoading}
+              />
             </Segment>
           </Grid.Column>
         </Grid>
