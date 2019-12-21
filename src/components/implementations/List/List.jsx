@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, Icon } from "semantic-ui-react";
+import { Menu, Icon, Segment, Loader } from "semantic-ui-react";
 
 export default function List({ children, subtitle, title, isListLoading }) {
   return (
@@ -7,36 +7,48 @@ export default function List({ children, subtitle, title, isListLoading }) {
       {title && <h1>{title}</h1>}
       {subtitle && <h5>{subtitle}</h5>}
 
-      <Menu pointing vertical fluid>
-        {children}
-      </Menu>
+      {isListLoading ? (
+        <Loader active={isListLoading} inline="centered" />
+      ) : (
+        <Menu pointing vertical fluid>
+          {children}
+        </Menu>
+      )}
     </>
   );
 }
 
-export function Entry({ extraOptions, title, isSelected, onClick }) {
-  // const rgbstring = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2`;
+function noEntriesFound() {
+  return <Segment placeholder>No Entries Found</Segment>;
+}
+
+export function Entry({ children, extraOptions, isSelected, onClick }) {
   const [shouldHideOptions, hideOptions] = useState(true);
+  const props = {};
+  props.onClick = false;
+  if (onClick) {
+    props.onClick = () => onClick();
+  }
+
   return (
     <Menu.Item
-      // style={{ backgroundColor: isSelected ? rgbstring : "#fff" }}
-      onClick={() => onClick()}
+      {...props}
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}
     >
-      {title}
-      {extraOptions.map(([iconName, onClick]) => (
-        <>
-          <Icon
-            name={shouldHideOptions || iconName}
-            onClick={event => {
-              event.stopPropagation();
-              onClick();
-            }}
-          />
-        </>
-      ))}
-      {/* this part will deal with actions */}
+      {children}
+      {extraOptions &&
+        extraOptions.map(([iconName, onClick]) => (
+          <>
+            <Icon
+              name={shouldHideOptions || iconName}
+              onClick={event => {
+                event.stopPropagation();
+                onClick();
+              }}
+            />
+          </>
+        ))}
     </Menu.Item>
   );
 }

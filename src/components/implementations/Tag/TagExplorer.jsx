@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import List, { Entry } from "../List/List";
 import { Menu, Icon } from "semantic-ui-react";
 
-function TagExplorer({ tagMap, selectedTags, functions, operation }) {
+export default function TagExplorer({
+  tagMap,
+  selectedTags,
+  functions,
+  operation
+}) {
   return (
     <List
       subtitle={`Showing notes with ${
@@ -13,15 +18,13 @@ function TagExplorer({ tagMap, selectedTags, functions, operation }) {
         <Entry
           onClick={() => functions.toggleTag(key)}
           extraOptions={[["pencil", () => functions.setAsActiveTag(key)]]}
-          {...tagMap.get(key)}
           isSelected={selectedTags.has(key)}
-          functions={functions}
-          key={index}
+          key={key}
           operation={index > 0 && operation}
-        />
+        >
+          {tagMap.get(key).title}
+        </Entry>
       ))}
     </List>
   );
 }
-
-export default TagExplorer;

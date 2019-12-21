@@ -55,7 +55,7 @@ function Dashboard({ state, functions }) {
             <Segment>
               <NoteSelector
                 functions={functions}
-                notes={Array.from(notes)}
+                notes={notes}
                 tagMap={tagMap}
                 isLoading={isLoading}
               />
