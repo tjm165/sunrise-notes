@@ -18,10 +18,6 @@ export default function List({ children, subtitle, title, isListLoading }) {
   );
 }
 
-function noEntriesFound() {
-  return <Segment placeholder>No Entries Found</Segment>;
-}
-
 export function Entry({ children, extraOptions, isSelected, onClick }) {
   const [shouldHideOptions, hideOptions] = useState(true);
   const props = {};
