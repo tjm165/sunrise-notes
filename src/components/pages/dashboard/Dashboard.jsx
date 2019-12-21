@@ -7,10 +7,9 @@ import {
   Header,
   Grid
 } from "semantic-ui-react";
+import Board from "./Board";
 import TopPannel from "./TopPannel";
 import TagEditor from "../../implementations/Tag/TagEditor";
-import NoteEditor from "../../implementations/Note/NoteEditor";
-import NoteSelector from "../../implementations/Note/NotesSelector";
 import { NO_INSTANCE_UUID } from "../../../API";
 import VerticalPannel from "./VerticalPannel";
 
@@ -53,11 +52,11 @@ function Dashboard({ state, functions }) {
 
           <Grid.Column>
             <Segment>
-              <NoteSelector
+              <Board
                 functions={functions}
                 notes={notes}
-                tagMap={tagMap}
                 isLoading={isLoading}
+                activeNote={activeNote}
               />
             </Segment>
           </Grid.Column>

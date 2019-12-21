@@ -1,24 +1,14 @@
 import React, { useState } from "react";
 import { Menu, Icon, Segment, Loader } from "semantic-ui-react";
 
-export default function List({ children, subtitle, title, isListLoading }) {
-  return (
-    <>
-      {title && <h1>{title}</h1>}
-      {subtitle && <h5>{subtitle}</h5>}
-
-      {isListLoading ? (
-        <Loader active={isListLoading} inline="centered" />
-      ) : (
-        <Menu pointing vertical fluid>
-          {children}
-        </Menu>
-      )}
-    </>
-  );
-}
-
-export function Entry({ children, extraOptions, isSelected, onClick }) {
+// should be an all in one container than can deal with different types of data and serve multiple purposes
+export default function FlexContainer({
+  children,
+  extraOptions,
+  color,
+  isSelected,
+  onClick
+}) {
   const [shouldHideOptions, hideOptions] = useState(true);
   const props = {};
   props.onClick = false;
@@ -32,7 +22,7 @@ export function Entry({ children, extraOptions, isSelected, onClick }) {
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}
     >
-      {children}
+      {isSelected && children[1] ? children[1] : children[0]}
       {extraOptions &&
         extraOptions.map(([iconName, onClick]) => (
           <>

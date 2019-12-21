@@ -1,7 +1,7 @@
 import React from "react";
 import { NEW_INSTANCE_UUID } from "../../../API";
 import NoteCreateButton from "../../implementations/Note/NoteCreateButton";
-import TagExplorer from "../../implementations/Tag/TagExplorer";
+import TagList from "../../implementations/Tag/TagList";
 import OperationSelector from "./OperationSelector";
 import { Divider } from "semantic-ui-react";
 
@@ -18,7 +18,7 @@ export default function VerticalPannel({
 
       <OperationSelector operation={operation} functions={functions} />
       <br />
-      <TagExplorer
+      <TagList
         operation={operation}
         tagMap={tagMap}
         selectedTags={context.tags}

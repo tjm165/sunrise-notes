@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import List, { Entry } from "../List/List";
-import { Menu, Icon } from "semantic-ui-react";
+import React from "react";
+import List from "../List";
+import FlexContainer from "../../implementations/../FlexContainer";
 
-export default function TagExplorer({
+export default function TagList({
   tagMap,
   selectedTags,
   functions,
@@ -15,7 +15,7 @@ export default function TagExplorer({
       }`}
     >
       {Array.from(tagMap.keys()).map((key, index) => (
-        <Entry
+        <FlexContainer
           onClick={() => functions.toggleTag(key)}
           extraOptions={[["pencil", () => functions.setAsActiveTag(key)]]}
           isSelected={selectedTags.has(key)}
@@ -23,7 +23,7 @@ export default function TagExplorer({
           operation={index > 0 && operation}
         >
           {tagMap.get(key).title}
-        </Entry>
+        </FlexContainer>
       ))}
     </List>
   );
