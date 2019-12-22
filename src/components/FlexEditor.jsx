@@ -30,11 +30,12 @@ export default function FlexEditor({
     <Form loading={isLoading.setAsActiveNote}>
       <Dropdown
         value={type}
+        onChange={(e, { value }) => setType(value)}
         options={[
-          { key: "item", text: "list text" },
-          { key: "image", text: "image" },
-          { key: "link", text: "link" },
-          { key: "paragraph", text: "paragraph" }
+          { key: "item", text: "item", value: "item" },
+          { key: "image", text: "image", value: "image" },
+          { key: "link", text: "link", value: "link" },
+          { key: "paragraph", text: "paragraph", value: "paragraph" }
         ]}
       ></Dropdown>
       <TextArea
