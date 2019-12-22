@@ -17,7 +17,7 @@ export default function FlexContainer({
   }
 
   return (
-    <Menu.Item
+    <Segment
       {...props}
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}
@@ -35,6 +35,6 @@ export default function FlexContainer({
             />
           </>
         ))}
-    </Menu.Item>
+    </Segment>
   );
 }

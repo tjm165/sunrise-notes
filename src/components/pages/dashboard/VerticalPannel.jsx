@@ -1,9 +1,8 @@
 import React from "react";
 import { NEW_INSTANCE_UUID } from "../../../API";
-import NoteCreateButton from "../../implementations/Note/NoteCreateButton";
 import TagList from "../../implementations/Tag/TagList";
 import OperationSelector from "./OperationSelector";
-import { Divider } from "semantic-ui-react";
+import { Button, Divider } from "semantic-ui-react";
 
 export default function VerticalPannel({
   operation,
@@ -25,5 +24,16 @@ export default function VerticalPannel({
         functions={functions}
       />
     </>
+  );
+}
+
+function NoteCreateButton({ label = "Create Note", functions, ...rest }) {
+  return (
+    <Button
+      {...rest}
+      onClick={() => functions.setAsActiveNote(NEW_INSTANCE_UUID)}
+    >
+      {label}
+    </Button>
   );
 }

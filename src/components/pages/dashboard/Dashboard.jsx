@@ -57,6 +57,7 @@ function Dashboard({ state, functions }) {
                 notes={notes}
                 isLoading={isLoading}
                 activeNote={activeNote}
+                tagMap={tagMap}
               />
             </Segment>
           </Grid.Column>

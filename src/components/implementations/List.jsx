@@ -1,7 +1,13 @@
 import React, { useState } from "react";
-import { Menu, Icon, Segment, Loader } from "semantic-ui-react";
+import { Segment, Icon, Loader } from "semantic-ui-react";
 
-export default function List({ children, subtitle, title, isListLoading }) {
+export default function List({
+  stacked,
+  children,
+  subtitle,
+  title,
+  isListLoading
+}) {
   return (
     <>
       {title && <h1>{title}</h1>}
@@ -10,9 +16,14 @@ export default function List({ children, subtitle, title, isListLoading }) {
       {isListLoading ? (
         <Loader active={isListLoading} inline="centered" />
       ) : (
-        <Menu pointing vertical fluid>
+        <Segment.Group
+          stacked={children.length > 1 && stacked}
+          pointing
+          vertical
+          fluid
+        >
           {children}
-        </Menu>
+        </Segment.Group>
       )}
     </>
   );
