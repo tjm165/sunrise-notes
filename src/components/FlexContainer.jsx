@@ -7,7 +7,8 @@ export default function FlexContainer({
   extraOptions,
   color,
   isSelected,
-  onClick
+  onClick,
+  type
 }) {
   const [shouldHideOptions, hideOptions] = useState(true);
   const props = {};
@@ -37,4 +38,4 @@ export default function FlexContainer({
         ))}
     </Segment>
   );
-}
+} //split this into multiple pieces and then some conditionals on the type
