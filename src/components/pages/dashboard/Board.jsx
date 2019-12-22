@@ -3,7 +3,7 @@ import List from "../../implementations/List";
 import FlexContainer from "./../../FlexContainer";
 import FlexEditor from "./../../FlexEditor";
 import { NEW_INSTANCE_UUID } from "../../../API";
-import { Image } from "semantic-ui-react";
+import { Image, Icon } from "semantic-ui-react";
 
 export default function Board({
   tagMap,
@@ -46,7 +46,12 @@ export default function Board({
         <FlexNotes notes={paragraph} {...flexNoteProps} />
       </>
       <Image.Group>
-        <FlexNotes notes={images} {...flexNoteProps} />
+        <FlexNotes
+          size="massive"
+          type="image"
+          notes={images}
+          {...flexNoteProps}
+        ></FlexNotes>
       </Image.Group>
     </>
   );
@@ -58,7 +63,9 @@ function FlexNotes({
   activeNote,
   functions,
   isLoading,
-  tagMap
+  type,
+  tagMap,
+  ...rest
 }) {
   return (
     <>
@@ -66,10 +73,13 @@ function FlexNotes({
         <FlexContainer
           isSelected={activeNote.UUID === key}
           onClick={() => functions.setAsActiveNote(key)}
+          extraOptions={[["circle outline", () => alert("hello")]]}
+          {...rest}
+          type={type}
         >
-          <> {noteMap.get(key).content}</>
+          {noteMap.get(key).content}
           <FlexEditor
-            type="item"
+            type={type}
             isLoading={isLoading}
             note={activeNote}
             tagMap={tagMap}
