@@ -1,6 +1,6 @@
 import React from "react";
 import List from "../List";
-import FlexContainer from "../../implementations/../FlexContainer";
+import FlexContainer from "../Flex/FlexContainer";
 
 export default function TagList({
   tagMap,

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TextArea, Icon, Button, Form, Dropdown } from "semantic-ui-react";
-import { TagDropdown } from "./implementations/Tag/TagDropdown";
-import { NEW_INSTANCE_UUID } from "../API";
+import { TagDropdown } from "../../implementations/Tag/TagDropdown";
+import { NEW_INSTANCE_UUID } from "../../../API";
 
 export default function FlexEditor({
   note,

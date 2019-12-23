@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import List from "../../implementations/List";
-import FlexContainer from "./../../FlexContainer";
-import FlexEditor from "./../../FlexEditor";
+import FlexEditor from "../../implementations/Flex/FlexEditor";
+import Items from "../../implementations/Flex/Items";
+import Images from "../../implementations/Flex/Images";
+import Paragraphs from "../../implementations/Flex/Paragraphs";
 import { NEW_INSTANCE_UUID } from "../../../API";
 import { Image, Icon } from "semantic-ui-react";
 
@@ -14,10 +16,15 @@ export default function Board({
 }) {
   const isLoadingNotes = isLoading.fetchNoteSet;
   const noteArray = Array.from(notes.keys());
+  const items = noteArray.filter(key => notes.get(key).type === "item");
+  const paragraphs = noteArray.filter(
+    key => notes.get(key).type === "paragraph"
+  );
+  const links = noteArray.filter(key => notes.get(key).type === "link");
+  const images = noteArray.filter(key => notes.get(key).type === "image");
 
   const flexNoteProps = {
     noteMap: notes,
-    notes: noteArray,
     activeNote,
     functions,
     isLoading,
@@ -37,104 +44,11 @@ export default function Board({
           onDelete={() => functions.deleteNote(activeNote["UUID"])}
         />
       )}
-      <Items functions={functions} {...flexNoteProps} />
-
-      <>
-        <FlexNotes {...flexNoteProps} />
-      </>
-      <Image.Group>
-        <FlexNotes
-          size="massive"
-          type="image"
-          notes={notes}
-          {...flexNoteProps}
-        ></FlexNotes>
-      </Image.Group>
-    </>
-  );
-}
-
-function Items({
-  noteMap,
-  activeNote,
-  functions,
-  isLoading,
-  type,
-  tagMap,
-  notes,
-  ...rest
-}) {
-  return (
-    <List>
-      {notes
-        .filter(key => noteMap.get(key).type === "item")
-        .map(key => (
-          <FlexContainer
-            isSelected={activeNote.UUID === key}
-            onClick={() => functions.setAsActiveNote(key)}
-            {...rest}
-            type={type}
-          >
-            <>
-              <Icon
-                onClick={() =>
-                  functions.submitNote({
-                    ...noteMap.get(key),
-                    secondaryContent: !noteMap.get(key).secondaryContent
-                  })
-                }
-                name={
-                  noteMap.get(key).secondaryContent
-                    ? "circle"
-                    : "circle outline"
-                }
-              ></Icon>
-              {noteMap.get(key).content}
-            </>
-            <FlexEditor
-              type={type}
-              isLoading={isLoading}
-              note={activeNote}
-              tagMap={tagMap}
-              onSubmit={functions.submitNote}
-              onDelete={() => functions.deleteNote(activeNote["UUID"])}
-            />
-          </FlexContainer>
-        ))}
-    </List>
-  );
-}
-
-function FlexNotes({
-  noteMap,
-  notes,
-  activeNote,
-  functions,
-  isLoading,
-  type,
-  tagMap,
-  ...rest
-}) {
-  return (
-    <>
-      {notes.map(key => (
-        <FlexContainer
-          isSelected={activeNote.UUID === key}
-          onClick={() => functions.setAsActiveNote(key)}
-          {...rest}
-          type={type}
-        >
-          {noteMap.get(key).content}
-          <FlexEditor
-            type={type}
-            isLoading={isLoading}
-            note={activeNote}
-            tagMap={tagMap}
-            onSubmit={functions.submitNote}
-            onDelete={() => functions.deleteNote(activeNote["UUID"])}
-          />
-        </FlexContainer>
-      ))}
+      List
+      {/* These are FlexGroups! */}
+      <Items items={items} functions={functions} {...flexNoteProps} />
+      Images
+      <Images images={images} functions={functions} {...flexNoteProps} />
     </>
   );
 }
