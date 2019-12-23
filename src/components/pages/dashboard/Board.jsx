@@ -13,12 +13,11 @@ export default function Board({
   isLoading
 }) {
   const isLoadingNotes = isLoading.fetchNoteSet;
-  const items = Array.from(notes.keys());
-  const paragraph = Array.from(notes.keys());
-  const images = Array.from(notes.keys());
+  const noteArray = Array.from(notes.keys());
 
   const flexNoteProps = {
     noteMap: notes,
+    notes: noteArray,
     activeNote,
     functions,
     isLoading,
@@ -38,22 +37,71 @@ export default function Board({
           onDelete={() => functions.deleteNote(activeNote["UUID"])}
         />
       )}
-      <List stacked>
-        <FlexNotes notes={items} {...flexNoteProps} />
-      </List>
+      <Items functions={functions} {...flexNoteProps} />
 
       <>
-        <FlexNotes notes={paragraph} {...flexNoteProps} />
+        <FlexNotes {...flexNoteProps} />
       </>
       <Image.Group>
         <FlexNotes
           size="massive"
           type="image"
-          notes={images}
+          notes={notes}
           {...flexNoteProps}
         ></FlexNotes>
       </Image.Group>
     </>
+  );
+}
+
+function Items({
+  noteMap,
+  activeNote,
+  functions,
+  isLoading,
+  type,
+  tagMap,
+  notes,
+  ...rest
+}) {
+  return (
+    <List>
+      {notes
+        .filter(key => noteMap.get(key).type === "item")
+        .map(key => (
+          <FlexContainer
+            isSelected={activeNote.UUID === key}
+            onClick={() => functions.setAsActiveNote(key)}
+            {...rest}
+            type={type}
+          >
+            <>
+              <Icon
+                onClick={() =>
+                  functions.submitNote({
+                    ...noteMap.get(key),
+                    secondaryContent: !noteMap.get(key).secondaryContent
+                  })
+                }
+                name={
+                  noteMap.get(key).secondaryContent
+                    ? "circle"
+                    : "circle outline"
+                }
+              ></Icon>
+              {noteMap.get(key).content}
+            </>
+            <FlexEditor
+              type={type}
+              isLoading={isLoading}
+              note={activeNote}
+              tagMap={tagMap}
+              onSubmit={functions.submitNote}
+              onDelete={() => functions.deleteNote(activeNote["UUID"])}
+            />
+          </FlexContainer>
+        ))}
+    </List>
   );
 }
 
@@ -73,7 +121,6 @@ function FlexNotes({
         <FlexContainer
           isSelected={activeNote.UUID === key}
           onClick={() => functions.setAsActiveNote(key)}
-          extraOptions={[["circle outline", () => alert("hello")]]}
           {...rest}
           type={type}
         >

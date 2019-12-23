@@ -13,6 +13,8 @@ export default function FlexEditor({
 }) {
   const isPreexisting = note["UUID"] !== NEW_INSTANCE_UUID;
   const [tagUUIDs, setTagUUIDs] = useState(note.tagUUIDs || []);
+  const [secondaryContent] = useState(note.secondaryContent || false);
+
   const [content, setContent] = useState(note.content);
   const [type, setType] = useState(note.type || type || "paragraph"); //don't know if this will work
 
@@ -22,6 +24,7 @@ export default function FlexEditor({
       UUID: note.UUID,
       content,
       tagUUIDs,
+      secondaryContent,
       type
     });
   };
