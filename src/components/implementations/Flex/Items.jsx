@@ -22,6 +22,7 @@ export default function Items({
           onClick={() => functions.setAsActiveNote(key)}
           {...rest}
           type={type}
+          rgb={noteMap.get(key).rgb}
         >
           <>
             <Icon

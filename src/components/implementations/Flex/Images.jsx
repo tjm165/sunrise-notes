@@ -21,7 +21,9 @@ export default function Items({
           isSelected={activeNote.UUID === key}
           onClick={() => functions.setAsActiveNote(key)}
           {...rest}
+          color={noteMap.get(key).color}
           type={type}
+          rgb={noteMap.get(key).rgb}
         >
           <Image src={noteMap.get(key).content} size="medium" />
           <FlexEditor
