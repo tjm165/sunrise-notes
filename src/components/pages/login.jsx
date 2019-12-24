@@ -33,7 +33,7 @@ const Login = props => {
     <Desktop hideFooter activeItem="Login">
       <Paragraph headerText="Sign In">
         {error && <Header as="h4">{error}</Header>}
-
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
         <Form>
           <Form.Input
             label="Email"
