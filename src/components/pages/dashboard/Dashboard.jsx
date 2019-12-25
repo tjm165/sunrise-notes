@@ -7,10 +7,9 @@ import {
   Header,
   Grid
 } from "semantic-ui-react";
+import Board from "./Board";
 import TopPannel from "./TopPannel";
 import TagEditor from "../../implementations/Tag/TagEditor";
-import NoteEditor from "../../implementations/Note/NoteEditor";
-import NoteSelector from "../../implementations/Note/NotesSelector";
 import { NO_INSTANCE_UUID } from "../../../API";
 import VerticalPannel from "./VerticalPannel";
 
@@ -53,33 +52,13 @@ function Dashboard({ state, functions }) {
 
           <Grid.Column>
             <Segment>
-              {activeNote ? (
-                <>
-                  <Button
-                    onClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
-                  >
-                    back
-                  </Button>
-                  <NoteEditor
-                    key={JSON.stringify(state.activeNote)}
-                    tagMap={tagMap}
-                    note={activeNote}
-                    onSubmit={functions.submitNote}
-                    onDelete={() =>
-                      functions.deleteNote(state.activeNote["UUID"])
-                    }
-                    setAsActiveTag={functions.setAsActiveTag}
-                    isLoading={isLoading}
-                  />
-                </>
-              ) : (
-                <NoteSelector
-                  functions={functions}
-                  notes={Array.from(notes)}
-                  tagMap={tagMap}
-                  isLoading={isLoading}
-                />
-              )}
+              <Board
+                functions={functions}
+                notes={notes}
+                isLoading={isLoading}
+                activeNote={activeNote}
+                tagMap={tagMap}
+              />
             </Segment>
           </Grid.Column>
         </Grid>

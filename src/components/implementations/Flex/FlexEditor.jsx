@@ -1,38 +1,51 @@
 import React, { useState } from "react";
-import { TextArea, Icon, Button, Form } from "semantic-ui-react";
-import { TagDropdown } from "../Tag/TagDropdown";
+import { TextArea, Icon, Button, Form, Dropdown } from "semantic-ui-react";
+import { TagDropdown } from "../../implementations/Tag/TagDropdown";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
-const NoteEditor = ({
+export default function FlexEditor({
   note,
   tagMap,
   onSubmit,
   onDelete,
   setAsActiveTag,
   isLoading
-}) => {
+}) {
   const isPreexisting = note["UUID"] !== NEW_INSTANCE_UUID;
   const [tagUUIDs, setTagUUIDs] = useState(note.tagUUIDs || []);
-  const [title, setTitle] = useState(note.title);
+  const [secondaryContent] = useState(note.secondaryContent || false);
+
   const [content, setContent] = useState(note.content);
+  const [type, setType] = useState(note.type || type || "paragraph"); //don't know if this will work
 
   const handleSubmit = event => {
     event.preventDefault();
     onSubmit({
       UUID: note.UUID,
-      title,
       content,
-      tagUUIDs
+      tagUUIDs,
+      secondaryContent,
+      type
     });
   };
 
   return (
     <Form loading={isLoading.setAsActiveNote}>
+      <Dropdown
+        value={type}
+        onChange={(e, { value }) => setType(value)}
+        options={[
+          { key: "item", text: "item", value: "item" },
+          { key: "image", text: "image", value: "image" },
+          { key: "link", text: "link", value: "link" },
+          { key: "paragraph", text: "paragraph", value: "paragraph" }
+        ]}
+      ></Dropdown>
       <TextArea
-        name="title"
-        defaultValue={title}
-        placeholder="Give your note a title..."
-        onChange={(e, { value }) => setTitle(value)}
+        name="content"
+        defaultValue={content}
+        placeholder="Enter content here..."
+        onChange={(e, { value }) => setContent(value)}
       />
       <TagDropdown
         placeholder="Add tags to your note"
@@ -42,12 +55,6 @@ const NoteEditor = ({
         defaultValue={tagUUIDs}
         onChange={(e, DropdownProps) => setTagUUIDs(DropdownProps.value)}
         setAsActiveTag={setAsActiveTag}
-      />
-      <TextArea
-        name="content"
-        defaultValue={content}
-        placeholder="Enter content here..."
-        onChange={(e, { value }) => setContent(value)}
       />
       <Button
         positive
@@ -66,6 +73,4 @@ const NoteEditor = ({
       )}
     </Form>
   );
-};
-
-export default NoteEditor;
+}

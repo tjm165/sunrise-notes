@@ -161,11 +161,11 @@ class SmartDashboard extends Component {
     }
   }
 
-  submitNote(note, tagsToInsert, tagsToRemove) {
+  submitNote(note) {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, submitNote: true }
     }));
-    postNote(note, tagsToInsert, tagsToRemove).then(() => {
+    postNote(note).then(() => {
       this.setState(prevState => ({
         isLoading: { ...prevState.isLoading, submitNote: false }
       }));

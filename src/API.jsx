@@ -61,7 +61,7 @@ export function deleteTag(UUID) {
   });
 }
 
-export function postNote(noteObject, tagsToInsert, tagsToRemove) {
+export function postNote(noteObject) {
   return POST(`note`, { noteObject })
     .then(data => console.log(JSON.stringify(data)))
     .catch(error => console.error(error));
