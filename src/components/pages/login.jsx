@@ -4,7 +4,6 @@ import { signin } from "../../API";
 import Desktop from "../implementations/Layout/Desktop";
 import { withRouter } from "react-router-dom";
 import Paragraph from "../implementations/Layout/Paragraph";
-import GoogleLogin from "react-google-login";
 
 const Login = props => {
   const [email, setEmail] = useState([""]);
@@ -30,21 +29,11 @@ const Login = props => {
       .finally(() => setLoading(false));
   };
 
-  const responseGoogle = response => {
-    console.log(response);
-  };
-
   return (
     <Desktop hideFooter activeItem="Login">
-      <GoogleLogin
-        clientId="647453733657-82tcdpdimrrubgo1hi5glp1cdlrvo3it.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={"single_host_origin"}
-      />
       <Paragraph headerText="Sign In">
         {error && <Header as="h4">{error}</Header>}
+
         <Form>
           <Form.Input
             label="Email"
