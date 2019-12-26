@@ -11,10 +11,9 @@ import Signup from "./components/pages/signup";
 
 class App extends Component {
   render() {
-    const { pathname } = window.location;
-    alert(pathname);
     return (
-      <BrowserRouter forceRefresh={true}>
+      <BrowserRouter>
+        {/* //eventually home page */}
         <Route exact path="/" render={props => <Landing {...props} />} />
         <Route
           exact
@@ -28,7 +27,6 @@ class App extends Component {
         />
         <Route exact path="/contribute" render={props => <Contribute />} />
         <Route exact path="/about-team" render={props => <AboutTeam />} />
-
         <Route exact path="/signup" render={props => <Signup {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
       </BrowserRouter>
