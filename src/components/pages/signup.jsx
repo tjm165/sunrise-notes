@@ -3,6 +3,7 @@ import { Auth } from "aws-amplify";
 import { Form, Button, List, Message } from "semantic-ui-react";
 import Desktop from "../implementations/Layout/Desktop";
 import Paragraph from "../implementations/Layout/Paragraph";
+import GoogleLogin from "react-google-login";
 
 export default function Signup() {
   return (
@@ -29,6 +30,11 @@ export class SignupComponent extends Component {
     this.check = { name: "check", color: "green" };
     this.x = { name: "minus" };
   }
+
+  responseGoogle = async response => {
+    this.setState({ isLoading: true });
+    console.log(response);
+  };
 
   handleSubmit = async event => {
     this.setState({ isLoading: true });
@@ -73,6 +79,9 @@ export class SignupComponent extends Component {
 
     return (
       <>
+        <button onClick={() => Auth.federatedSignIn({ provider: "Google" })}>
+          Open Google
+        </button>
         {!signupPassed ? (
           <Paragraph headerText="We're so excited that you're signing up!">
             <Form error={error}>
