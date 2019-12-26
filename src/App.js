@@ -11,6 +11,8 @@ import Signup from "./components/pages/signup";
 
 class App extends Component {
   render() {
+    const { pathname } = window.location;
+    alert(pathname);
     return (
       <BrowserRouter forceRefresh={true}>
         <Route exact path="/" render={props => <Landing {...props} />} />
