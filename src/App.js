@@ -27,7 +27,6 @@ class App extends Component {
         />
         <Route exact path="/contribute" render={props => <Contribute />} />
         <Route exact path="/about-team" render={props => <AboutTeam />} />
-
         <Route exact path="/signup" render={props => <Signup {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
       </BrowserRouter>
