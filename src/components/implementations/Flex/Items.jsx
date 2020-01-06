@@ -45,6 +45,7 @@ export default function Items({
             tagMap={tagMap}
             onSubmit={functions.submitNote}
             onDelete={() => functions.deleteNote(activeNote["UUID"])}
+            setAsActiveTag={functions.setAsActiveTag}
           />
         </FlexContainer>
       ))}
