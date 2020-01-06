@@ -27,8 +27,6 @@ def lambda_handler(event, context):
 
         return user.get_noteset_by_tag_uuids(tag_uuids, operation)
     if (action == "note-GET"):
-        if querystring['UUID'] == "all":
-            return user.get_all_notes()
         return user.get_note(querystring['UUID'])
 
     if (action == "tag-DELETE"):

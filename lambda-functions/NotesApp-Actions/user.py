@@ -37,7 +37,7 @@ class User():
 
     # returns the note object from the table
     def get_note(self, uuid):
-        return self.notes_table.get_item(uuid)
+        return self.notes_table.get_item(uuid, True)
 
     # puts the tag object in the table
     def put_tag(self, tag_object):
@@ -69,6 +69,7 @@ class User():
     def get_noteset_by_tag_uuids(self, tag_uuids, operation):
         # get all notes
         notes = self.get_all_notes()
+        note_dict = {}
 
         # apply the correct filter
         if (len(tag_uuids) == 0):
@@ -84,4 +85,6 @@ class User():
         # color
         for note in notes:
             note['rgb'] = self.generate_note_rgb(note)
-        return notes
+            note_dict[note['UUID']] = note
+
+        return note_dict
