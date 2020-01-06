@@ -12,6 +12,7 @@ class User():
     user_table = None
     tags_table = None
     notes_table = None
+    note_tag_association_table = None
 
     def __init__(self, user_uuid):
         self.user_uuid = user_uuid
@@ -19,20 +20,16 @@ class User():
         self.tags_table = Table('SunriseNotes-Tags')
         self.notes_table = AssiciatedTable('SunriseNotes-Notes', 'SunriseNotes-NoteTagAssociation', 'SunriseNotes-Tags',
                                            'NoteUUID-index', 'NoteUUID', 'TagUUID-index', 'TagUUID')
-
-    def get_all_notes(self):
-        note_uuids = self.notes_table.query(
-            "UserUUID-index", Key("UserUUID").eq(self.user_uuid))['Items']
-
-        notes = []
-        for uuid in note_uuids:
-            notes.append(self.get_note(uuid))
-        return notes
+        self.note_tag_association_table = Table(
+            'SunriseNotes-NoteTagAssociations')
 
     def get_all_tags(self):
-        tag_uuids = self.tags_table.query(
-            "UserUUID-index", Key("UserUUID").eq(self.user_uuid))['Items']
-        return tag_uuids
+        return self.tags_table.query(
+            "UserUUID-index", Key("UserUUID").eq(self.user_uuid))
+
+    def get_all_notes(self):
+        return self.notes_table.query(
+            "UserUUID-index", Key("UserUUID").eq(self.user_uuid), True)
 
     # returns the tag object from the table
     def get_tag(self, uuid):
@@ -56,93 +53,35 @@ class User():
             note_object['UUID'] = uuid4().hex
         note_object['UserUUID'] = self.user_uuid
 
-        return self.notes_table.put_item(note_object)
+        return self.notes_table.put_item({**note_object, 'tagUUIDs': None}, note_object['tagUUIDs'])
 
     # deletes the tag and removes itself from any notes
     def delete_tag(self, uuid):
-        self.tags_table.delete_item(uuid)
-        for note in self.get_all_notes():
-            if uuid in note['tagUUIDs']:
-                note['tagUUIDs'].remove(uuid)
-            self.notes_table.put_item(note)
+        pass
 
     def delete_note(self, uuid):
-        self.notes_table.delete_item(uuid)
+        pass
+
+    def generate_note_rgb(self, note):
+        return {'r': 100, 'g': 200, 'b': 300}
 
     # returns a set of colored notes
-    # This is the only function that is O(Junctions)
-
     def get_noteset_by_tag_uuids(self, tag_uuids, operation):
+        # get all notes
+        notes = self.get_all_notes()
+
+        # apply the correct filter
         if (len(tag_uuids) == 0):
-            return self.get_notes_with_no_tags()
-        if operation == "union":
-            return self.get_notes_with_any_tags(tag_uuids)
-        if operation == "intersection":
-            return self.get_notes_with_all_tags(tag_uuids)
-        if operation == "complement":
-            return self.get_notes_without_any_of(tag_uuids)
+            notes = list(filter(lambda note: len(
+                note['associatedItems']) == 0, notes))
+        elif operation == "intersection":
+            notes = list(filter(lambda note:
+                                all(tag in tag_uuids for tag in note['associatedItems']), notes))
+        elif operation == "union":
+            notes = list(filter(lambda note:
+                                any(tag in tag_uuids for tag in note['associatedItems']), notes))
 
-    def get_notes_with_no_tags(self):
-        notes = {}
-        for note in self.get_all_notes():
-            if (len(note['tagUUIDs']) == 0):
-                notes[note['UUID']] = note
-                notes[note['UUID']]['rgb'] = {'r': 255, 'g': 255, 'b': 255}
+        # color
+        for note in notes:
+            note['rgb'] = self.generate_note_rgb(note)
         return notes
-
-    def get_notes_with_all_tags(self, tag_uuids):
-        noteset = self.get_all_notes().copy()
-
-        mixed_colors = self.get_tag(tag_uuids[0])['rgb']
-        iter_tags = iter(tag_uuids)
-        next(iter_tags)
-
-        for tag_uuid in iter_tags:
-            mixed_colors = mix_colors(
-                mixed_colors, self.get_tag(tag_uuid)['rgb'])
-
-        notedict = {}
-        for note in noteset:
-            notedict[note['UUID']] = note
-
-        for note in noteset:
-            for tag in tag_uuids:
-                if note['UUID'] in notedict:
-                    if tag not in note['tagUUIDs']:
-                        del notedict[note['UUID']]
-                    else:
-                        notedict[note['UUID']]['rgb'] = mixed_colors
-
-        return notedict
-
-    def get_notes_with_any_tags(self, tag_uuids):
-        noteset = {}
-        for note in self.get_all_notes():
-            for tag_uuid in note['tagUUIDs']:
-                if tag_uuid in tag_uuids:
-                    tag_rgb = self.get_tag(tag_uuid)['rgb']
-                    if note['UUID'] in noteset:
-                        noteset[note['UUID']]['rgb'] = mix_colors(tag_rgb,
-                                                                  noteset[note['UUID']]['rgb'])
-                    else:
-                        noteset[note['UUID']] = note
-                        noteset[note['UUID']]['rgb'] = tag_rgb
-        return noteset
-
-    def get_notes_without_any_of(self, tag_uuids):
-        noteset = self.get_all_notes().copy()
-
-        notedict = {}
-        for note in noteset:
-            notedict[note['UUID']] = note
-
-        for note in noteset:
-            for tag in tag_uuids:
-                if note['UUID'] in notedict:
-                    if tag in note['tagUUIDs']:
-                        del notedict[note['UUID']]
-                    else:
-                        notedict[note['UUID']]['rgb'] = {
-                            'r': 255, 'g': 255, 'b': 255}
-
-        return notedict
