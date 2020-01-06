@@ -46,34 +46,39 @@ class AssiciatedTable(Table):
         self.associated_index_name = associated_index_name
         self.associated_key_name = associated_key_name
 
-    def __associate(self, item):
+    def __associate(self, item, alias="associatedItems", only_associate_uuid=False):
         associations = self.association_table.query(
             self.index_name,
             Key(self.key_name).eq(item['UUID']),
         )
 
-        item['associatedItems'] = {}
-        for association in associations:
-            associated_uuid = association[self.associated_key_name]
-            associated_item = self.associated_table.get_item(
-                associated_uuid)
-            item["associatedItems"][associated_uuid] = associated_item
+        if only_associate_uuid:
+            item[alias] = []
+            for association in associations:
+                associated_uuid = association[self.associated_key_name]
+                item[alias].append(associated_uuid)
+        else:
+            item[alias] = {}
+            for association in associations:
+                associated_uuid = association[self.associated_key_name]
+                associated_item = self.associated_table.get_item(
+                    associated_uuid)
+                item[alias][associated_uuid] = associated_item
         return item
 
-    def query(self, index_name, key_condition_expression, with_associated_items):
+    def query(self, index_name, key_condition_expression, with_associated_items, alias, only_associate_uuid):
         items = super().query(index_name, key_condition_expression)
 
         if with_associated_items:
             for item in items:
-                item = self.__associate(item)
+                item = self.__associate(item, alias, only_associate_uuid)
         return items
 
-    def get_item(self, UUID, with_associated_items):
+    def get_item(self, UUID, with_associated_items, alias, only_associate_uuid):
         item = super().get_item(UUID)
-        item["associatedItems"] = {}
 
         if with_associated_items:
-            item = self.__associate(item)
+            item = self.__associate(item, alias, only_associate_uuid)
 
         return item
 

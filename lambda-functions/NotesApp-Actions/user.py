@@ -27,17 +27,21 @@ class User():
         return self.tags_table.query(
             "UserUUID-index", Key("UserUUID").eq(self.user_uuid))
 
-    def get_all_notes(self):
+    def get_all_notes(self, only_associate_uuid):
         return self.notes_table.query(
-            "UserUUID-index", Key("UserUUID").eq(self.user_uuid), True)
+            "UserUUID-index",
+            Key("UserUUID").eq(self.user_uuid),
+            True,
+            "tagUUIDs",
+            only_associate_uuid)
 
     # returns the tag object from the table
     def get_tag(self, uuid):
         return self.tags_table.get_item(uuid)
 
     # returns the note object from the table
-    def get_note(self, uuid):
-        return self.notes_table.get_item(uuid, True)
+    def get_note(self, uuid, only_associate_uuid):
+        return self.notes_table.get_item(uuid, True, "tagUUIDs", only_associate_uuid)
 
     # puts the tag object in the table
     def put_tag(self, tag_object):
@@ -68,19 +72,19 @@ class User():
     # returns a set of colored notes
     def get_noteset_by_tag_uuids(self, tag_uuids, operation):
         # get all notes
-        notes = self.get_all_notes()
+        notes = self.get_all_notes(True)
         note_dict = {}
 
         # apply the correct filter
         if (len(tag_uuids) == 0):
             notes = list(filter(lambda note: len(
-                note['associatedItems']) == 0, notes))
+                note['tagUUIDs']) == 0, notes))
         elif operation == "intersection":
             notes = list(filter(lambda note:
-                                all(tag in tag_uuids for tag in note['associatedItems']), notes))
+                                all(tag in tag_uuids for tag in note['tagUUIDs']), notes))
         elif operation == "union":
             notes = list(filter(lambda note:
-                                any(tag in tag_uuids for tag in note['associatedItems']), notes))
+                                any(tag in tag_uuids for tag in note['tagUUIDs']), notes))
 
         # color
         for note in notes:

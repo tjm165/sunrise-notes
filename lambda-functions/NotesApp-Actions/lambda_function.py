@@ -27,7 +27,7 @@ def lambda_handler(event, context):
 
         return user.get_noteset_by_tag_uuids(tag_uuids, operation)
     if (action == "note-GET"):
-        return user.get_note(querystring['UUID'])
+        return user.get_note(querystring['UUID'], True)
 
     if (action == "tag-DELETE"):
         response = user.delete_tag(querystring['UUID'])
