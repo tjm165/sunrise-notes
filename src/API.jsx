@@ -63,13 +63,17 @@ export function deleteTag(UUID) {
 
 export function postNote(noteObject) {
   return POST(`note`, { noteObject })
-    .then(data => console.log(JSON.stringify(data)))
+    .then(data => {
+      return data;
+    })
     .catch(error => console.error(error));
 }
 
 export function postTag(tagObject) {
   return POST(`tag`, { tagObject })
-    .then(data => console.log(JSON.stringify(data)))
+    .then(data => {
+      return data;
+    })
     .catch(error => console.error(error));
 }
 

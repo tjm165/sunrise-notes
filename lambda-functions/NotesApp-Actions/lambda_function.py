@@ -1,4 +1,6 @@
 from user import User
+import boto3
+from boto3.dynamodb.conditions import Key, Attr
 
 
 def lambda_handler(event, context):
@@ -10,12 +12,12 @@ def lambda_handler(event, context):
     user = User(event['sunrise-user'])
 
     if (action == "test"):
-        return user.get_all_tags()
+        return "ping"
+
     if (action == "tags-GET"):
         return user.get_all_tags()
     if (action == "tag-POST"):
         response = user.put_tag(body['tagObject'])
-        user.save_permissions()
         return response
     if (action == "note-set-GET"):
         tag_uuids = querystring['tagUUIDs'].split(',')
@@ -25,23 +27,16 @@ def lambda_handler(event, context):
 
         return user.get_noteset_by_tag_uuids(tag_uuids, operation)
     if (action == "note-GET"):
-        if querystring['UUID'] == "all":
-            return user.get_all_notes()
-        return user.get_note(querystring['UUID'])
+        return user.get_note(querystring['UUID'], True)
 
     if (action == "tag-DELETE"):
-        response = user.delete_tag(querystring['UUID'])
-        user.save_permissions()
-        return response
+        return user.delete_tag(querystring['UUID'])
 
     if (action == "note-DELETE"):
-        response = user.delete_note(querystring['UUID'])
-        user.save_permissions()
-        return response
+        return user.delete_note(querystring['UUID'])
 
     if (action == "note-POST"):
         response = user.put_note(body['noteObject'])
-        user.save_permissions()
         return response
 
     return "action not supported: " + action
