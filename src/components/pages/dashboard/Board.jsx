@@ -42,6 +42,7 @@ export default function Board({
           tagMap={tagMap}
           onSubmit={functions.submitNote}
           onDelete={() => functions.deleteNote(activeNote["UUID"])}
+          setAsActiveTag={functions.setAsActiveTag}
         />
       )}
       List
