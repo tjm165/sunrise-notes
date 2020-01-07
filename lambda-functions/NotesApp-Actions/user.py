@@ -48,16 +48,17 @@ class User():
         if ('UUID' not in tag_object) or tag_object['UUID'] is -1:
             tag_object['UUID'] = uuid4().hex
         tag_object['UserUUID'] = self.user_uuid
-
-        return self.tags_table.put_item(tag_object)
+        self.tags_table.put_item(tag_object)
+        return {'UUID': tag_object['UUID']}
 
     # puts the note object in the table
     def put_note(self, note_object):
         if ('UUID' not in note_object) or note_object['UUID'] is -1:
             note_object['UUID'] = uuid4().hex
         note_object['UserUUID'] = self.user_uuid
-
-        return self.notes_table.put_item({**note_object, 'tagUUIDs': None}, note_object['tagUUIDs'])
+        self.notes_table.put_item(
+            {**note_object, 'tagUUIDs': None}, note_object['tagUUIDs'])
+        return {'UUID': note_object['UUID']}
 
     # deletes the tag and removes itself from any notes
     def delete_tag(self, uuid):
