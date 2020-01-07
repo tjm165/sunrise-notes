@@ -46,11 +46,14 @@ class AssiciatedTable(Table):
         self.associated_index_name = associated_index_name
         self.associated_key_name = associated_key_name
 
-    def __associate(self, item, alias="associatedItems", only_associate_uuid=False):
-        associations = self.association_table.query(
+    def __get_associations(self, uuid):
+        return self.association_table.query(
             self.index_name,
-            Key(self.key_name).eq(item['UUID']),
+            Key(self.key_name).eq(uuid),
         )
+
+    def __associate(self, item, alias="associatedItems", only_associate_uuid=False):
+        associations = self.__get_associations(item['UUID'])
 
         if only_associate_uuid:
             item[alias] = []
@@ -98,6 +101,9 @@ class AssiciatedTable(Table):
         return item['UUID']
 
     def delete_item(self, UUID):
-        # so if this is a notes table then here is a note
-        # you need to delete the note and the assiciations
+        associations = self.__get_associations(UUID)
+        super().delete_item(UUID)
+        for association in associations:
+            self.association_table.delete_item(association['UUID'])
+
         return None

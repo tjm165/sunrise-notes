@@ -61,10 +61,10 @@ class User():
 
     # deletes the tag and removes itself from any notes
     def delete_tag(self, uuid):
-        pass
+        return self.tags_table.delete_item(uuid)
 
     def delete_note(self, uuid):
-        pass
+        return self.notes_table.delete_item(uuid)
 
     def generate_note_rgb(self, note):
         return {'r': 100, 'g': 200, 'b': 300}

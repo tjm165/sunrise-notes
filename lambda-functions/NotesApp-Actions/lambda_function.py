@@ -30,12 +30,10 @@ def lambda_handler(event, context):
         return user.get_note(querystring['UUID'], True)
 
     if (action == "tag-DELETE"):
-        response = user.delete_tag(querystring['UUID'])
-        return response
+        return user.delete_tag(querystring['UUID'])
 
     if (action == "note-DELETE"):
-        response = user.delete_note(querystring['UUID'])
-        return response
+        return user.delete_note(querystring['UUID'])
 
     if (action == "note-POST"):
         response = user.put_note(body['noteObject'])
