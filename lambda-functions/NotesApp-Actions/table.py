@@ -91,6 +91,11 @@ class AssiciatedTable(Table):
             item['UUID'] = new_uuid()
 
         super().put_item(item)
+
+        for association in self.__get_associations(item['UUID']):
+            self.association_table.delete_item(association['UUID'])
+
+        # then call this
         for associated_item_uuid in associated_item_uuids:
             self.association_table.put_item({
                 'UUID': new_uuid(),
