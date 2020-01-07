@@ -23,6 +23,7 @@ export default function Items({
           {...rest}
           type={type}
           rgb={noteMap.get(key).rgb}
+          key={key}
         >
           <>
             <Icon
