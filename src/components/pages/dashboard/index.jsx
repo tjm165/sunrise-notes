@@ -226,7 +226,9 @@ class SmartDashboard extends Component {
     const context = this.state.context;
     context.notes.delete(noteUUID);
     deleteNote(noteUUID).then(() => {
-      this.setState({ context, activeNote: false });
+      this.setState(prevState => ({
+        context: { ...prevState.context, activeNote: false }
+      }));
       this.setState(prevState => ({
         isLoading: { ...prevState.isLoading, deleteNote: false }
       }));
