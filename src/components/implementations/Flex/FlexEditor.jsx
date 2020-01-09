@@ -53,7 +53,7 @@ export default function FlexEditor({
         isLoading={isLoading}
         tagMap={tagMap}
         defaultValue={tagUUIDs}
-        onChange={(e, DropdownProps) => setTagUUIDs(DropdownProps.value)}
+        setTagUUIDs={setTagUUIDs}
         setAsActiveTag={setAsActiveTag}
       />
       <Button
