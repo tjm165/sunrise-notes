@@ -182,22 +182,24 @@ class SmartDashboard extends Component {
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, submitTag: true }
     }));
-    postTag(tag, this.state.userUUID)
-      .then(() => this.fetchUserTags())
-
-      .then(() => {
-        this.setState(prevState => ({
-          context: {
-            ...prevState.context,
-            activeTag: NO_INSTANCE_UUID
+    postTag(tag, this.state.userUUID).then(({ UUID }) => {
+      this.fetchUserTags();
+      this.setState(prevState => ({
+        context: {
+          ...prevState.context,
+          activeTag: NO_INSTANCE_UUID,
+          activeNote: {
+            ...prevState.context.activeNote,
+            tagUUIDs: prevState.context.activeNote.tagUUIDs.concat(UUID)
           }
-        }));
-        this.fetchNoteSet(this.state.context.tags);
+        }
+      }));
+      this.fetchNoteSet(this.state.context.tags);
 
-        this.setState(prevState => ({
-          isLoading: { ...prevState.isLoading, submitTag: false }
-        }));
-      });
+      this.setState(prevState => ({
+        isLoading: { ...prevState.isLoading, submitTag: false }
+      }));
+    });
   }
 
   deleteTag(tagUUID) {

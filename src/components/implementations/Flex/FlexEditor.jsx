@@ -48,6 +48,7 @@ export default function FlexEditor({
         onChange={(e, { value }) => setContent(value)}
       />
       <TagDropdown
+        key={Math.random()}
         placeholder="Add tags to your note"
         fluid
         isLoading={isLoading}
