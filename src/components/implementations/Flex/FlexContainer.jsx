@@ -24,9 +24,9 @@ export default function FlexContainer({
     props.onClick = () => onClick();
   }
 
-  var mainChild = children[0];
+  var mainChild = children[0] || children;
   if (type === "image") {
-    mainChild = <Image src={children[0]} {...rest} />;
+    mainChild = <Image src={children[0] || children} {...rest} />;
   }
 
   return (
@@ -39,6 +39,7 @@ export default function FlexContainer({
     >
       {/* Perhaps in future versions it can switch between multiple children instead of just toggle between 2 */}
       {isSelected && children[1] ? children[1] : mainChild}
+
       {extraOptions && (
         <Options
           shouldHideOptions={shouldHideOptions}

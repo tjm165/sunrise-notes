@@ -36,6 +36,7 @@ export default function Board({
       <h1>Notes</h1>
       {activeNote.UUID === NEW_INSTANCE_UUID && (
         <FlexEditor
+          key={activeNote.tagUUIDs}
           type="item"
           isLoading={isLoading}
           note={activeNote}

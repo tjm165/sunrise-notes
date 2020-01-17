@@ -69,7 +69,7 @@ class AssiciatedTable(Table):
                 item[alias][associated_uuid] = associated_item
         return item
 
-    def query(self, index_name, key_condition_expression, with_associated_items, alias, only_associate_uuid):
+    def query(self, index_name, key_condition_expression, with_associated_items=False, alias="associatedItem", only_associate_uuid=True):
         items = super().query(index_name, key_condition_expression)
 
         if with_associated_items:
@@ -86,22 +86,23 @@ class AssiciatedTable(Table):
         return item
 
     # the associated_items must already exist
-    def put_item(self, item, associated_item_uuids):
+    def put_item(self, item, associated_item_uuids=None):
         if ('UUID' not in item) or item['UUID'] is -1:
             item['UUID'] = new_uuid()
 
         super().put_item(item)
 
-        for association in self.__get_associations(item['UUID']):
-            self.association_table.delete_item(association['UUID'])
+        if associated_item_uuids:
+            for association in self.__get_associations(item['UUID']):
+                self.association_table.delete_item(association['UUID'])
 
-        # then call this
-        for associated_item_uuid in associated_item_uuids:
-            self.association_table.put_item({
-                'UUID': new_uuid(),
-                self.key_name: item['UUID'],
-                self.associated_key_name: associated_item_uuid
-            })
+            # then call this
+            for associated_item_uuid in associated_item_uuids:
+                self.association_table.put_item({
+                    'UUID': new_uuid(),
+                    self.key_name: item['UUID'],
+                    self.associated_key_name: associated_item_uuid
+                })
 
         return item['UUID']
 

@@ -1,5 +1,7 @@
 import React from "react";
 import List from "../List";
+import { Icon } from "semantic-ui-react";
+
 import FlexContainer from "../Flex/FlexContainer";
 
 export default function TagList({
@@ -22,7 +24,7 @@ export default function TagList({
           key={key}
           operation={index > 0 && operation}
         >
-          {tagMap.get(key).title}
+          <>{tagMap.get(key).title}</>
         </FlexContainer>
       ))}
     </List>

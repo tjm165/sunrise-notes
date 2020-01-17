@@ -10,6 +10,7 @@ export class TagDropdown extends Component {
       defaultValue,
       setAsActiveTag,
       isLoading,
+      setTagUUIDs,
       ...rest
     } = this.props;
     const tagKeys = [...tagMap.keys()];
@@ -36,7 +37,8 @@ export class TagDropdown extends Component {
       onClick: () => setAsActiveTag(label.value)
     });
 
-    const activateNewTag = value => {
+    const onAddItem = value => {
+      setTagUUIDs(defaultValue);
       setAsActiveTag(NEW_INSTANCE_UUID, value);
     };
 
@@ -51,7 +53,8 @@ export class TagDropdown extends Component {
         options={options}
         renderLabel={renderLabel}
         defaultValue={defaultValue}
-        onAddItem={(e, { value }) => activateNewTag(value)}
+        onChange={(e, DropdownProps) => setTagUUIDs(DropdownProps.value)}
+        onAddItem={(e, { value }) => onAddItem(value)}
         {...rest}
       />
     );
