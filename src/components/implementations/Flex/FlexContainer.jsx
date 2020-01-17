@@ -7,6 +7,7 @@ export default function FlexContainer({
   extraOptions,
   optionPosition,
   rgb,
+  selectedRGB,
   isSelected,
   onClick,
   type,
@@ -16,6 +17,9 @@ export default function FlexContainer({
   const props = {};
   rgb = rgb || { r: "FFF", g: "FFF", b: "FFF" };
   const rgbstring = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2`;
+  const selectedRGBString =
+    selectedRGB &&
+    `rgba(${selectedRGB.r}, ${selectedRGB.g}, ${selectedRGB.b}, 0.2`;
 
   console.log(rgbstring);
 
@@ -35,7 +39,7 @@ export default function FlexContainer({
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}
       {...rest}
-      style={{ backgroundColor: rgbstring }}
+      style={{ backgroundColor: isSelected ? selectedRGBString : rgbstring }}
     >
       {/* Perhaps in future versions it can switch between multiple children instead of just toggle between 2 */}
       {isSelected && children[1] ? children[1] : mainChild}
