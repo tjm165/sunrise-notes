@@ -25,6 +25,7 @@ export default function TagList({
           isSelected={selectedTags.has(key)}
           key={key}
           operation={index > 0 && operation}
+          shouldColorWhenSelected
         >
           <>{tagMap.get(key).title}</>
         </FlexContainer>

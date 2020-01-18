@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Dropdown, Header, Icon } from "semantic-ui-react";
-import TagSegment from "./TagSegment";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
 export class TagDropdown extends Component {
@@ -26,14 +25,14 @@ export class TagDropdown extends Component {
         rgb: rgb,
         content: (
           <Header size="tiny">
-            <TagSegment text={text} rgb={rgb} />
+            <TagFragment text={text} rgb={rgb} />
           </Header>
         )
       };
     });
 
     const renderLabel = label => ({
-      content: <TagSegment text={label.text} rgb={label.rgb} />,
+      content: <TagFragment text={label.text} rgb={label.rgb} />,
       onClick: () => setAsActiveTag(label.value)
     });
 
@@ -59,4 +58,15 @@ export class TagDropdown extends Component {
       />
     );
   }
+}
+
+function TagFragment({ rgb, text }) {
+  const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+
+  return (
+    <>
+      <Icon name="tag" style={{ color: rgbstring }} />
+      {text}
+    </>
+  );
 }
