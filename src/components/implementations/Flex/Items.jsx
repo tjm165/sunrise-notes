@@ -16,41 +16,47 @@ export default function Items({
 }) {
   return (
     <List>
-      {items.map(key => (
-        <FlexContainer
-          isSelected={activeNote.UUID === key}
-          onClick={() => functions.setAsActiveNote(key)}
-          {...rest}
-          type={type}
-          rgb={noteMap.get(key).rgb}
-          key={key}
-          borderTop
-        >
-          <>
-            <Icon
-              onClick={() =>
-                functions.submitNote({
-                  ...noteMap.get(key),
-                  secondaryContent: !noteMap.get(key).secondaryContent
-                })
-              }
-              name={
-                noteMap.get(key).secondaryContent ? "circle" : "circle outline"
-              }
-            ></Icon>
-            {noteMap.get(key).content}
-          </>
-          <FlexEditor
+      {items.map(key => {
+        const { rgb, content, secondaryContent } = noteMap.get(key);
+        const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+
+        return (
+          <FlexContainer
+            isSelected={activeNote.UUID === key}
+            onClick={() => functions.setAsActiveNote(key)}
+            {...rest}
             type={type}
-            isLoading={isLoading}
-            note={activeNote}
-            tagMap={tagMap}
-            onSubmit={functions.submitNote}
-            onDelete={() => functions.deleteNote(activeNote["UUID"])}
-            setAsActiveTag={functions.setAsActiveTag}
-          />
-        </FlexContainer>
-      ))}
+            rgb={rgb}
+            key={key}
+            borderTop
+          >
+            <>
+              <span style={{ float: "left" }}>
+                <Icon
+                  style={{ color: rgbstring }}
+                  onClick={() =>
+                    functions.submitNote({
+                      ...noteMap.get(key),
+                      secondaryContent: !secondaryContent
+                    })
+                  }
+                  name={secondaryContent ? "check square" : "square outline"}
+                ></Icon>
+              </span>
+              {content}
+            </>
+            <FlexEditor
+              type={type}
+              isLoading={isLoading}
+              note={activeNote}
+              tagMap={tagMap}
+              onSubmit={functions.submitNote}
+              onDelete={() => functions.deleteNote(activeNote["UUID"])}
+              setAsActiveTag={functions.setAsActiveTag}
+            />
+          </FlexContainer>
+        );
+      })}
     </List>
   );
 }
