@@ -24,6 +24,7 @@ export default function Items({
           type={type}
           rgb={noteMap.get(key).rgb}
           key={key}
+          borderTop
         >
           <>
             <Icon

@@ -11,17 +11,18 @@ export default function FlexContainer({
   isSelected,
   onClick,
   type,
+  borderTop,
+  borderBottom,
+  borderLeft,
+  borderRight,
+  shouldColorWhenSelected,
   ...rest
 }) {
   const [shouldHideOptions, hideOptions] = useState(true);
   const props = {};
   rgb = rgb || { r: "FFF", g: "FFF", b: "FFF" };
-  const rgbstring = `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2`;
-  const selectedRGBString =
-    selectedRGB &&
-    `rgba(${selectedRGB.r}, ${selectedRGB.g}, ${selectedRGB.b}, 0.2`;
-
-  console.log(rgbstring);
+  const rgbstring = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b}`;
+  const border = `2px solid ${rgbstring}`;
 
   props.onClick = false;
   if (onClick) {
@@ -39,7 +40,13 @@ export default function FlexContainer({
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}
       {...rest}
-      style={{ backgroundColor: isSelected ? selectedRGBString : rgbstring }}
+      style={{
+        borderTop: borderTop && border,
+        borderBottom: borderBottom && border,
+        borderLeft: borderLeft && border,
+        borderRight: borderRight && border,
+        backgroundColor: isSelected && shouldColorWhenSelected && rgbstring
+      }}
     >
       {/* Perhaps in future versions it can switch between multiple children instead of just toggle between 2 */}
       {isSelected && children[1] ? children[1] : mainChild}

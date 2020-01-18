@@ -18,8 +18,8 @@ export default function TagList({
     >
       {Array.from(tagMap.keys()).map((key, index) => (
         <FlexContainer
-          rgb={{ r: 255, g: 255, b: 255 }}
-          selectedRGB={tagMap.get(key).rgb}
+          rgb={tagMap.get(key).rgb}
+          borderLeft
           onClick={() => functions.toggleTag(key)}
           extraOptions={[["pencil", () => functions.setAsActiveTag(key)]]}
           isSelected={selectedTags.has(key)}
