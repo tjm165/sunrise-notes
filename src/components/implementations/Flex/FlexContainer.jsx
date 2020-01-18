@@ -49,13 +49,16 @@ export default function FlexContainer({
       }}
     >
       {/* Perhaps in future versions it can switch between multiple children instead of just toggle between 2 */}
+
       {isSelected && children[1] ? children[1] : mainChild}
 
       {extraOptions && (
-        <Options
-          shouldHideOptions={shouldHideOptions}
-          extraOptions={extraOptions}
-        />
+        <span style={{ float: "right" }}>
+          <Options
+            shouldHideOptions={shouldHideOptions}
+            extraOptions={extraOptions}
+          />
+        </span>
       )}
     </Segment>
   );
