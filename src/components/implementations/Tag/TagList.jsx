@@ -18,11 +18,14 @@ export default function TagList({
     >
       {Array.from(tagMap.keys()).map((key, index) => (
         <FlexContainer
+          rgb={tagMap.get(key).rgb}
+          borderLeft
           onClick={() => functions.toggleTag(key)}
           extraOptions={[["pencil", () => functions.setAsActiveTag(key)]]}
           isSelected={selectedTags.has(key)}
           key={key}
           operation={index > 0 && operation}
+          shouldColorWhenSelected
         >
           <>{tagMap.get(key).title}</>
         </FlexContainer>

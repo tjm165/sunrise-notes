@@ -17,7 +17,7 @@ import Paragraph from "../implementations/Layout/Paragraph";
 
 const HomepageHeading = () => (
   <Heading
-    h1="Created by students for students"
+    h1="Best Note Taking App Ever"
     h2="You've never used note-taking like this before."
     misc={
       <Link to="/signup">
