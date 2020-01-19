@@ -24,7 +24,6 @@ export default function Items({
         return (
           <Toggler key={key} indexToShow={activeNote.UUID === key ? 1 : 0}>
             <FlexContent
-              threed
               onClick={() => functions.setAsActiveNote(key)}
               {...rest}
               type={type}
@@ -49,6 +48,8 @@ export default function Items({
               </>
             </FlexContent>
             <FlexEditor
+              rgb={rgb}
+              borderTop
               functions={functions}
               type={type}
               isLoading={isLoading}
