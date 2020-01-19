@@ -22,6 +22,7 @@ export default function Items({
 
         return (
           <FlexContainer
+            threed
             isSelected={activeNote.UUID === key}
             onClick={() => functions.setAsActiveNote(key)}
             {...rest}
@@ -33,6 +34,7 @@ export default function Items({
             <>
               <span style={{ float: "left" }}>
                 <Icon
+                  className="grow"
                   style={{ color: rgbstring }}
                   onClick={() =>
                     functions.submitNote({
@@ -41,7 +43,7 @@ export default function Items({
                     })
                   }
                   name={secondaryContent ? "check square" : "square outline"}
-                ></Icon>
+                />
               </span>
               {content}
             </>

@@ -16,6 +16,7 @@ export default function FlexContainer({
   borderLeft,
   borderRight,
   shouldColorWhenSelected,
+  threed,
   ...rest
 }) {
   const [shouldHideOptions, hideOptions] = useState(true);
@@ -36,6 +37,7 @@ export default function FlexContainer({
 
   return (
     <Segment
+      className={threed && "threed"}
       {...props}
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}
@@ -68,6 +70,7 @@ function Options({ extraOptions, shouldHideOptions }) {
   return extraOptions.map(([iconName, onClick]) => (
     <>
       <Icon
+        className="grow"
         name={shouldHideOptions || iconName}
         onClick={event => {
           event.stopPropagation();
