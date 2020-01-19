@@ -49,6 +49,7 @@ export default function Items({
               </>
             </FlexContent>
             <FlexEditor
+              functions={functions}
               type={type}
               isLoading={isLoading}
               note={activeNote}
