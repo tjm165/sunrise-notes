@@ -35,9 +35,14 @@ export default function FlexContent({
     mainChild = <Image src={children[0] || children} {...rest} />;
   }
 
+  var className = "FlexContent";
+  if (threed) {
+    className = className.concat("threed");
+  }
+
   return (
     <Segment
-      className={threed && "threed"}
+      className={className}
       {...props}
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}

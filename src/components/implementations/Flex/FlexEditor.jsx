@@ -49,6 +49,7 @@ export default function FlexEditor({
   return (
     <OutsideCaller
       onOutsideClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
+      exception="FlexContent"
     >
       <Segment
         style={{
