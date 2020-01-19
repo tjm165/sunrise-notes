@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { List, Icon } from "semantic-ui-react";
-import FlexContainer from "./FlexContainer";
+import FlexContent from "./FlexContent";
 import FlexEditor from "./FlexEditor";
+import Toggler from "./Toggler";
 
 export default function Items({
   noteMap,
@@ -21,32 +22,32 @@ export default function Items({
         const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
 
         return (
-          <FlexContainer
-            threed
-            isSelected={activeNote.UUID === key}
-            onClick={() => functions.setAsActiveNote(key)}
-            {...rest}
-            type={type}
-            rgb={rgb}
-            key={key}
-            borderTop
-          >
-            <>
-              <span style={{ float: "left" }}>
-                <Icon
-                  className="grow"
-                  style={{ color: rgbstring }}
-                  onClick={() =>
-                    functions.submitNote({
-                      ...noteMap.get(key),
-                      secondaryContent: !secondaryContent
-                    })
-                  }
-                  name={secondaryContent ? "check square" : "square outline"}
-                />
-              </span>
-              {content}
-            </>
+          <Toggler key={key} indexToShow={activeNote.UUID === key ? 1 : 0}>
+            <FlexContent
+              threed
+              onClick={() => functions.setAsActiveNote(key)}
+              {...rest}
+              type={type}
+              rgb={rgb}
+              borderTop
+            >
+              <>
+                <span style={{ float: "left" }}>
+                  <Icon
+                    className="grow"
+                    style={{ color: rgbstring }}
+                    onClick={() =>
+                      functions.submitNote({
+                        ...noteMap.get(key),
+                        secondaryContent: !secondaryContent
+                      })
+                    }
+                    name={secondaryContent ? "check square" : "square outline"}
+                  />
+                </span>
+                {content}
+              </>
+            </FlexContent>
             <FlexEditor
               type={type}
               isLoading={isLoading}
@@ -56,7 +57,7 @@ export default function Items({
               onDelete={() => functions.deleteNote(activeNote["UUID"])}
               setAsActiveTag={functions.setAsActiveTag}
             />
-          </FlexContainer>
+          </Toggler>
         );
       })}
     </List>

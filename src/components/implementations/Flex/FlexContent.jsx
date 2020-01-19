@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Menu, Image, Icon, Segment, Loader } from "semantic-ui-react";
 
 // should be an all in one container than can deal with different types of data and serve multiple purposes
-export default function FlexContainer({
+export default function FlexContent({
   children,
   extraOptions,
   optionPosition,

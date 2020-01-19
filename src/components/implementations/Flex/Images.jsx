@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { List, Image } from "semantic-ui-react";
-import FlexContainer from "./FlexContainer";
+import FlexContent from "./FlexContent";
 import FlexEditor from "./FlexEditor";
 
 export default function Items({
@@ -17,7 +17,7 @@ export default function Items({
   return (
     <Image.Group>
       {images.map(key => (
-        <FlexContainer
+        <FlexContent
           isSelected={activeNote.UUID === key}
           onClick={() => functions.setAsActiveNote(key)}
           {...rest}
@@ -34,7 +34,7 @@ export default function Items({
             onSubmit={functions.submitNote}
             onDelete={() => functions.deleteNote(activeNote["UUID"])}
           />
-        </FlexContainer>
+        </FlexContent>
       ))}
     </Image.Group>
   );
