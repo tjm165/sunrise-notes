@@ -7,20 +7,21 @@ function useOutsideCaller(ref, onOutsideClick) {
    */
   function handleClickOutside(event, onOutsideClick) {
     if (ref.current && !ref.current.contains(event.target)) {
-      alert("You clicked outside of me!");
-      if (onOutsideClick) {
-        onOutsideClick();
-      }
+      onOutsideClick();
     }
   }
 
   //TODO
   useEffect(() => {
     // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", event =>
+      handleClickOutside(event, onOutsideClick)
+    );
     return () => {
       // Unbind the event listener on clean up
-      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", event =>
+        handleClickOutside(event, onOutsideClick)
+      );
     };
   });
 }
