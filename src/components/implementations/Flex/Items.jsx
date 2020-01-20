@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { List, Icon } from "semantic-ui-react";
-import FlexContainer from "./FlexContainer";
+import FlexContent from "./FlexContent";
 import FlexEditor from "./FlexEditor";
+import Toggler from "./Toggler";
 
 export default function Items({
   noteMap,
@@ -16,41 +17,52 @@ export default function Items({
 }) {
   return (
     <List>
-      {items.map(key => (
-        <FlexContainer
-          isSelected={activeNote.UUID === key}
-          onClick={() => functions.setAsActiveNote(key)}
-          {...rest}
-          type={type}
-          rgb={noteMap.get(key).rgb}
-          key={key}
-          borderTop
-        >
-          <>
-            <Icon
-              onClick={() =>
-                functions.submitNote({
-                  ...noteMap.get(key),
-                  secondaryContent: !noteMap.get(key).secondaryContent
-                })
-              }
-              name={
-                noteMap.get(key).secondaryContent ? "circle" : "circle outline"
-              }
-            ></Icon>
-            {noteMap.get(key).content}
-          </>
-          <FlexEditor
-            type={type}
-            isLoading={isLoading}
-            note={activeNote}
-            tagMap={tagMap}
-            onSubmit={functions.submitNote}
-            onDelete={() => functions.deleteNote(activeNote["UUID"])}
-            setAsActiveTag={functions.setAsActiveTag}
-          />
-        </FlexContainer>
-      ))}
+      {items.map(key => {
+        const { rgb, content, secondaryContent } = noteMap.get(key);
+        const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+
+        return (
+          <Toggler key={key} indexToShow={activeNote.UUID === key ? 1 : 0}>
+            <FlexContent
+              onClick={() => functions.setAsActiveNote(key)}
+              {...rest}
+              type={type}
+              rgb={rgb}
+              borderTop
+              fade
+            >
+              <>
+                <span style={{ float: "left" }}>
+                  <Icon
+                    className="grow"
+                    style={{ color: rgbstring }}
+                    onClick={() =>
+                      functions.submitNote({
+                        ...noteMap.get(key),
+                        secondaryContent: !secondaryContent
+                      })
+                    }
+                    name={secondaryContent ? "check square" : "square outline"}
+                  />
+                </span>
+                {content}
+              </>
+            </FlexContent>
+            <FlexEditor
+              rgb={rgb}
+              borderTop
+              functions={functions}
+              type={type}
+              isLoading={isLoading}
+              note={activeNote}
+              tagMap={tagMap}
+              onSubmit={functions.submitNote}
+              onDelete={() => functions.deleteNote(activeNote["UUID"])}
+              setAsActiveTag={functions.setAsActiveTag}
+            />
+          </Toggler>
+        );
+      })}
     </List>
   );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import List from "../List";
 import { Icon } from "semantic-ui-react";
 
-import FlexContainer from "../Flex/FlexContainer";
+import FlexContent from "../Flex/FlexContent";
 
 export default function TagList({
   tagMap,
@@ -17,7 +17,8 @@ export default function TagList({
       }`}
     >
       {Array.from(tagMap.keys()).map((key, index) => (
-        <FlexContainer
+        <FlexContent
+          fade
           rgb={tagMap.get(key).rgb}
           borderLeft
           onClick={() => functions.toggleTag(key)}
@@ -28,7 +29,7 @@ export default function TagList({
           shouldColorWhenSelected
         >
           <>{tagMap.get(key).title}</>
-        </FlexContainer>
+        </FlexContent>
       ))}
     </List>
   );

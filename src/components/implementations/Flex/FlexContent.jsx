@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Menu, Image, Icon, Segment, Loader } from "semantic-ui-react";
 
 // should be an all in one container than can deal with different types of data and serve multiple purposes
-export default function FlexContainer({
+export default function FlexContent({
   children,
   extraOptions,
   optionPosition,
@@ -16,6 +16,9 @@ export default function FlexContainer({
   borderLeft,
   borderRight,
   shouldColorWhenSelected,
+  threed,
+  fade,
+  fadeWithColor,
   ...rest
 }) {
   const [shouldHideOptions, hideOptions] = useState(true);
@@ -34,13 +37,25 @@ export default function FlexContainer({
     mainChild = <Image src={children[0] || children} {...rest} />;
   }
 
+  var className = "FlexContent";
+  if (threed) {
+    className = className.concat(" threed");
+  } else if (fade) {
+    className = className.concat(" fade");
+  } else if (fadeWithColor) {
+    className = className.concat(" fadeWithColor");
+  }
+
   return (
     <Segment
+      className={className}
       {...props}
       onMouseOver={() => hideOptions(false)}
       onMouseOut={() => hideOptions(true)}
       {...rest}
       style={{
+        "--fadeColor": rgbstring,
+        fadeColor: rgbstring,
         borderTop: borderTop && border,
         borderBottom: borderBottom && border,
         borderLeft: borderLeft && border,
@@ -68,6 +83,7 @@ function Options({ extraOptions, shouldHideOptions }) {
   return extraOptions.map(([iconName, onClick]) => (
     <>
       <Icon
+        className="grow"
         name={shouldHideOptions || iconName}
         onClick={event => {
           event.stopPropagation();

@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { TextArea, Icon, Button, Form, Dropdown } from "semantic-ui-react";
+import {
+  TextArea,
+  Icon,
+  Button,
+  Form,
+  Dropdown,
+  Segment
+} from "semantic-ui-react";
 import { TagDropdown } from "../../implementations/Tag/TagDropdown";
-import { NEW_INSTANCE_UUID } from "../../../API";
+import { NEW_INSTANCE_UUID, NO_INSTANCE_UUID } from "../../../API";
+import OutsideCaller from "./OutsideCaller";
 
 export default function FlexEditor({
   note,
@@ -9,7 +17,13 @@ export default function FlexEditor({
   onSubmit,
   onDelete,
   setAsActiveTag,
-  isLoading
+  isLoading,
+  functions,
+  borderTop,
+  borderBottom,
+  borderLeft,
+  borderRight,
+  rgb
 }) {
   const isPreexisting = note["UUID"] !== NEW_INSTANCE_UUID;
   const [tagUUIDs, setTagUUIDs] = useState(note.tagUUIDs || []);
@@ -28,50 +42,67 @@ export default function FlexEditor({
       type
     });
   };
+  rgb = rgb || { r: "FFF", g: "FFF", b: "FFF" };
+  const rgbstring = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b}`;
+  const border = `2px solid ${rgbstring}`;
 
   return (
-    <Form loading={isLoading.setAsActiveNote}>
-      <Dropdown
-        value={type}
-        onChange={(e, { value }) => setType(value)}
-        options={[
-          { key: "item", text: "item", value: "item" },
-          { key: "image", text: "image", value: "image" },
-          { key: "link", text: "link", value: "link" },
-          { key: "paragraph", text: "paragraph", value: "paragraph" }
-        ]}
-      ></Dropdown>
-      <TextArea
-        name="content"
-        defaultValue={content}
-        placeholder="Enter content here..."
-        onChange={(e, { value }) => setContent(value)}
-      />
-      <TagDropdown
-        key={Math.random()}
-        placeholder="Add tags to your note"
-        fluid
-        isLoading={isLoading}
-        tagMap={tagMap}
-        defaultValue={tagUUIDs}
-        setTagUUIDs={setTagUUIDs}
-        setAsActiveTag={setAsActiveTag}
-      />
-      <Button
-        positive
-        icon
-        onClick={handleSubmit}
-        loading={isLoading.submitNote}
+    <OutsideCaller
+      onOutsideClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
+      exception="FlexContent"
+    >
+      <Segment
+        style={{
+          borderTop: borderTop && border,
+          borderBottom: borderBottom && border,
+          borderLeft: borderLeft && border,
+          borderRight: borderRight && border
+        }}
       >
-        <Icon name="save" />
-        Save
-      </Button>
-      {isPreexisting && (
-        <Button icon onClick={onDelete} loading={isLoading.deleteNote}>
-          <Icon name="trash alternate" />
-          Delete
-        </Button>
-      )}
-    </Form>
+        <Form loading={isLoading.setAsActiveNote}>
+          <Dropdown
+            value={type}
+            onChange={(e, { value }) => setType(value)}
+            options={[
+              { key: "item", text: "item", value: "item" },
+              { key: "image", text: "image", value: "image" },
+              { key: "link", text: "link", value: "link" },
+              { key: "paragraph", text: "paragraph", value: "paragraph" }
+            ]}
+          ></Dropdown>
+          <TextArea
+            name="content"
+            defaultValue={content}
+            placeholder="Enter content here..."
+            onChange={(e, { value }) => setContent(value)}
+          />
+          <TagDropdown
+            key={Math.random()}
+            placeholder="Add tags to your note"
+            fluid
+            isLoading={isLoading}
+            tagMap={tagMap}
+            defaultValue={tagUUIDs}
+            setTagUUIDs={setTagUUIDs}
+            setAsActiveTag={setAsActiveTag}
+          />
+          <Button
+            positive
+            icon
+            onClick={handleSubmit}
+            loading={isLoading.submitNote}
+          >
+            <Icon name="save" />
+            Save
+          </Button>
+          {isPreexisting && (
+            <Button icon onClick={onDelete} loading={isLoading.deleteNote}>
+              <Icon name="trash alternate" />
+              Delete
+            </Button>
+          )}
+        </Form>{" "}
+      </Segment>
+    </OutsideCaller>
   );
 }

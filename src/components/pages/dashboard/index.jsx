@@ -109,6 +109,8 @@ class SmartDashboard extends Component {
   }
 
   setAsActiveNote(noteUUID) {
+    console.log(noteUUID);
+
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, setAsActiveNote: true }
     }));
