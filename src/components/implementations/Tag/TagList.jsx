@@ -18,7 +18,7 @@ export default function TagList({
     >
       {Array.from(tagMap.keys()).map((key, index) => (
         <FlexContent
-          threed
+          fade
           rgb={tagMap.get(key).rgb}
           borderLeft
           onClick={() => functions.toggleTag(key)}

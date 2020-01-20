@@ -17,6 +17,8 @@ export default function FlexContent({
   borderRight,
   shouldColorWhenSelected,
   threed,
+  fade,
+  fadeWithColor,
   ...rest
 }) {
   const [shouldHideOptions, hideOptions] = useState(true);
@@ -37,7 +39,11 @@ export default function FlexContent({
 
   var className = "FlexContent";
   if (threed) {
-    className = className.concat("threed");
+    className = className.concat(" threed");
+  } else if (fade) {
+    className = className.concat(" fade");
+  } else if (fadeWithColor) {
+    className = className.concat(" fadeWithColor");
   }
 
   return (
@@ -48,6 +54,8 @@ export default function FlexContent({
       onMouseOut={() => hideOptions(true)}
       {...rest}
       style={{
+        "--fadeColor": rgbstring,
+        fadeColor: rgbstring,
         borderTop: borderTop && border,
         borderBottom: borderBottom && border,
         borderLeft: borderLeft && border,

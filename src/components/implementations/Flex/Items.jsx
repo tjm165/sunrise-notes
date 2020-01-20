@@ -29,6 +29,7 @@ export default function Items({
               type={type}
               rgb={rgb}
               borderTop
+              fade
             >
               <>
                 <span style={{ float: "left" }}>
