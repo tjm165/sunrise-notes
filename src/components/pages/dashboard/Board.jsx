@@ -5,7 +5,7 @@ import Items from "../../implementations/Flex/Items";
 import Images from "../../implementations/Flex/Images";
 import Paragraphs from "../../implementations/Flex/Paragraphs";
 import { NEW_INSTANCE_UUID } from "../../../API";
-import { Image, Icon } from "semantic-ui-react";
+import { Image, Icon, Segment } from "semantic-ui-react";
 
 export default function Board({
   tagMap,
@@ -33,6 +33,15 @@ export default function Board({
 
   return (
     <>
+      <Segment onClick={() => console.log("hey")}>
+        <Icon
+          name="check"
+          onClick={event => {
+            event.stopPropagation();
+            console.log("icon");
+          }}
+        ></Icon>
+      </Segment>
       <h1>Notes</h1>
       {activeNote.UUID === NEW_INSTANCE_UUID && (
         <FlexEditor

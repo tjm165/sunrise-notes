@@ -164,6 +164,9 @@ class SmartDashboard extends Component {
   }
 
   submitNote(note) {
+    const noteWasOriginallyOpen =
+      this.state.context.activeNote !== NO_INSTANCE_UUID;
+
     this.setState(prevState => ({
       isLoading: { ...prevState.isLoading, submitNote: true }
     }));
@@ -172,9 +175,14 @@ class SmartDashboard extends Component {
       note["UUID"] = UUID;
       // there needs to be a cleaner way to set as active note
       this.setState(prevState => ({
-        isLoading: { ...prevState.isLoading, submitNote: false },
-        context: { ...prevState.context, activeNote: note }
+        isLoading: { ...prevState.isLoading, submitNote: false }
       }));
+
+      //if the note being submitted is a new note, or the open note
+      if (noteWasOriginallyOpen)
+        this.setState(prevState => ({
+          context: { ...prevState.context, activeNote: note }
+        }));
 
       this.fetchNoteSet(this.state.context.tags);
     });

@@ -29,11 +29,6 @@ export default function FlexContent({
   const rgbstring = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b}`;
   const border = `2px solid ${rgbstring}`;
 
-  props.onClick = false;
-  if (onClick) {
-    props.onClick = () => onClick();
-  }
-
   var mainChild = children[0] || children;
   if (type === "image") {
     mainChild = <Image src={children[0] || children} {...rest} />;
@@ -50,6 +45,7 @@ export default function FlexContent({
 
   return (
     <Segment
+      onClick={() => onClick()}
       className={className}
       {...props}
       onMouseOver={() => hideOptions(false)}
