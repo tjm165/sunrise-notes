@@ -31,6 +31,7 @@ export default function Items({
               borderTop
               fade
               shouldColorOptions
+              shouldNeverHideOptions
               leftExtraOptions={[
                 [
                   secondaryContent ? "check square" : "square outline",

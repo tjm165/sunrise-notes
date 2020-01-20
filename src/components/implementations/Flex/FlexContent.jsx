@@ -20,6 +20,7 @@ export default function FlexContent({
   fade,
   fadeWithColor,
   shouldColorOptions,
+  shouldNeverHideOptions,
   ...rest
 }) {
   const [shouldHideOptions, hideOptions] = useState(true);
@@ -68,7 +69,7 @@ export default function FlexContent({
       {leftExtraOptions && (
         <span style={{ float: "left" }}>
           <Options
-            shouldHideOptions={shouldHideOptions}
+            shouldHideOptions={!shouldNeverHideOptions && shouldHideOptions}
             extraOptions={leftExtraOptions}
             rgbString={shouldColorOptions && rgbstring}
           />
@@ -80,7 +81,7 @@ export default function FlexContent({
       {rightExtraOptions && (
         <span style={{ float: "right" }}>
           <Options
-            shouldHideOptions={shouldHideOptions}
+            shouldHideOptions={!shouldNeverHideOptions && shouldHideOptions}
             extraOptions={rightExtraOptions}
             rgbString={shouldColorOptions && rgbstring}
           />
