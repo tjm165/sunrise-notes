@@ -22,7 +22,7 @@ export default function TagList({
           rgb={tagMap.get(key).rgb}
           borderLeft
           onClick={() => functions.toggleTag(key)}
-          extraOptions={[["pencil", () => functions.setAsActiveTag(key)]]}
+          rightExtraOptions={[["pencil", () => functions.setAsActiveTag(key)]]}
           isSelected={selectedTags.has(key)}
           key={key}
           operation={index > 0 && operation}
