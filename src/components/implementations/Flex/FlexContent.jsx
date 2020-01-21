@@ -4,8 +4,8 @@ import { Menu, Image, Icon, Segment, Loader } from "semantic-ui-react";
 // should be an all in one container than can deal with different types of data and serve multiple purposes
 export default function FlexContent({
   children,
-  extraOptions,
-  optionPosition,
+  leftExtraOptions,
+  rightExtraOptions,
   rgb,
   selectedRGB,
   isSelected,
@@ -19,6 +19,8 @@ export default function FlexContent({
   threed,
   fade,
   fadeWithColor,
+  shouldColorOptions,
+  shouldNeverHideOptions,
   ...rest
 }) {
   const [shouldHideOptions, hideOptions] = useState(true);
@@ -26,11 +28,6 @@ export default function FlexContent({
   rgb = rgb || { r: "FFF", g: "FFF", b: "FFF" };
   const rgbstring = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b}`;
   const border = `2px solid ${rgbstring}`;
-
-  props.onClick = false;
-  if (onClick) {
-    props.onClick = () => onClick();
-  }
 
   var mainChild = children[0] || children;
   if (type === "image") {
@@ -48,6 +45,7 @@ export default function FlexContent({
 
   return (
     <Segment
+      onClick={() => onClick()}
       className={className}
       {...props}
       onMouseOver={() => hideOptions(false)}
@@ -63,15 +61,25 @@ export default function FlexContent({
         backgroundColor: isSelected && shouldColorWhenSelected && rgbstring
       }}
     >
-      {/* Perhaps in future versions it can switch between multiple children instead of just toggle between 2 */}
+      {/* TODO: Get rid of toggle */}
+      {leftExtraOptions && (
+        <span style={{ float: "left" }}>
+          <Options
+            shouldHideOptions={!shouldNeverHideOptions && shouldHideOptions}
+            extraOptions={leftExtraOptions}
+            rgbString={shouldColorOptions && rgbstring}
+          />
+        </span>
+      )}
 
       {isSelected && children[1] ? children[1] : mainChild}
 
-      {extraOptions && (
+      {rightExtraOptions && (
         <span style={{ float: "right" }}>
           <Options
-            shouldHideOptions={shouldHideOptions}
-            extraOptions={extraOptions}
+            shouldHideOptions={!shouldNeverHideOptions && shouldHideOptions}
+            extraOptions={rightExtraOptions}
+            rgbString={shouldColorOptions && rgbstring}
           />
         </span>
       )}
@@ -79,10 +87,16 @@ export default function FlexContent({
   );
 } //split this into multiple pieces and then some conditionals on the as
 
-function Options({ extraOptions, shouldHideOptions }) {
+function Options({ extraOptions, shouldHideOptions, rgbString }) {
+  const style = {};
+  if (rgbString) {
+    style["color"] = rgbString;
+  }
+
   return extraOptions.map(([iconName, onClick]) => (
     <>
       <Icon
+        style={style}
         className="grow"
         name={shouldHideOptions || iconName}
         onClick={event => {

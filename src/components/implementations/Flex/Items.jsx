@@ -30,23 +30,20 @@ export default function Items({
               rgb={rgb}
               borderTop
               fade
+              shouldColorOptions
+              shouldNeverHideOptions
+              leftExtraOptions={[
+                [
+                  secondaryContent ? "check square" : "square outline",
+                  () =>
+                    functions.submitNote({
+                      ...noteMap.get(key),
+                      secondaryContent: !secondaryContent
+                    })
+                ]
+              ]}
             >
-              <>
-                <span style={{ float: "left" }}>
-                  <Icon
-                    className="grow"
-                    style={{ color: rgbstring }}
-                    onClick={() =>
-                      functions.submitNote({
-                        ...noteMap.get(key),
-                        secondaryContent: !secondaryContent
-                      })
-                    }
-                    name={secondaryContent ? "check square" : "square outline"}
-                  />
-                </span>
-                {content}
-              </>
+              <>{content}</>
             </FlexContent>
             <FlexEditor
               rgb={rgb}
