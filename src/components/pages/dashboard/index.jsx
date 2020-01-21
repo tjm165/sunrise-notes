@@ -171,6 +171,16 @@ class SmartDashboard extends Component {
       isLoading: { ...prevState.isLoading, submitNote: true }
     }));
 
+    //speed up the response time
+    if (!noteWasOriginallyOpen) {
+      const context = this.state.context;
+      context["notes"].set(note["UUID"], note);
+
+      this.setState({
+        context
+      });
+    }
+
     postNote(note).then(({ UUID }) => {
       note["UUID"] = UUID;
       // there needs to be a cleaner way to set as active note
