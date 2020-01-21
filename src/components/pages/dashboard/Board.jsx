@@ -33,15 +33,6 @@ export default function Board({
 
   return (
     <>
-      <Segment onClick={() => console.log("hey")}>
-        <Icon
-          name="check"
-          onClick={event => {
-            event.stopPropagation();
-            console.log("icon");
-          }}
-        ></Icon>
-      </Segment>
       <h1>Notes</h1>
       {activeNote.UUID === NEW_INSTANCE_UUID && (
         <FlexEditor
