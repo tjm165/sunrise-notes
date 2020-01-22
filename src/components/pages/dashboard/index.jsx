@@ -17,6 +17,7 @@ class SmartDashboard extends Component {
     super();
 
     this.state = {
+      isModalOpen: false,
       operation: "union",
       tagMap: new Map(), //all of the user's tags
       context: {
@@ -38,7 +39,9 @@ class SmartDashboard extends Component {
 
     this.functions = {
       fetchUserTags: this.fetchUserTags.bind(this),
+      getIsModalOpen: this.getIsModalOpen.bind(this),
       fetchNoteSet: this.fetchNoteSet.bind(this),
+      setModalState: this.setModalState.bind(this),
 
       setOperation: this.setOperation.bind(this),
 
@@ -50,6 +53,14 @@ class SmartDashboard extends Component {
       submitTag: this.submitTag.bind(this),
       deleteTag: this.deleteTag.bind(this)
     };
+  }
+
+  setModalState(isModalOpen) {
+    this.setState({ isModalOpen });
+  }
+
+  getIsModalOpen() {
+    return this.state.isModalOpen;
   }
 
   //name?

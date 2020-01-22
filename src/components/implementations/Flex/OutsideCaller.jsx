@@ -1,15 +1,17 @@
 import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 
-function useOutsideCaller(ref, onOutsideClick, exception) {
+function useOutsideCaller(ref, getIsModalOpen, onOutsideClick, exception) {
   /**
    * Alert if clicked on outside of element
    */
   function handleClickOutside(event, onOutsideClick) {
     if (ref.current && !ref.current.contains(event.target)) {
-      if (!event.target.className.includes(exception)) {
-        console.log(event.target.className);
-        onOutsideClick();
+      if (!getIsModalOpen()) {
+        if (!event.target.className.includes(exception)) {
+          console.log(event.target.className);
+          onOutsideClick();
+        }
       }
     }
   }
@@ -32,9 +34,14 @@ function useOutsideCaller(ref, onOutsideClick, exception) {
 /**
  * Component that alerts if you click outside of it
  */
-function OutsideCaller({ children, onOutsideClick, exception }) {
+function OutsideCaller({
+  children,
+  getIsModalOpen,
+  onOutsideClick,
+  exception
+}) {
   const wrapperRef = useRef(null);
-  useOutsideCaller(wrapperRef, onOutsideClick, exception);
+  useOutsideCaller(wrapperRef, getIsModalOpen, onOutsideClick, exception);
 
   return <div ref={wrapperRef}>{children}</div>;
 }

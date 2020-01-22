@@ -12,13 +12,13 @@ import { NEW_INSTANCE_UUID, NO_INSTANCE_UUID } from "../../../API";
 import OutsideCaller from "./OutsideCaller";
 
 export default function FlexEditor({
+  functions,
   note,
   tagMap,
   onSubmit,
   onDelete,
   setAsActiveTag,
   isLoading,
-  functions,
   borderTop,
   borderBottom,
   borderLeft,
@@ -48,6 +48,7 @@ export default function FlexEditor({
 
   return (
     <OutsideCaller
+      getIsModalOpen={() => functions.getIsModalOpen()}
       onOutsideClick={() => functions.setAsActiveNote(NO_INSTANCE_UUID)}
       exception="FlexContent"
     >
