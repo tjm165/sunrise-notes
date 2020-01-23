@@ -27,6 +27,7 @@ export default function FlexContent({
   const props = {};
   rgb = rgb || { r: "FFF", g: "FFF", b: "FFF" };
   const rgbstring = `rgb(${rgb.r}, ${rgb.g}, ${rgb.b}`;
+  const fadestring = `rgb(${rgb.r - 10}, ${rgb.g - 10}, ${rgb.b - 10}`;
   const border = `2px solid ${rgbstring}`;
 
   var mainChild = children[0] || children;
@@ -52,8 +53,7 @@ export default function FlexContent({
       onMouseOut={() => hideOptions(true)}
       {...rest}
       style={{
-        "--fadeColor": rgbstring,
-        fadeColor: rgbstring,
+        "--fadeColor": fadestring,
         borderTop: borderTop && border,
         borderBottom: borderBottom && border,
         borderLeft: borderLeft && border,
