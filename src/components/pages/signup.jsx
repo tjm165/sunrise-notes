@@ -33,6 +33,7 @@ export class SignupComponent extends Component {
 
   responseGoogle = async response => {
     this.setState({ isLoading: true });
+
     console.log(response);
   };
 
@@ -79,9 +80,6 @@ export class SignupComponent extends Component {
 
     return (
       <>
-        <button onClick={() => Auth.federatedSignIn({ provider: "Google" })}>
-          Open Google
-        </button>
         {!signupPassed ? (
           <Paragraph headerText="We're so excited that you're signing up!">
             <Form error={error}>

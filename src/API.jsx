@@ -31,6 +31,10 @@ export function signin(username, password) {
   return Auth.signIn(username, password);
 }
 
+export function googleSignIn() {
+  Auth.federatedSignIn({ provider: "Google" });
+}
+
 //need to unhard code this soon!
 export function fetchUserTags() {
   var tagMap = new Map();

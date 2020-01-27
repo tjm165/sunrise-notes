@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Form, Button, Header } from "semantic-ui-react";
-import { signin } from "../../API";
+import { signin, googleSignIn } from "../../API";
 import Desktop from "../implementations/Layout/Desktop";
 import { withRouter } from "react-router-dom";
 import Paragraph from "../implementations/Layout/Paragraph";
-import GoogleLogin from "react-google-login";
 
 const Login = props => {
   const [email, setEmail] = useState([""]);
@@ -13,6 +12,23 @@ const Login = props => {
   const [isLoading, setLoading] = useState(false);
   const responseGoogle = response => {
     console.log(response);
+  };
+
+  const handleGoogleSubmit = () => {
+    setLoading(true);
+
+    console.log("hey google");
+
+    googleSignIn()
+      .then(user => {
+        document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
+        props.history.push("/dashboard");
+      })
+      .catch(error => {
+        console.log(error);
+        setError(error.message);
+      })
+      .finally(() => setLoading(false));
   };
 
   const handleSubmit = event => {
@@ -35,15 +51,14 @@ const Login = props => {
 
   return (
     <Desktop hideFooter activeItem="Login">
-      bo
-      <GoogleLogin
-        clientId="647453733657-82tcdpdimrrubgo1hi5glp1cdlrvo3it.apps.googleusercontent.com"
-        buttonText="Login"
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
-        cookiePolicy={"single_host_origin"}
-      />
-      om
+      <Button
+        positive
+        onClick={() => handleGoogleSubmit()}
+        loading={isLoading}
+        disabled={error}
+      >
+        Google Sign In
+      </Button>
       <Paragraph headerText="Sign In">
         {error && <Header as="h4">{error}</Header>}
 
