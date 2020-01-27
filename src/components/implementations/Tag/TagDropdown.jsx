@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Dropdown, Header, Icon } from "semantic-ui-react";
-import TagSegment from "./TagSegment";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
 export class TagDropdown extends Component {
@@ -10,6 +9,7 @@ export class TagDropdown extends Component {
       defaultValue,
       setAsActiveTag,
       isLoading,
+      setTagUUIDs,
       ...rest
     } = this.props;
     const tagKeys = [...tagMap.keys()];
@@ -25,18 +25,19 @@ export class TagDropdown extends Component {
         rgb: rgb,
         content: (
           <Header size="tiny">
-            <TagSegment text={text} rgb={rgb} />
+            <TagFragment text={text} rgb={rgb} />
           </Header>
         )
       };
     });
 
     const renderLabel = label => ({
-      content: <TagSegment text={label.text} rgb={label.rgb} />,
+      content: <TagFragment text={label.text} rgb={label.rgb} />,
       onClick: () => setAsActiveTag(label.value)
     });
 
-    const activateNewTag = value => {
+    const onAddItem = value => {
+      setTagUUIDs(defaultValue);
       setAsActiveTag(NEW_INSTANCE_UUID, value);
     };
 
@@ -51,9 +52,21 @@ export class TagDropdown extends Component {
         options={options}
         renderLabel={renderLabel}
         defaultValue={defaultValue}
-        onAddItem={(e, { value }) => activateNewTag(value)}
+        onChange={(e, DropdownProps) => setTagUUIDs(DropdownProps.value)}
+        onAddItem={(e, { value }) => onAddItem(value)}
         {...rest}
       />
     );
   }
+}
+
+function TagFragment({ rgb, text }) {
+  const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+
+  return (
+    <>
+      <Icon name="tag" style={{ color: rgbstring }} />
+      {text}
+    </>
+  );
 }

@@ -1,6 +1,8 @@
 import React from "react";
 import List from "../List";
-import FlexContainer from "../Flex/FlexContainer";
+import { Icon } from "semantic-ui-react";
+
+import FlexContent from "../Flex/FlexContent";
 
 export default function TagList({
   tagMap,
@@ -14,17 +16,28 @@ export default function TagList({
         selectedTags.size == 0 ? "no tags" : "..."
       }`}
     >
-      {Array.from(tagMap.keys()).map((key, index) => (
-        <FlexContainer
-          onClick={() => functions.toggleTag(key)}
-          extraOptions={[["pencil", () => functions.setAsActiveTag(key)]]}
-          isSelected={selectedTags.has(key)}
-          key={key}
-          operation={index > 0 && operation}
-        >
-          {tagMap.get(key).title}
-        </FlexContainer>
-      ))}
+      {Array.from(tagMap.keys()).map((key, index) => {
+        const isSelected = selectedTags.has(key);
+
+        return (
+          <FlexContent
+            fade={!isSelected}
+            fadeWithColor={isSelected}
+            rgb={tagMap.get(key).rgb}
+            borderLeft
+            onClick={() => functions.toggleTag(key)}
+            rightExtraOptions={[
+              ["pencil", () => functions.setAsActiveTag(key)]
+            ]}
+            isSelected={isSelected}
+            key={key}
+            operation={index > 0 && operation}
+            shouldColorWhenSelected
+          >
+            <>{tagMap.get(key).title}</>
+          </FlexContent>
+        );
+      })}
     </List>
   );
 }

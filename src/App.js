@@ -8,6 +8,7 @@ import AboutTeam from "./components/pages/AboutTeam";
 import Landing from "./components/pages/landing";
 import Login from "./components/pages/login";
 import Signup from "./components/pages/signup";
+import Google from "./components/pages/GooglePostSignIn";
 
 class App extends Component {
   render() {
@@ -29,6 +30,11 @@ class App extends Component {
         <Route exact path="/about-team" render={props => <AboutTeam />} />
         <Route exact path="/signup" render={props => <Signup {...props} />} />
         <Route exact path="/login" render={props => <Login {...props} />} />
+        <Route
+          exact
+          path="/googlepostsignin"
+          render={props => <Google {...props} />}
+        />
       </BrowserRouter>
     );
   }

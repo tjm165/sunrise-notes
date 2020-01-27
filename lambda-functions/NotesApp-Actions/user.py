@@ -17,9 +17,11 @@ class User():
     def __init__(self, user_uuid):
         self.user_uuid = user_uuid
         self.user_table = Table('SunriseNotes-Users')
-        self.tags_table = Table('SunriseNotes-Tags')
         self.notes_table = AssiciatedTable('SunriseNotes-Notes', 'SunriseNotes-NoteTagAssociation', 'SunriseNotes-Tags',
                                            'NoteUUID-index', 'NoteUUID', 'TagUUID-index', 'TagUUID')
+        self.tags_table = AssiciatedTable('SunriseNotes-Tags', 'SunriseNotes-NoteTagAssociation', 'SunriseNotes-Notes',
+                                          'TagUUID-index', 'TagUUID', 'NoteUUID-index', 'NoteUUID')
+
         self.note_tag_association_table = Table(
             'SunriseNotes-NoteTagAssociations')
 

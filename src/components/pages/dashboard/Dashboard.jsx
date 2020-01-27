@@ -1,12 +1,6 @@
 import React, { useEffect } from "react";
-import {
-  Button,
-  Container,
-  Modal,
-  Segment,
-  Header,
-  Grid
-} from "semantic-ui-react";
+import { Button, Container, Segment, Header, Grid } from "semantic-ui-react";
+import MyModal from "../../implementations/MyModal";
 import Board from "./Board";
 import TopPannel from "./TopPannel";
 import TagEditor from "../../implementations/Tag/TagEditor";
@@ -63,12 +57,14 @@ function Dashboard({ state, functions }) {
           </Grid.Column>
         </Grid>
       </div>
-
       {activeTag && (
-        <Modal
+        <MyModal
+          onClose={() => {
+            functions.setAsActiveTag(NO_INSTANCE_UUID);
+          }}
+          functions={functions}
           open={activeTag}
           closeIcon
-          onClose={() => functions.setAsActiveTag(NO_INSTANCE_UUID)}
         >
           <TagEditor
             tag={activeTag}
@@ -77,7 +73,7 @@ function Dashboard({ state, functions }) {
             onDelete={() => functions.deleteTag(activeTag["UUID"])}
             isLoading={isLoading}
           />
-        </Modal>
+        </MyModal>
       )}
     </>
   );
