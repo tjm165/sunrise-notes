@@ -22,7 +22,7 @@ const Login = props => {
     googleSignIn()
       .then(user => {
         document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
-        props.history.push("/dashboard");
+        props.history.push("/googlepostsignin");
       })
       .catch(error => {
         console.log(error);
