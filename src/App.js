@@ -9,6 +9,7 @@ import Landing from "./components/pages/landing";
 import Login from "./components/pages/login";
 import Signup from "./components/pages/signup";
 import Google from "./components/pages/GooglePostSignIn";
+import PrivacyPolicy from "./components/pages/PrivacyPolicy";
 
 class App extends Component {
   render() {
@@ -34,6 +35,11 @@ class App extends Component {
           exact
           path="/googlepostsignin"
           render={props => <Google {...props} />}
+        />
+        <Route
+          exact
+          path="/privacypolicy"
+          render={props => <PrivacyPolicy {...props} />}
         />
       </BrowserRouter>
     );
