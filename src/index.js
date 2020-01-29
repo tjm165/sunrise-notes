@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import config from "./config";
-import Amplify from "aws-amplify";
+import Amplify, { Auth, Hub } from "aws-amplify";
 import * as serviceWorker from "./serviceWorker";
 
 const styleLink = document.createElement("link");
@@ -21,7 +21,7 @@ const oauth = {
     "openid",
     "aws.cognito.signin.user.admin"
   ],
-  redirectSignIn: "https://www.sunrisenotes.com/dashboard",
+  redirectSignIn: "http://localhost:3000/googlepostsignin",
   redirectSignOut: "http://localhost:3000/",
   responseType: "code" // or 'token', note that REFRESH token will only be generated when the responseType is code
 };
@@ -35,6 +35,7 @@ Amplify.configure({
   },
   oauth
 });
+Auth.configure({ oauth });
 
 ReactDOM.render(<App />, document.getElementById("root"));
 

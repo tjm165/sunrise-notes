@@ -32,7 +32,7 @@ export function signin(username, password) {
 }
 
 export function googleSignIn() {
-  Auth.federatedSignIn({ provider: "Google" });
+  return Auth.federatedSignIn({ provider: "Google" });
 }
 
 //need to unhard code this soon!

@@ -4,6 +4,8 @@ import { signin, googleSignIn } from "../../API";
 import Desktop from "../implementations/Layout/Desktop";
 import { withRouter } from "react-router-dom";
 import Paragraph from "../implementations/Layout/Paragraph";
+import OAuthButton from "../implementations/OAuth/OAuthButton";
+import Amplify, { Auth, Hub } from "aws-amplify";
 
 const Login = props => {
   const [email, setEmail] = useState([""]);
