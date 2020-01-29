@@ -39,6 +39,13 @@ function NavBar({ fixed, activeItem, history }) {
         >
           About Team
         </Menu.Item>
+        <Menu.Item
+          as="a"
+          onClick={() => history.push("/PrivacyPolicy")}
+          active={activeItem === "Privacy Policy"}
+        >
+          Privacy Policy
+        </Menu.Item>
         <Menu.Item position="right">
           <Button
             as="a"
