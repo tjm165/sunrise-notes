@@ -105,7 +105,7 @@ const LandingPageLayout = props => (
         </Grid.Column>
       </Grid>
     </Paragraph>
-    <Paragraph>
+    <Paragraph headerText="We're Glad To Have You Joining Us!">
       <SignupComponent horizontal />
     </Paragraph>
   </Desktop>

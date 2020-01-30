@@ -23,7 +23,7 @@ function getActiveItem(login) {
 }
 
 function getHeaderString(login) {
-  return login ? "Welcome Back!" : "We're Glad You're Joining Us!";
+  return login ? "Welcome Back!" : "We're Glad To Have You Joining Us!";
 }
 
 function AuthorizationPage({ login, horizontal, ...rest }) {
