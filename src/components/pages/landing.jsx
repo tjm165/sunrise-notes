@@ -9,7 +9,7 @@ import {
   Image,
   Container
 } from "semantic-ui-react";
-import { SignupComponent } from "./signup";
+import { SignupComponent } from "../pages/Authorization";
 import Heading from "../implementations/Layout/Heading";
 import Desktop from "../implementations/Layout/Desktop";
 import Divider from "../implementations/Layout/Divider";
@@ -105,8 +105,8 @@ const LandingPageLayout = props => (
         </Grid.Column>
       </Grid>
     </Paragraph>
-    <Paragraph>
-      <SignupComponent />
+    <Paragraph headerText="We're Glad To Have You Joining Us!">
+      <SignupComponent horizontal />
     </Paragraph>
   </Desktop>
 );

@@ -8,7 +8,8 @@ import AboutTeam from "./components/pages/AboutTeam";
 import Landing from "./components/pages/landing";
 import Login from "./components/pages/login";
 import Signup from "./components/pages/signup";
-import Google from "./components/pages/GooglePostSignIn";
+import AuthorizationPage from "./components/pages/Authorization";
+import GooglePostSignIn from "./components/implementations/OAuth/Google";
 import PrivacyPolicy from "./components/pages/PrivacyPolicy";
 
 class App extends Component {
@@ -29,12 +30,20 @@ class App extends Component {
         />
         <Route exact path="/contribute" render={props => <Contribute />} />
         <Route exact path="/about-team" render={props => <AboutTeam />} />
-        <Route exact path="/signup" render={props => <Signup {...props} />} />
-        <Route exact path="/login" render={props => <Login {...props} />} />
+        <Route
+          exact
+          path="/signup"
+          render={props => <AuthorizationPage {...props} />}
+        />
+        <Route
+          exact
+          path="/login"
+          render={props => <AuthorizationPage login {...props} />}
+        />
         <Route
           exact
           path="/googlepostsignin"
-          render={props => <Google {...props} />}
+          render={props => <GooglePostSignIn {...props} />}
         />
         <Route
           exact
