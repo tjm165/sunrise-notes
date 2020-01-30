@@ -13,7 +13,12 @@ function GooglePostSignIn(props) {
     });
   });
 
-  return <div>Please wait while authenticating with Google</div>;
+  return (
+    <div>
+      Please wait while authenticating with Google. If this page lasts for more
+      than 10 seconds then please reload.
+    </div>
+  );
 }
 
 export default withRouter(GooglePostSignIn);

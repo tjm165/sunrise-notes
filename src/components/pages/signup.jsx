@@ -1,9 +1,17 @@
 import React, { Component } from "react";
 import { Auth } from "aws-amplify";
-import { Form, Button, List, Message } from "semantic-ui-react";
+import {
+  Form,
+  Button,
+  List,
+  Message,
+  Segment,
+  Grid,
+  Divider
+} from "semantic-ui-react";
 import Desktop from "../implementations/Layout/Desktop";
 import Paragraph from "../implementations/Layout/Paragraph";
-import GoogleLogin from "react-google-login";
+import { GoogleOAuthButton } from "../implementations/OAuth/Google";
 
 export default function Signup() {
   return (
@@ -13,7 +21,25 @@ export default function Signup() {
   );
 }
 
-export class SignupComponent extends Component {
+export function SignupComponent() {
+  return (
+    <Segment placeholder>
+      <Grid columns={2} relaxed="very" stackable>
+        <Grid.Column>
+          <SignupWithSunrise />
+        </Grid.Column>
+
+        <Grid.Column verticalAlign="middle">
+          <GoogleOAuthButton />
+        </Grid.Column>
+      </Grid>
+
+      <Divider vertical>Or</Divider>
+    </Segment>
+  );
+}
+
+class SignupWithSunrise extends Component {
   constructor() {
     super();
     this.state = {
