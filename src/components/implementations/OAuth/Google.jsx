@@ -1,14 +1,20 @@
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Auth } from "aws-amplify";
+
+import { Auth, Hub } from "aws-amplify";
+
 import { googleSignIn } from "../../../API";
 
 import GoogleButton from "react-google-button";
 
 function GooglePostSignIn(props) {
   useEffect(() => {
-    Auth.currentAuthenticatedUser().then(user => {
-      props.history.push("/dashboard");
+    Hub.listen("auth", ({ payload: { event, data } }) => {
+      Auth.currentAuthenticatedUser()
+        .then(() => {
+          props.history.push("/dashboard");
+        })
+        .catch(error => console.log(error));
     });
   });
 
@@ -21,11 +27,3 @@ function GooglePostSignIn(props) {
 }
 
 export default withRouter(GooglePostSignIn);
-
-export function GoogleOAuthButton() {
-  const handleGoogleSubmit = () => {
-    googleSignIn();
-  };
-
-  return <GoogleButton onClick={() => handleGoogleSubmit()} />;
-}

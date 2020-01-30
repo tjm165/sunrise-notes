@@ -15,7 +15,7 @@ import {
 } from "semantic-ui-react";
 import Desktop from "../implementations/Layout/Desktop";
 import Paragraph from "../implementations/Layout/Paragraph";
-import { GoogleOAuthButton } from "../implementations/OAuth/Google";
+import GoogleOAuthButton from "../implementations/OAuth/GoogleOAuthButton";
 import { withRouter } from "react-router-dom";
 
 function getActiveItem(login) {

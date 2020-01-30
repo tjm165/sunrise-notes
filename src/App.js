@@ -6,8 +6,6 @@ import Contribute from "./components/pages/contribute";
 import AboutTeam from "./components/pages/AboutTeam";
 
 import Landing from "./components/pages/landing";
-import Login from "./components/pages/login";
-import Signup from "./components/pages/signup";
 import AuthorizationPage from "./components/pages/Authorization";
 import GooglePostSignIn from "./components/implementations/OAuth/Google";
 import PrivacyPolicy from "./components/pages/PrivacyPolicy";
