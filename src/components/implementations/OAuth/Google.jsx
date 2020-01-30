@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { googleSignIn } from "../../../API";
-import { Button } from "semantic-ui-react";
+
+import GoogleButton from "react-google-button";
 
 function GooglePostSignIn(props) {
   useEffect(() => {
@@ -19,18 +20,8 @@ export default withRouter(GooglePostSignIn);
 
 export function GoogleOAuthButton() {
   const handleGoogleSubmit = () => {
-    setGoogleLoading(true);
     googleSignIn();
   };
-  const [isGoogleLoading, setGoogleLoading] = useState(false);
 
-  return (
-    <Button
-      positive
-      onClick={() => handleGoogleSubmit()}
-      loading={isGoogleLoading}
-    >
-      Sign In With Google
-    </Button>
-  );
+  return <GoogleButton onClick={() => handleGoogleSubmit()} />;
 }
