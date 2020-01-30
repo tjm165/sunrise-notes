@@ -4,14 +4,11 @@ export const NEW_INSTANCE_UUID = -1;
 export const NO_INSTANCE_UUID = false;
 
 const api = config.api.invokeUrl;
-function getCookie(name) {
-  var value = "; " + document.cookie;
-  var parts = value.split("; " + name + "=");
-  if (parts.length === 2)
-    return parts
-      .pop()
-      .split(";")
-      .shift();
+
+function getJWTToken() {
+  return Auth.currentAuthenticatedUser().then(user => {
+    return user.signInUserSession.idToken.jwtToken;
+  });
 }
 
 export function fetchNoteSet(tagUUIDs, operation) {
@@ -81,13 +78,15 @@ export function postTag(tagObject) {
     .catch(error => console.error(error));
 }
 
-function GET(resource, querystring = null) {
+async function GET(resource, querystring = null) {
   let ask = `${api}/${resource}/${querystring}`;
 
   // Default options are marked with *
   if (querystring === null) {
     ask = `${api}/${resource}`;
   }
+
+  const JWTToken = await getJWTToken();
 
   return fetch(ask, {
     method: "GET", // *GET, POST, PUT, DELETE, etc.
@@ -96,20 +95,21 @@ function GET(resource, querystring = null) {
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("idToken")
+      Authorization: JWTToken
     },
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client
   }).then(response => response.json()); // parses JSON response into native Javascript objects
 }
 
-function DELETE(resource, querystring = null) {
+async function DELETE(resource, querystring = null) {
   let ask = `${api}/${resource}/${querystring}`;
 
   // Default options are marked with *
   if (querystring === null) {
     ask = `${api}/${resource}`;
   }
+  const JWTToken = await getJWTToken();
 
   return fetch(ask, {
     method: "DELETE", // *GET, POST, PUT, DELETE, etc.
@@ -118,15 +118,17 @@ function DELETE(resource, querystring = null) {
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("idToken")
+      Authorization: JWTToken
     },
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer" // no-referrer, *client
   }).then(response => response.json()); // parses JSON response into native Javascript objects
 }
 
-function POST(resource, data = {}) {
+async function POST(resource, data = {}) {
   const ask = `${api}/${resource}`;
+
+  const JWTToken = await getJWTToken();
 
   // Default options are marked with *
   return fetch(ask, {
@@ -136,7 +138,7 @@ function POST(resource, data = {}) {
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: getCookie("idToken")
+      Authorization: JWTToken
     },
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer", // no-referrer, *client
