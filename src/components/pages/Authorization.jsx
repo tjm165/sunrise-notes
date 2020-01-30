@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
+import { signin } from "../../API";
+
 import { Auth } from "aws-amplify";
 import {
   Form,
@@ -7,11 +9,14 @@ import {
   Message,
   Segment,
   Grid,
-  Divider
+  Divider,
+  Header,
+  Container
 } from "semantic-ui-react";
 import Desktop from "../implementations/Layout/Desktop";
 import Paragraph from "../implementations/Layout/Paragraph";
 import { GoogleOAuthButton } from "../implementations/OAuth/Google";
+import { withRouter } from "react-router-dom";
 
 function getActiveItem(login) {
   return login ? "Login" : "Signup";
@@ -21,73 +26,114 @@ function getHeaderString(login) {
   return login ? "Welcome Back!" : "We're Glad You're Joining Us!";
 }
 
-export default function AuthorizationPage({ login }) {
+function AuthorizationPage({ login, horizontal, ...rest }) {
   return (
     <Desktop hideFooter activeItem={getActiveItem(login)}>
       <Paragraph headerText={getHeaderString(login)}>
-        <SignComponent login={login} />
+        <SignComponent login={login} horizontal={horizontal} {...rest} />
       </Paragraph>
     </Desktop>
   );
 }
 
-export function SignupComponent() {
-  return <SignComponent />;
+export default withRouter(AuthorizationPage);
+
+export function SignupComponent(props) {
+  return <SignComponent {...props} />;
 }
 
-export function LoginComponent() {
-  return <SignComponent login />;
+export function LoginComponent(props) {
+  return <SignComponent login {...props} />;
 }
 
-function SignComponent({ login }) {
-  <Segment placeholder>
-    <Grid columns={2} relaxed="very" stackable>
-      <Grid.Column>
-        {login ? <LoginWithSunrise /> : <SignupWithSunrise />}
-      </Grid.Column>
+function SignComponent({ login, horizontal, ...rest }) {
+  const numColumns = horizontal ? 1 : 2;
 
-      <Grid.Column verticalAlign="middle">
-        <GoogleOAuthButton />
-      </Grid.Column>
-    </Grid>
+  return (
+    <Segment placeholder>
+      <Grid columns={numColumns} relaxed="very" stackable>
+        <Grid.Column>
+          {login ? (
+            <LoginWithSunrise {...rest} />
+          ) : (
+            <SignupWithSunrise {...rest} />
+          )}
+          {horizontal && (
+            <Divider horizontal={horizontal} vertical={!horizontal}>
+              Or
+            </Divider>
+          )}
+        </Grid.Column>
 
-    <Divider vertical>Or</Divider>
-  </Segment>;
+        {!horizontal && (
+          <Grid.Column verticalAlign="middle">
+            <GoogleOAuthButton />
+          </Grid.Column>
+        )}
+      </Grid>
+
+      {horizontal ? (
+        <Grid.Column verticalAlign="middle">
+          <GoogleOAuthButton />
+        </Grid.Column>
+      ) : (
+        <Divider horizontal={horizontal} vertical={!horizontal}>
+          Or
+        </Divider>
+      )}
+    </Segment>
+  );
 }
 
 const LoginWithSunrise = props => {
-  <Paragraph headerText="Sign In">
-    {error && <Header as="h4">{error}</Header>}
-    <Grid columns="equal">
-      <Grid.Column>
-        <Container>
-          <Form>
-            <Form.Input
-              label="Email"
-              placeholder="email"
-              value={email}
-              onChange={event => setEmail(event.target.value)}
-            />
-            <Form.Input
-              label="Enter Password"
-              type="password"
-              placeholder="password"
-              value={password}
-              onChange={event => setPassword(event.target.value)}
-            />
-            <Button positive onClick={e => handleSubmit(e)} loading={isLoading}>
-              Sign in
-            </Button>
-          </Form>
-        </Container>
-      </Grid.Column>
-      <Grid.Column>
-        <Container>
-          <GoogleOAuthButton />
-        </Container>
-      </Grid.Column>
-    </Grid>
-  </Paragraph>;
+  const [email, setEmail] = useState([""]);
+  const [password, setPassword] = useState([""]);
+  const [error, setError] = useState(null);
+  const [isLoading, setLoading] = useState(false);
+
+  const handleSubmit = event => {
+    setLoading(true);
+
+    event.preventDefault();
+    console.log("hey");
+
+    signin(email, password)
+      .then(user => {
+        document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
+        props.history.push("/dashboard");
+      })
+      .catch(error => {
+        console.log(error);
+        setError(error.message);
+      })
+      .finally(() => setLoading(false));
+  };
+
+  return (
+    <Paragraph headerText="Sign In" textAlign="center">
+      {error && <Header as="h4">{error}</Header>}
+      <Container>
+        <Form>
+          <Form.Input
+            label="Email"
+            placeholder="email"
+            value={email}
+            onChange={event => setEmail(event.target.value)}
+          />
+          <Form.Input
+            label="Enter Password"
+            type="password"
+            placeholder="password"
+            value={password}
+            onChange={event => setPassword(event.target.value)}
+          />
+          <Button positive onClick={e => handleSubmit(e)} loading={isLoading}>
+            Sign in
+          </Button>
+        </Form>
+      </Container>
+    </Paragraph>
+  );
 };
 
 class SignupWithSunrise extends Component {
@@ -158,7 +204,7 @@ class SignupWithSunrise extends Component {
     return (
       <>
         {!signupPassed ? (
-          <Paragraph headerText="We're so excited that you're signing up!">
+          <Paragraph headerText="Sign Up" textAlign="center">
             <Form error={error}>
               <Form.Input
                 label="Email"
@@ -186,14 +232,6 @@ class SignupWithSunrise extends Component {
                   <List>
                     Passwords must:
                     <List.Item
-                      icon={
-                        password.length > 0 && doPasswordsMatch
-                          ? this.check
-                          : this.x
-                      }
-                      content="Match"
-                    />
-                    <List.Item
                       icon={passwordIsMinLength ? this.check : this.x}
                       content="Be at least 8 characters"
                     />
@@ -202,6 +240,14 @@ class SignupWithSunrise extends Component {
                       content="Contain a number"
                     />
                   </List>
+                  <List.Item
+                    icon={
+                      password.length > 0 && doPasswordsMatch
+                        ? this.check
+                        : this.x
+                    }
+                    content="Match"
+                  />
                 </Message>
               )}
 
