@@ -99,7 +99,6 @@ const LoginWithSunrise = props => {
 
     signin(email, password)
       .then(user => {
-        document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
         props.history.push("/dashboard");
       })
       .catch(error => {

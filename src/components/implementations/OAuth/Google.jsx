@@ -8,7 +8,6 @@ import GoogleButton from "react-google-button";
 function GooglePostSignIn(props) {
   useEffect(() => {
     Auth.currentAuthenticatedUser().then(user => {
-      document.cookie = `idToken=${user.signInUserSession.idToken.jwtToken}`;
       props.history.push("/dashboard");
     });
   });
