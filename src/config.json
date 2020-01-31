@@ -8,6 +8,6 @@
     "APP_CLIENT_ID": "69el2bc4g3rgn547vbq40e0t5v"
   },
   "environment": {
-    "host": "https://www.sunrisenotes.com/"
+    "host": "http://localhost:3000/"
   }
 }

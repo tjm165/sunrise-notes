@@ -15,7 +15,7 @@ function GooglePostSignIn(props) {
           console.log(user);
           props.history.push("/dashboard");
         })
-        .catch(error => console.log(error));
+        .catch(error => googleSignIn());
     });
   });
 
