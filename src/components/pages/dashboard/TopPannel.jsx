@@ -1,15 +1,37 @@
 import React from "react";
-import { Header, Segment, Image } from "semantic-ui-react";
+import { Button, Container, Menu, Dropdown, Image } from "semantic-ui-react";
+import { signout } from "../../../API";
+import { withRouter } from "react-router-dom";
 
-export default function TopPannel({ fixed, activeItem, history }) {
+function TopPannel({ fixed, activeItem, history }) {
   return (
-    <Segment
-      inverted
-      style={{ borderRadius: "0px", backgroundColor: "#333333" }}
-    >
-      <Header as="h3">
-        <Image circular src="/images/logo.png" /> Sunrise Notes
-      </Header>
-    </Segment>
+    <Menu className="navBar" size="large" fluid inverted>
+      <Container>
+        <Menu.Item>
+          <Image size="mini" src="/images/logo.png" />
+        </Menu.Item>
+
+        <Menu.Menu position="right">
+          <Dropdown item icon="user outline" pointing="up">
+            <Dropdown.Menu>
+              <Dropdown.Item
+                as="a"
+                inverted={!fixed}
+                primary={fixed}
+                style={{ marginLeft: "0.5em" }}
+                onClick={() => signout().then(history.push("/signedout"))}
+              >
+                Sign Out
+              </Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+
+          <Menu.Item></Menu.Item>
+        </Menu.Menu>
+      </Container>
+    </Menu>
   );
 }
+
+//should combine with navbar? or call it alternate nav bar and then have one component to switch?
+export default withRouter(TopPannel);

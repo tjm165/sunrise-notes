@@ -9,6 +9,7 @@ import Landing from "./components/pages/landing";
 import AuthorizationPage from "./components/pages/Authorization";
 import GooglePostSignIn from "./components/implementations/OAuth/Google";
 import PrivacyPolicy from "./components/pages/PrivacyPolicy";
+import SignedOut from "./components/pages/SignedOut";
 
 class App extends Component {
   render() {
@@ -48,6 +49,7 @@ class App extends Component {
           path="/privacypolicy"
           render={props => <PrivacyPolicy {...props} />}
         />
+        <Route exact path="/signedout" render={props => <SignedOut />} />
       </BrowserRouter>
     );
   }

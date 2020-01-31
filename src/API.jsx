@@ -28,6 +28,12 @@ export function signin(username, password) {
   return Auth.signIn(username, password);
 }
 
+export function signout() {
+  return Auth.signOut()
+    .then(data => console.log(data))
+    .catch(err => console.log(err));
+}
+
 export function googleSignIn() {
   Auth.federatedSignIn({ provider: "Google" });
 }
