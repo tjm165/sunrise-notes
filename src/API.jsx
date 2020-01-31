@@ -29,7 +29,7 @@ export function signin(username, password) {
 }
 
 export function googleSignIn() {
-  return Auth.federatedSignIn({ provider: "Google" });
+  Auth.federatedSignIn({ provider: "Google" });
 }
 
 //need to unhard code this soon!

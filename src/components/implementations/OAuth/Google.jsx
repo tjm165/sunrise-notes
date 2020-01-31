@@ -11,7 +11,8 @@ function GooglePostSignIn(props) {
   useEffect(() => {
     Hub.listen("auth", ({ payload: { event, data } }) => {
       Auth.currentAuthenticatedUser()
-        .then(() => {
+        .then(user => {
+          console.log(user);
           props.history.push("/dashboard");
         })
         .catch(error => console.log(error));

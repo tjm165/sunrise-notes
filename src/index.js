@@ -21,8 +21,8 @@ const oauth = {
     "openid",
     "aws.cognito.signin.user.admin"
   ],
-  redirectSignIn: `${config.environment.path}/googlepostsignin`,
-  redirectSignOut: `${config.environment.path}`,
+  redirectSignIn: `${config.environment.host}googlepostsignin`,
+  redirectSignOut: `${config.environment.host}`,
   responseType: "code" // or 'token', note that REFRESH token will only be generated when the responseType is code
 };
 
