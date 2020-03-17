@@ -2,8 +2,7 @@ from table import Table, AssiciatedTable
 import boto3
 from boto3.dynamodb.conditions import Key, Attr
 from uuid import uuid4
-from subactions import mix_colors, serialize_note
-
+from subactions import *
 # All the CRUD that the users can do to a table.
 
 
@@ -69,8 +68,14 @@ class User():
     def delete_note(self, uuid):
         return self.notes_table.delete_item(uuid)
 
-    def generate_note_rgb(self, note):
-        return {'r': 100, 'g': 200, 'b': 300}
+    def generate_relative_note_rgb(self, note, relative_tag_uuids):
+        color = {'r': 0, 'g': 0, 'b': 0}
+        common_tag_uuids = intersection(relative_tag_uuids, note['tagUUIDs'])
+
+        for tag_uuid in note['tagUUIDs']:
+            color = mix_colors(
+                color, self.get_tag(tag_uuid)['rgb'])
+        return color
 
     # returns a set of colored notes
     def get_noteset_by_tag_uuids(self, tag_uuids, operation):
@@ -91,7 +96,7 @@ class User():
 
         # color
         for note in notes:
-            note['rgb'] = self.generate_note_rgb(note)
+            note['rgb'] = self.generate_relative_note_rgb(note, tag_uuids)
             note_dict[note['UUID']] = note
 
         return note_dict

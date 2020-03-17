@@ -1,6 +1,11 @@
 import uuid
 
 
+def intersection(lst1, lst2):
+    lst3 = [list(filter(lambda x: x in lst1, sublist)) for sublist in lst2]
+    return lst3
+
+
 def mix_colors(rgb1, rgb2):
     rgb = {}
     rgb['r'] = rgb1['r'] - ((rgb1['r'] - rgb2['r']) / 2)
