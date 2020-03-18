@@ -2,8 +2,7 @@ import uuid
 
 
 def intersection(lst1, lst2):
-    lst3 = [list(filter(lambda x: x in lst1, sublist)) for sublist in lst2]
-    return lst3
+    return list(set(lst1).intersection(set(lst2)))
 
 
 def mix_colors(rgb1, rgb2):

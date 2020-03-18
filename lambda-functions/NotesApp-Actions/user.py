@@ -72,9 +72,12 @@ class User():
         color = {'r': 0, 'g': 0, 'b': 0}
         common_tag_uuids = intersection(relative_tag_uuids, note['tagUUIDs'])
 
-        for tag_uuid in note['tagUUIDs']:
-            color = mix_colors(
-                color, self.get_tag(tag_uuid)['rgb'])
+        # return {'rel': relative_tag_uuids, 'note': note['tagUUIDs'], 'com': common_tag_uuids}
+        if (len(common_tag_uuids) > 0):
+            color = self.get_tag(common_tag_uuids[0])['rgb']
+            for tag_uuid in common_tag_uuids[0:]:
+                color = mix_colors(
+                    color, self.get_tag(tag_uuid)['rgb'])
         return color
 
     # returns a set of colored notes
