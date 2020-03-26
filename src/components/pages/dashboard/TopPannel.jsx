@@ -21,7 +21,7 @@ function TopPannel({ fixed, activeItem, history }) {
                 style={{ marginLeft: "0.5em" }}
                 onClick={() => signout().then(history.push("/signedout"))}
               >
-                Sign Out
+                Sign-Out
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
