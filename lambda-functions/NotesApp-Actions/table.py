@@ -77,7 +77,7 @@ class AssiciatedTable(Table):
                 item = self.__associate(item, alias, only_associate_uuid)
         return items
 
-    def get_item(self, UUID, with_associated_items, alias, only_associate_uuid):
+    def get_item(self, UUID, with_associated_items=False, alias=False, only_associate_uuid=False):
         item = super().get_item(UUID)
 
         if with_associated_items:
