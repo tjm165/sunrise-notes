@@ -27,7 +27,7 @@ export default function VerticalPannel({
   );
 }
 
-function NoteCreateButton({ label = "Create Note", functions, ...rest }) {
+function NoteCreateButton({ label = "New Note", functions, ...rest }) {
   return (
     <Button
       {...rest}
