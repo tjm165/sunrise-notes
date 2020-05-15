@@ -12,23 +12,23 @@ export default function Board({
   activeNote,
   functions,
   notes,
-  isLoading
+  isLoading,
 }) {
   const isLoadingNotes = isLoading.fetchNoteSet;
   const noteArray = Array.from(notes.keys());
-  const items = noteArray.filter(key => notes.get(key).type === "item");
+  const items = noteArray.filter((key) => notes.get(key).type === "item");
   const paragraphs = noteArray.filter(
-    key => notes.get(key).type === "paragraph"
+    (key) => notes.get(key).type === "paragraph"
   );
-  const links = noteArray.filter(key => notes.get(key).type === "link");
-  const images = noteArray.filter(key => notes.get(key).type === "image");
+  const links = noteArray.filter((key) => notes.get(key).type === "link");
+  const images = noteArray.filter((key) => notes.get(key).type === "image");
 
   const flexNoteProps = {
     noteMap: notes,
     activeNote,
     functions,
     isLoading,
-    tagMap
+    tagMap,
   };
 
   return (
@@ -50,8 +50,8 @@ export default function Board({
       List
       {/* These are FlexGroups! */}
       <Items items={items} functions={functions} {...flexNoteProps} />
-      Images
-      <Images images={images} functions={functions} {...flexNoteProps} />
+      {/* Images
+      <Images images={images} functions={functions} {...flexNoteProps} /> */}
     </>
   );
 }

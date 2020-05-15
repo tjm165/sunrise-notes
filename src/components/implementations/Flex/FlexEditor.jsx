@@ -5,7 +5,7 @@ import {
   Button,
   Form,
   Dropdown,
-  Segment
+  Segment,
 } from "semantic-ui-react";
 import { TagDropdown } from "../../implementations/Tag/TagDropdown";
 import { NEW_INSTANCE_UUID, NO_INSTANCE_UUID } from "../../../API";
@@ -23,23 +23,23 @@ export default function FlexEditor({
   borderBottom,
   borderLeft,
   borderRight,
-  rgb
+  rgb,
 }) {
   const isPreexisting = note["UUID"] !== NEW_INSTANCE_UUID;
   const [tagUUIDs, setTagUUIDs] = useState(note.tagUUIDs || []);
   const [secondaryContent] = useState(note.secondaryContent || false);
 
   const [content, setContent] = useState(note.content);
-  const [type, setType] = useState(note.type || type || "paragraph"); //don't know if this will work
+  const [type, setType] = useState(note.type || type || "item"); //don't know if this will work
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     event.preventDefault();
     onSubmit({
       UUID: note.UUID,
       content,
       tagUUIDs,
       secondaryContent,
-      type
+      type,
     });
   };
   rgb = rgb || { r: "FFF", g: "FFF", b: "FFF" };
@@ -57,20 +57,15 @@ export default function FlexEditor({
           borderTop: borderTop && border,
           borderBottom: borderBottom && border,
           borderLeft: borderLeft && border,
-          borderRight: borderRight && border
+          borderRight: borderRight && border,
         }}
       >
         <Form loading={isLoading.setAsActiveNote}>
-          <Dropdown
+          {/* <Dropdown
             value={type}
             onChange={(e, { value }) => setType(value)}
-            options={[
-              { key: "item", text: "item", value: "item" },
-              { key: "image", text: "image", value: "image" },
-              { key: "link", text: "link", value: "link" },
-              { key: "paragraph", text: "paragraph", value: "paragraph" }
-            ]}
-          ></Dropdown>
+            options={[{ key: "item", text: "item", value: "item" }]}
+          ></Dropdown> */}
           <TextArea
             name="content"
             defaultValue={content}
