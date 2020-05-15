@@ -8,7 +8,7 @@ function TopPannel({ fixed, activeItem, history }) {
     <Menu className="navBar" size="large" fluid inverted>
       <Container>
         <Menu.Item>
-          <Image size="mini" src="/images/logo.png" />
+          <Image size="medium" src="/images/header.png" />
         </Menu.Item>
 
         <Menu.Menu position="right">
