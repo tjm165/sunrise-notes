@@ -13,6 +13,7 @@
 
 .navBar {
   border-bottom: 0px solid rgba(34, 36, 38, 0.15) !important;
+  background: rgba(145, 234, 87, 1) !important;
 }
 
 .grow:hover {
