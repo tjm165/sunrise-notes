@@ -17,13 +17,44 @@ export default function Items({
 }) {
   return (
     <List>
-      {items.map(key => {
+      {items.map((key) => {
         const { rgb, content, secondaryContent } = noteMap.get(key);
         const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
 
         return (
           <Toggler key={key} indexToShow={activeNote.UUID === key ? 1 : 0}>
-            <FlexContent
+            {content.startsWith("http") ? (
+              <LinkFlexContent
+                functions={functions}
+                index={key}
+                type={"item"}
+                rgb={rgb}
+                noteMap={noteMap}
+                content={content}
+                secondaryContent={secondaryContent}
+              />
+            ) : (
+              <ItemFlexContent
+                functions={functions}
+                index={key}
+                type={"item"}
+                rgb={rgb}
+                noteMap={noteMap}
+                content={content}
+                secondaryContent={secondaryContent}
+              />
+            )}
+
+            <ItemFlexContent
+              functions={functions}
+              index={key}
+              type={content.startsWith("http") ? "link" : "item"}
+              rgb={rgb}
+              noteMap={noteMap}
+              content={content}
+              secondaryContent={secondaryContent}
+            />
+            {/* <FlexContent
               onClick={() => functions.setAsActiveNote(key)}
               {...rest}
               type={type}
@@ -44,7 +75,7 @@ export default function Items({
               ]}
             >
               <>{content}</>
-            </FlexContent>
+            </FlexContent> */}
             <FlexEditor
               rgb={rgb}
               borderTop
@@ -61,5 +92,60 @@ export default function Items({
         );
       })}
     </List>
+  );
+}
+
+function ItemFlexContent({
+  functions,
+  index,
+  secondaryContent,
+  noteMap,
+  content,
+  ...rest
+}) {
+  return (
+    <FlexContent
+      onClick={() => functions.setAsActiveNote(index)}
+      {...rest}
+      borderTop
+      fade
+      shouldColorOptions
+      shouldNeverHideOptions
+      leftExtraOptions={[
+        [
+          secondaryContent ? "check square" : "square outline",
+          () =>
+            functions.submitNote({
+              ...noteMap.get(index),
+              secondaryContent: !secondaryContent,
+            }),
+        ],
+      ]}
+    >
+      <>{content}</>
+    </FlexContent>
+  );
+}
+
+function LinkFlexContent({ functions, index, noteMap, content, ...rest }) {
+  return (
+    <FlexContent
+      onClick={() => functions.setAsActiveNote(index)}
+      {...rest}
+      borderTop
+      fade
+      shouldColorOptions
+      shouldNeverHideOptions
+      leftExtraOptions={[
+        [
+          "linkify",
+          () =>
+            //I think this is where the link should go
+            window.open(content, "_blank"),
+        ],
+      ]}
+    >
+      <>{content}</>
+    </FlexContent>
   );
 }
