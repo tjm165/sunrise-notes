@@ -12,7 +12,7 @@ function TopPannel({ fixed, activeItem, history }) {
         </Menu.Item>
 
         <Menu.Menu position="right">
-          <Dropdown item icon="user outline" pointing="up">
+          <Dropdown item icon="user outline" pointing>
             <Dropdown.Menu>
               <Dropdown.Item
                 as="a"

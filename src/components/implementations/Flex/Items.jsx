@@ -18,7 +18,7 @@ export default function Items({
   return (
     <List>
       {items.map((key) => {
-        const { rgb, content, secondaryContent } = noteMap.get(key);
+        const { rgb, content, secondarycontent } = noteMap.get(key);
         const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
 
         return (
@@ -32,7 +32,7 @@ export default function Items({
                 rgb={rgb}
                 noteMap={noteMap}
                 content={content}
-                secondaryContent={secondaryContent}
+                secondarycontent={secondarycontent}
               />
             ) : (
               <ItemFlexContent
@@ -43,7 +43,7 @@ export default function Items({
                 rgb={rgb}
                 noteMap={noteMap}
                 content={content}
-                secondaryContent={secondaryContent}
+                secondarycontent={secondarycontent}
               />
             )}
 
@@ -55,7 +55,7 @@ export default function Items({
               rgb={rgb}
               noteMap={noteMap}
               content={content}
-              secondaryContent={secondaryContent}
+              secondarycontent={secondarycontent}
             /> */}
             {/* <FlexContent
               onClick={() => functions.setAsActiveNote(key)}
@@ -68,11 +68,11 @@ export default function Items({
               shouldNeverHideOptions
               leftExtraOptions={[
                 [
-                  secondaryContent ? "check square" : "square outline",
+                  secondarycontent ? "check square" : "square outline",
                   () =>
                     functions.submitNote({
                       ...noteMap.get(key),
-                      secondaryContent: !secondaryContent
+                      secondarycontent: !secondarycontent
                     })
                 ]
               ]}
@@ -101,7 +101,7 @@ export default function Items({
 function ItemFlexContent({
   functions,
   index,
-  secondaryContent,
+  secondarycontent,
   noteMap,
   content,
 
@@ -118,11 +118,11 @@ function ItemFlexContent({
       shouldNeverHideOptions
       leftExtraOptions={[
         [
-          secondaryContent ? "check square" : "square outline",
+          secondarycontent ? "check square" : "square outline",
           () =>
             functions.submitNote({
               ...noteMap.get(index),
-              secondaryContent: !secondaryContent,
+              secondarycontent: !secondarycontent,
             }),
         ],
       ]}
