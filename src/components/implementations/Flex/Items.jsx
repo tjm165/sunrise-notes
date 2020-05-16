@@ -25,6 +25,7 @@ export default function Items({
           <Toggler key={key} indexToShow={activeNote.UUID === key ? 1 : 0}>
             {content.startsWith("http") ? (
               <LinkFlexContent
+                key={key}
                 functions={functions}
                 index={key}
                 type={"item"}
@@ -35,6 +36,7 @@ export default function Items({
               />
             ) : (
               <ItemFlexContent
+                key={key}
                 functions={functions}
                 index={key}
                 type={"item"}
@@ -45,7 +47,8 @@ export default function Items({
               />
             )}
 
-            <ItemFlexContent
+            {/* <ItemFlexContent
+              key={key}
               functions={functions}
               index={key}
               type={content.startsWith("http") ? "link" : "item"}
@@ -53,7 +56,7 @@ export default function Items({
               noteMap={noteMap}
               content={content}
               secondaryContent={secondaryContent}
-            />
+            /> */}
             {/* <FlexContent
               onClick={() => functions.setAsActiveNote(key)}
               {...rest}
@@ -101,10 +104,12 @@ function ItemFlexContent({
   secondaryContent,
   noteMap,
   content,
+
   ...rest
 }) {
   return (
     <FlexContent
+      key={index}
       onClick={() => functions.setAsActiveNote(index)}
       {...rest}
       borderTop
@@ -130,6 +135,7 @@ function ItemFlexContent({
 function LinkFlexContent({ functions, index, noteMap, content, ...rest }) {
   return (
     <FlexContent
+      key={index}
       onClick={() => functions.setAsActiveNote(index)}
       {...rest}
       borderTop

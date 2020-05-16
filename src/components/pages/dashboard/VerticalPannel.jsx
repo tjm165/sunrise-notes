@@ -8,7 +8,7 @@ export default function VerticalPannel({
   operation,
   tagMap,
   context,
-  functions
+  functions,
 }) {
   return (
     <>
@@ -27,7 +27,11 @@ export default function VerticalPannel({
   );
 }
 
-function NoteCreateButton({ label = "Create Note", functions, ...rest }) {
+export function NoteCreateButton({
+  label = "Create Note",
+  functions,
+  ...rest
+}) {
   return (
     <Button
       {...rest}

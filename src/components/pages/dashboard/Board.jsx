@@ -5,7 +5,8 @@ import Items from "../../implementations/Flex/Items";
 import Images from "../../implementations/Flex/Images";
 import Paragraphs from "../../implementations/Flex/Paragraphs";
 import { NEW_INSTANCE_UUID } from "../../../API";
-import { Image, Icon, Segment } from "semantic-ui-react";
+import { Image, Icon, Segment, Container, Header } from "semantic-ui-react";
+import { NoteCreateButton } from "../dashboard/VerticalPannel";
 
 export default function Board({
   tagMap,
@@ -47,9 +48,16 @@ export default function Board({
           setAsActiveTag={functions.setAsActiveTag}
         />
       )}
-      List
       {/* These are FlexGroups! */}
-      <Items items={items} functions={functions} {...flexNoteProps} />
+      {items.length > 0 ? (
+        <Items items={items} functions={functions} {...flexNoteProps} />
+      ) : (
+        <Container>
+          <Header>You do not have any notes in this section</Header>
+          <NoteCreateButton positive functions={functions} />
+        </Container>
+      )}
+
       {/* Images
       <Images images={images} functions={functions} {...flexNoteProps} /> */}
     </>
