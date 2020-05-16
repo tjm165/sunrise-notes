@@ -5,19 +5,19 @@ import { withRouter } from "react-router-dom";
 
 function TopPannel({ fixed, activeItem, history }) {
   return (
-    <Menu className="navBar" size="large" fluid inverted>
+    <Menu className="navBar gradient" size="large" fluid>
       <Container>
         <Menu.Item>
-          <Image size="mini" src="/images/logo.png" />
+          <Image size="medium" src="/images/header.png" />
         </Menu.Item>
 
         <Menu.Menu position="right">
-          <Dropdown item icon="user outline" pointing="up">
+          <Dropdown item icon="user outline" pointing>
             <Dropdown.Menu>
               <Dropdown.Item
                 as="a"
-                inverted={!fixed}
-                primary={fixed}
+                // inverted={!fixed}
+                // primary={fixed}
                 style={{ marginLeft: "0.5em" }}
                 onClick={() => signout().then(history.push("/signedout"))}
               >
@@ -25,8 +25,6 @@ function TopPannel({ fixed, activeItem, history }) {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-
-          <Menu.Item></Menu.Item>
         </Menu.Menu>
       </Container>
     </Menu>

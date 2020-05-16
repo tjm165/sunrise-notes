@@ -58,7 +58,7 @@ export default function FlexContent({
         borderBottom: borderBottom && border,
         borderLeft: borderLeft && border,
         borderRight: borderRight && border,
-        backgroundColor: isSelected && shouldColorWhenSelected && rgbstring
+        backgroundColor: isSelected && shouldColorWhenSelected && rgbstring,
       }}
     >
       {/* TODO: Get rid of toggle */}
@@ -93,13 +93,14 @@ function Options({ extraOptions, shouldHideOptions, rgbString }) {
     style["color"] = rgbString;
   }
 
-  return extraOptions.map(([iconName, onClick]) => (
+  return extraOptions.map(([iconName, onClick], key) => (
     <>
       <Icon
+        key={key}
         style={style}
         className="grow"
         name={shouldHideOptions || iconName}
-        onClick={event => {
+        onClick={(event) => {
           event.stopPropagation();
           onClick();
         }}

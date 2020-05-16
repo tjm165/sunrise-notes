@@ -11,7 +11,8 @@ import {
   Grid,
   Divider,
   Header,
-  Container
+  Label,
+  Container,
 } from "semantic-ui-react";
 import Desktop from "../implementations/Layout/Desktop";
 import Paragraph from "../implementations/Layout/Paragraph";
@@ -85,23 +86,23 @@ function SignComponent({ login, horizontal, ...rest }) {
   );
 }
 
-const LoginWithSunrise = props => {
+const LoginWithSunrise = (props) => {
   const [email, setEmail] = useState([""]);
   const [password, setPassword] = useState([""]);
   const [error, setError] = useState(null);
   const [isLoading, setLoading] = useState(false);
 
-  const handleSubmit = event => {
+  const handleSubmit = (event) => {
     setLoading(true);
 
     event.preventDefault();
     console.log("hey");
 
     signin(email, password)
-      .then(user => {
+      .then((user) => {
         props.history.push("/dashboard");
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         setError(error.message);
       })
@@ -117,16 +118,23 @@ const LoginWithSunrise = props => {
             label="Email"
             placeholder="email"
             value={email}
-            onChange={event => setEmail(event.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
           />
-          <Form.Input
-            label="Enter Password"
-            type="password"
-            placeholder="password"
-            value={password}
-            onChange={event => setPassword(event.target.value)}
-          />
-          <Button positive onClick={e => handleSubmit(e)} loading={isLoading}>
+          <Form.Field>
+            <Form.Input
+              label="Password"
+              icon="lock"
+              type="password"
+              placeholder="password"
+              value={password}
+              onChange={(event) => setPassword(event.target.value)}
+            />
+            <Label pointing="above">
+              Passwords are secured using AWS Cognito
+            </Label>
+          </Form.Field>
+
+          <Button positive onClick={(e) => handleSubmit(e)} loading={isLoading}>
             Sign in
           </Button>
         </Form>
@@ -143,7 +151,7 @@ class SignupWithSunrise extends Component {
       password: "",
       confirmPassword: "",
       signupPassed: false,
-      isLoading: false
+      isLoading: false,
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -153,13 +161,13 @@ class SignupWithSunrise extends Component {
     this.x = { name: "minus" };
   }
 
-  responseGoogle = async response => {
+  responseGoogle = async (response) => {
     this.setState({ isLoading: true });
 
     console.log(response);
   };
 
-  handleSubmit = async event => {
+  handleSubmit = async (event) => {
     this.setState({ isLoading: true });
 
     event.preventDefault();
@@ -169,7 +177,7 @@ class SignupWithSunrise extends Component {
       const signUpResponse = await Auth.signUp({
         username,
         password,
-        attributes: { email }
+        attributes: { email },
       });
       console.log(signUpResponse);
       this.setState({ signupPassed: true });
@@ -209,25 +217,35 @@ class SignupWithSunrise extends Component {
                 label="Email"
                 placeholder="Email"
                 value={email}
-                onChange={event => this.setEmail(event.target.value)}
+                onChange={(event) => this.setEmail(event.target.value)}
               />
+              <Form.Field>
+                <Form.Input
+                  icon="lock"
+                  label="Password"
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(event) => this.setPassword(event.target.value)}
+                />
+                <Label pointing="above">
+                  Passwords are secured using AWS Cognito
+                </Label>
+              </Form.Field>
+
               <Form.Input
-                label="Password"
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={event => this.setPassword(event.target.value)}
-              />
-              <Form.Input
+                icon="lock"
                 label="Confirm password"
                 type="password"
                 placeholder="Confirm password"
                 value={confirmPassword}
-                onChange={event => this.setConfirmPassword(event.target.value)}
+                onChange={(event) =>
+                  this.setConfirmPassword(event.target.value)
+                }
               />
 
               {error && (
-                <Message>
+                <Message error>
                   <List>
                     Passwords must:
                     <List.Item
@@ -238,21 +256,21 @@ class SignupWithSunrise extends Component {
                       icon={passwordHasNumber ? this.check : this.x}
                       content="Contain a number"
                     />
+                    <List.Item
+                      icon={
+                        password.length > 0 && doPasswordsMatch
+                          ? this.check
+                          : this.x
+                      }
+                      content="Match confirmed password"
+                    />
                   </List>
-                  <List.Item
-                    icon={
-                      password.length > 0 && doPasswordsMatch
-                        ? this.check
-                        : this.x
-                    }
-                    content="Match"
-                  />
                 </Message>
               )}
 
               <Button
                 positive
-                onClick={e => this.handleSubmit(e)}
+                onClick={(e) => this.handleSubmit(e)}
                 loading={this.state.isLoading}
                 disabled={error}
               >
