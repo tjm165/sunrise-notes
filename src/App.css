@@ -3,17 +3,17 @@
 }
 
 .gradient {
-  background: rgb(255, 255, 0);
+  background: rgb(255, 255, 0) !important;
   background: radial-gradient(
     circle,
     rgba(255, 255, 0, 1) 0%,
     rgba(145, 234, 87, 1) 100%
-  );
+  ) !important;
 }
 
 .navBar {
-  border-bottom: 0px solid rgba(34, 36, 38, 0.15) !important;
-  background: rgba(145, 234, 87, 1) !important;
+  border-bottom: 0px !important;
+  /* background: rgba(145, 234, 87, 1) !important; */
 }
 
 .grow:hover {
