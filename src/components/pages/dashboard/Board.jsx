@@ -12,7 +12,9 @@ export default function Board({
   isLoading,
 }) {
   const isLoadingNotes = isLoading.fetchNoteSet;
+
   const noteArray = Array.from(notes.keys());
+  const isnotesempty = noteArray.length == 0;
   const items = noteArray.filter((key) => notes.get(key).type === "item");
   const paragraphs = noteArray.filter(
     (key) => notes.get(key).type === "paragraph"
@@ -32,6 +34,7 @@ export default function Board({
     <>
       <h1>Notes</h1>
       {activeNote.UUID === NEW_INSTANCE_UUID && (
+        //Flex(editor, type = item by default)
         <FlexEditor
           functions={functions}
           key={activeNote.tagUUIDs}
@@ -44,18 +47,18 @@ export default function Board({
           setAsActiveTag={functions.setAsActiveTag}
         />
       )}
-      {/* These are FlexGroups! */}
-      {items.length > 0 ? (
-        <Items items={items} functions={functions} {...flexNoteProps} />
-      ) : (
+
+      {isNotesEmpty && (
         <Container>
           <Header>You do not have any notes in this section</Header>
           <NoteCreateButton positive functions={functions} />
         </Container>
       )}
 
-      {/* Images
-      <Images images={images} functions={functions} {...flexNoteProps} /> */}
+      {/* items.map((key) => Flex(item, mode = activeNote.UUID === key)) */}
+      {items.length > 0 && (
+        <Items items={items} functions={functions} {...flexNoteProps} />
+      )}
     </>
   );
 }

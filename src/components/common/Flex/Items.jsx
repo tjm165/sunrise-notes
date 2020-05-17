@@ -4,7 +4,7 @@ import { Toggler, FlexContent, FlexEditor } from "../../../components";
 
 export default function Items({
   noteMap,
-  activeNote,
+  activeNote, //editmode
   functions,
   isLoading,
   type,
@@ -44,39 +44,6 @@ export default function Items({
                 secondarycontent={secondarycontent}
               />
             )}
-
-            {/* <ItemFlexContent
-              key={key}
-              functions={functions}
-              index={key}
-              type={content.startsWith("http") ? "link" : "item"}
-              rgb={rgb}
-              noteMap={noteMap}
-              content={content}
-              secondarycontent={secondarycontent}
-            /> */}
-            {/* <FlexContent
-              onClick={() => functions.setAsActiveNote(key)}
-              {...rest}
-              type={type}
-              rgb={rgb}
-              borderTop
-              fade
-              shouldColorOptions
-              shouldNeverHideOptions
-              leftExtraOptions={[
-                [
-                  secondarycontent ? "check square" : "square outline",
-                  () =>
-                    functions.submitNote({
-                      ...noteMap.get(key),
-                      secondarycontent: !secondarycontent
-                    })
-                ]
-              ]}
-            >
-              <>{content}</>
-            </FlexContent> */}
             <FlexEditor
               rgb={rgb}
               borderTop
