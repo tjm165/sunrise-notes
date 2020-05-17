@@ -1,15 +1,7 @@
 import React, { useState } from "react";
-import {
-  TextArea,
-  Icon,
-  Button,
-  Form,
-  Dropdown,
-  Segment,
-} from "semantic-ui-react";
-import { TagDropdown } from "../../implementations/Tag/TagDropdown";
+import { TextArea, Icon, Button, Form, Segment } from "semantic-ui-react";
 import { NEW_INSTANCE_UUID, NO_INSTANCE_UUID } from "../../../API";
-import OutsideCaller from "./OutsideCaller";
+import { OutsideCaller, TagDropdown } from "../../../components";
 
 export default function FlexEditor({
   functions,

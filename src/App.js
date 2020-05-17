@@ -7,7 +7,8 @@ import AboutTeam from "./components/pages/AboutTeam";
 
 import Landing from "./components/pages/landing";
 import AuthorizationPage from "./components/pages/Authorization";
-import GooglePostSignIn from "./components/implementations/OAuth/Google";
+import { GooglePostSignIn } from "./components";
+
 import PrivacyPolicy from "./components/pages/PrivacyPolicy";
 import SignedOut from "./components/pages/SignedOut";
 
@@ -16,40 +17,40 @@ class App extends Component {
     return (
       <BrowserRouter>
         {/* //eventually home page */}
-        <Route exact path="/" render={props => <Landing {...props} />} />
+        <Route exact path="/" render={(props) => <Landing {...props} />} />
         <Route
           exact
           path="/index.html"
-          render={props => <Landing {...props} />}
+          render={(props) => <Landing {...props} />}
         />
         <Route
           exact
           path="/dashboard"
-          render={props => <SmartDashboard {...props} />}
+          render={(props) => <SmartDashboard {...props} />}
         />
-        <Route exact path="/contribute" render={props => <Contribute />} />
-        <Route exact path="/about-team" render={props => <AboutTeam />} />
+        <Route exact path="/contribute" render={(props) => <Contribute />} />
+        <Route exact path="/about-team" render={(props) => <AboutTeam />} />
         <Route
           exact
           path="/signup"
-          render={props => <AuthorizationPage {...props} />}
+          render={(props) => <AuthorizationPage {...props} />}
         />
         <Route
           exact
           path="/login"
-          render={props => <AuthorizationPage login {...props} />}
+          render={(props) => <AuthorizationPage login {...props} />}
         />
         <Route
           exact
           path="/googlepostsignin"
-          render={props => <GooglePostSignIn {...props} />}
+          render={(props) => <GooglePostSignIn {...props} />}
         />
         <Route
           exact
           path="/privacypolicy"
-          render={props => <PrivacyPolicy {...props} />}
+          render={(props) => <PrivacyPolicy {...props} />}
         />
-        <Route exact path="/signedout" render={props => <SignedOut />} />
+        <Route exact path="/signedout" render={(props) => <SignedOut />} />
       </BrowserRouter>
     );
   }

@@ -1,14 +1,11 @@
 import React from "react";
-import List from "../List";
-import { Icon } from "semantic-ui-react";
-
-import FlexContent from "../Flex/FlexContent";
+import { List, FlexContent } from "../../../components";
 
 export default function TagList({
   tagMap,
   selectedTags,
   functions,
-  operation
+  operation,
 }) {
   return (
     <List
@@ -27,7 +24,7 @@ export default function TagList({
             borderLeft
             onClick={() => functions.toggleTag(key)}
             rightExtraOptions={[
-              ["pencil", () => functions.setAsActiveTag(key)]
+              ["pencil", () => functions.setAsActiveTag(key)],
             ]}
             isSelected={isSelected}
             key={key}

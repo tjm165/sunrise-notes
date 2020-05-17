@@ -7,13 +7,10 @@ import {
   Grid,
   Header,
   Image,
-  Container
+  Container,
 } from "semantic-ui-react";
 import { SignupComponent } from "../pages/Authorization";
-import Heading from "../implementations/Layout/Heading";
-import Desktop from "../implementations/Layout/Desktop";
-import Divider from "../implementations/Layout/Divider";
-import Paragraph from "../implementations/Layout/Paragraph";
+import { Desktop, Paragraph, Heading, Divider } from "../../components";
 
 const HomepageHeading = () => (
   <Heading
@@ -30,7 +27,7 @@ const HomepageHeading = () => (
   />
 );
 
-const LandingPageLayout = props => (
+const LandingPageLayout = (props) => (
   <Desktop activeItem="Home" heading={<HomepageHeading />}>
     <Paragraph headerText="How It Works">
       <Grid columns="equal">

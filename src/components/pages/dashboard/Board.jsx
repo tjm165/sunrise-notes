@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import List from "../../implementations/List";
-import FlexEditor from "../../implementations/Flex/FlexEditor";
-import Items from "../../implementations/Flex/Items";
-import Images from "../../implementations/Flex/Images";
-import Paragraphs from "../../implementations/Flex/Paragraphs";
+import { FlexEditor, Items } from "../../../components";
 import { NEW_INSTANCE_UUID } from "../../../API";
-import { Image, Icon, Segment, Container, Header } from "semantic-ui-react";
+import { Container, Header } from "semantic-ui-react";
 import { NoteCreateButton } from "../dashboard/VerticalPannel";
 
 export default function Board({

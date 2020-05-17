@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { Button, Container, Segment, Header, Grid } from "semantic-ui-react";
-import MyModal from "../../implementations/MyModal";
+import { Segment, Grid } from "semantic-ui-react";
 import Board from "./Board";
 import TopPannel from "./TopPannel";
-import TagEditor from "../../implementations/Tag/TagEditor";
+import { TagEditor, MyModal } from "../../../components";
 import { NO_INSTANCE_UUID } from "../../../API";
 import VerticalPannel from "./VerticalPannel";
 
@@ -31,7 +30,7 @@ function Dashboard({ state, functions }) {
           <Grid.Column
             width={4}
             style={{
-              borderRadius: "0px"
+              borderRadius: "0px",
             }}
           >
             <Segment raised>

@@ -1,8 +1,6 @@
-import React, { useState } from "react";
-import { List, Icon } from "semantic-ui-react";
-import FlexContent from "./FlexContent";
-import FlexEditor from "./FlexEditor";
-import Toggler from "./Toggler";
+import React from "react";
+import { List } from "semantic-ui-react";
+import { Toggler, FlexContent, FlexEditor } from "../../../components";
 
 export default function Items({
   noteMap,

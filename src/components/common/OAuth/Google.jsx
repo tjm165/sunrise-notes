@@ -5,17 +5,15 @@ import { Auth, Hub } from "aws-amplify";
 
 import { googleSignIn } from "../../../API";
 
-import GoogleButton from "react-google-button";
-
 function GooglePostSignIn(props) {
   useEffect(() => {
     Hub.listen("auth", ({ payload: { event, data } }) => {
       Auth.currentAuthenticatedUser()
-        .then(user => {
+        .then((user) => {
           console.log(user);
           props.history.push("/dashboard");
         })
-        .catch(error => googleSignIn());
+        .catch((error) => googleSignIn());
     });
   });
 

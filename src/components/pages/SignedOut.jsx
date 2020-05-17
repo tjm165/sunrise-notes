@@ -1,16 +1,7 @@
-import React, { useState } from "react";
-import {
-  Grid,
-  Image,
-  Header,
-  Button,
-  Icon,
-  Container
-} from "semantic-ui-react";
+import React from "react";
+import { Container } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
-
-import Desktop from "../implementations/Layout/Desktop";
-import Paragraph from "../implementations/Layout/Paragraph";
+import { Desktop, Paragraph } from "../../components";
 
 const SignedOut = () => {
   return (

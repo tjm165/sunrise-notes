@@ -1,6 +1,6 @@
 import React from "react";
 import { NEW_INSTANCE_UUID } from "../../../API";
-import TagList from "../../implementations/Tag/TagList";
+import { TagList } from "../../../components";
 import OperationSelector from "./OperationSelector";
 import { Button, Divider } from "semantic-ui-react";
 

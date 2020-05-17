@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   Grid,
   Image,
   Header,
   Button,
   Icon,
-  Container
+  Container,
 } from "semantic-ui-react";
 import { withRouter } from "react-router-dom";
-
-import Desktop from "../implementations/Layout/Desktop";
-import Paragraph from "../implementations/Layout/Paragraph";
+import { Desktop, Paragraph } from "../../components";
 
 function Contribute({ history }) {
   return (

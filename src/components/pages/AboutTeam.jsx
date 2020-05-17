@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
 
 import { Image, Button, Card } from "semantic-ui-react";
-import Desktop from "../implementations/Layout/Desktop";
-import Paragraph from "../implementations/Layout/Paragraph";
+import { Desktop, Paragraph } from "../../components";
 
 function ContactLink({ label, link, username }) {
   return (
@@ -46,20 +45,20 @@ function AboutTeam({ history }) {
       contacts: [
         {
           label: "Email",
-          username: "tjm165@case.edu"
+          username: "tjm165@case.edu",
         },
         {
           label: "GitHub",
           username: "tjm165",
-          link: "https://github.com/tjm165"
+          link: "https://github.com/tjm165",
         },
         {
           label: "LinkedIn",
           username: "Thomas Moawad",
-          link: "https://www.linkedin.com/in/thomas-moawad-58785b17b/"
-        }
-      ]
-    }
+          link: "https://www.linkedin.com/in/thomas-moawad-58785b17b/",
+        },
+      ],
+    },
   ];
 
   return (

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Dropdown, Header, Icon } from "semantic-ui-react";
 import { NEW_INSTANCE_UUID } from "../../../API";
 
-export class TagDropdown extends Component {
+export default class TagDropdown extends Component {
   render() {
     const {
       tagMap,
@@ -15,7 +15,7 @@ export class TagDropdown extends Component {
     const tagKeys = [...tagMap.keys()];
 
     //the choices
-    const options = tagKeys.map(key => {
+    const options = tagKeys.map((key) => {
       const rgb = tagMap.get(key).rgb;
       const text = tagMap.get(key).title;
       return {
@@ -27,16 +27,16 @@ export class TagDropdown extends Component {
           <Header size="tiny">
             <TagFragment text={text} rgb={rgb} />
           </Header>
-        )
+        ),
       };
     });
 
-    const renderLabel = label => ({
+    const renderLabel = (label) => ({
       content: <TagFragment text={label.text} rgb={label.rgb} />,
-      onClick: () => setAsActiveTag(label.value)
+      onClick: () => setAsActiveTag(label.value),
     });
 
-    const onAddItem = value => {
+    const onAddItem = (value) => {
       setTagUUIDs(defaultValue);
       setAsActiveTag(NEW_INSTANCE_UUID, value);
     };
