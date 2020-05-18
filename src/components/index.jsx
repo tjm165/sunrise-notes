@@ -17,3 +17,4 @@ export { default as NavBar } from "./common/Layout/NavBar";
 export { default as Paragraph } from "./common/Layout/Paragraph";
 export { default as GoogleOAuthButton } from "./common/OAuth/GoogleOAuthButton";
 export { default as GooglePostSignIn } from "./common/OAuth/Google";
+export { default as Flex } from "./common/Flex";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { FlexEditor, Items } from "../../../components";
+import { FlexEditor, Flex, Items } from "../../../components";
 import { NEW_INSTANCE_UUID } from "../../../API";
-import { Container, Header } from "semantic-ui-react";
+import { Container, Header, List } from "semantic-ui-react";
 import { NoteCreateButton } from "../dashboard/VerticalPannel";
 
 export default function Board({
@@ -14,7 +14,7 @@ export default function Board({
   const isLoadingNotes = isLoading.fetchNoteSet;
 
   const noteArray = Array.from(notes.keys());
-  const isnotesempty = noteArray.length == 0;
+  const isNotesEmpty = noteArray.length == 0;
   const items = noteArray.filter((key) => notes.get(key).type === "item");
   const paragraphs = noteArray.filter(
     (key) => notes.get(key).type === "paragraph"
@@ -54,11 +54,22 @@ export default function Board({
           <NoteCreateButton positive functions={functions} />
         </Container>
       )}
-
-      {/* items.map((key) => Flex(item, mode = activeNote.UUID === key)) */}
-      {items.length > 0 && (
-        <Items items={items} functions={functions} {...flexNoteProps} />
-      )}
+      {/* Dont know why list component is here */}
+      <List>
+        {items.map((key) => (
+          <Flex
+            key={key}
+            isInEditMode={key === activeNote}
+            key={key}
+            noteIndex={key}
+            isInEditMode={false}
+            items={items}
+            type="item"
+            functions={functions}
+            {...flexNoteProps}
+          />
+        ))}
+      </List>
     </>
   );
 }

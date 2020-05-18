@@ -1,5 +1,4 @@
 import React from "react";
-import { List } from "semantic-ui-react";
 import { Toggler, FlexContent, FlexEditor } from "../../../components";
 
 export default function Items({
@@ -9,57 +8,51 @@ export default function Items({
   isLoading,
   type,
   tagMap,
-  notes,
-  items,
+  noteIndex,
   ...rest
 }) {
-  return (
-    <List>
-      {items.map((key) => {
-        const { rgb, content, secondarycontent } = noteMap.get(key);
-        const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
+  const key = noteIndex;
+  const { rgb, content, secondarycontent } = noteMap.get(key);
+  const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
 
-        return (
-          <Toggler key={key} indexToShow={activeNote.UUID === key ? 1 : 0}>
-            {content.startsWith("http") ? (
-              <LinkFlexContent
-                key={key}
-                functions={functions}
-                index={key}
-                type={"item"}
-                rgb={rgb}
-                noteMap={noteMap}
-                content={content}
-                secondarycontent={secondarycontent}
-              />
-            ) : (
-              <ItemFlexContent
-                key={key}
-                functions={functions}
-                index={key}
-                type={"item"}
-                rgb={rgb}
-                noteMap={noteMap}
-                content={content}
-                secondarycontent={secondarycontent}
-              />
-            )}
-            <FlexEditor
-              rgb={rgb}
-              borderTop
-              functions={functions}
-              type={type}
-              isLoading={isLoading}
-              note={activeNote}
-              tagMap={tagMap}
-              onSubmit={functions.submitNote}
-              onDelete={() => functions.deleteNote(activeNote["UUID"])}
-              setAsActiveTag={functions.setAsActiveTag}
-            />
-          </Toggler>
-        );
-      })}
-    </List>
+  return (
+    <Toggler key={key} indexToShow={activeNote.UUID === key ? 1 : 0}>
+      {content.startsWith("http") ? (
+        <LinkFlexContent
+          key={key}
+          functions={functions}
+          index={key}
+          type={"item"}
+          rgb={rgb}
+          noteMap={noteMap}
+          content={content}
+          secondarycontent={secondarycontent}
+        />
+      ) : (
+        <ItemFlexContent
+          key={key}
+          functions={functions}
+          index={key}
+          type={"item"}
+          rgb={rgb}
+          noteMap={noteMap}
+          content={content}
+          secondarycontent={secondarycontent}
+        />
+      )}
+      <FlexEditor
+        rgb={rgb}
+        borderTop
+        functions={functions}
+        type={type}
+        isLoading={isLoading}
+        note={activeNote}
+        tagMap={tagMap}
+        onSubmit={functions.submitNote}
+        onDelete={() => functions.deleteNote(activeNote["UUID"])}
+        setAsActiveTag={functions.setAsActiveTag}
+      />
+    </Toggler>
   );
 }
 
