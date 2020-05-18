@@ -1,7 +1,7 @@
 import React from "react";
 import { Toggler, FlexContent, FlexEditor } from "../../../components";
 
-export default function Items({
+export default function Item({
   noteMap,
   activeNote, //editmode
   functions,
@@ -13,7 +13,6 @@ export default function Items({
 }) {
   const key = noteIndex;
   const { rgb, content, secondarycontent } = noteMap.get(key);
-  const rgbstring = "rgb(" + rgb.r + "," + rgb.g + "," + rgb.b + ")";
 
   return (
     <Toggler key={key} indexToShow={activeNote.UUID === key ? 1 : 0}>

@@ -60,7 +60,6 @@ export default function Board({
           <Flex
             key={key}
             isInEditMode={key === activeNote}
-            key={key}
             noteIndex={key}
             isInEditMode={false}
             items={items}

@@ -2,7 +2,7 @@ export { default as List } from "./common/List";
 export { default as MyModal } from "./common/MyModal";
 export { default as OutsideCaller } from "./common/OutsideCaller";
 export { default as Toggler } from "./common/Toggler";
-export { default as Items } from "./common/Flex/Items";
+export { default as Item } from "./common/Flex/Item";
 export { default as TagDropdown } from "./common/Tag/TagDropdown";
 export { default as TagEditor } from "./common/Tag/TagEditor";
 export { default as TagList } from "./common/Tag/TagList";
