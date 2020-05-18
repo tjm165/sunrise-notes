@@ -3,13 +3,12 @@ import { Toggler, FlexContent, FlexEditor } from "../../../components";
 
 export default function Item({
   noteMap,
-  activeNote, //editmode
+  activeNote, //this is an object
   functions,
   isLoading,
   type,
   tagMap,
   noteIndex,
-  ...rest
 }) {
   const key = noteIndex;
   const { rgb, content, secondarycontent } = noteMap.get(key);

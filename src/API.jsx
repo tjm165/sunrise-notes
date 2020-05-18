@@ -1,12 +1,12 @@
 import { Auth } from "aws-amplify";
 import config from "./config";
-export const NEW_INSTANCE_UUID = -1;
+export const NEW_INSTANCE_UUID = "NEW";
 export const NO_INSTANCE_UUID = false;
 
 const api = config.api.invokeUrl;
 
 function getJWTToken() {
-  return Auth.currentAuthenticatedUser().then(user => {
+  return Auth.currentAuthenticatedUser().then((user) => {
     return user.signInUserSession.idToken.jwtToken;
   });
 }
@@ -15,7 +15,7 @@ export function fetchNoteSet(tagUUIDs, operation) {
   var noteset = new Map();
 
   return GET(`note-set`, `?tagUUIDs=${tagUUIDs}&operation=${operation}`).then(
-    notes => {
+    (notes) => {
       Object.entries(notes).forEach(([key, note]) => {
         noteset.set(key, note);
       });
@@ -30,8 +30,8 @@ export function signin(username, password) {
 
 export function signout() {
   return Auth.signOut()
-    .then(data => console.log(data))
-    .catch(err => console.log(err));
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err));
 }
 
 export function googleSignIn() {
@@ -42,8 +42,8 @@ export function googleSignIn() {
 export function fetchUserTags() {
   var tagMap = new Map();
 
-  return GET(`tags`).then(json => {
-    json.forEach(tag => {
+  return GET(`tags`).then((json) => {
+    json.forEach((tag) => {
       tagMap.set(tag["UUID"], tag);
     });
     return tagMap;
@@ -51,37 +51,37 @@ export function fetchUserTags() {
 }
 
 export function fetchNote(UUID) {
-  return GET(`note`, `?UUID=${UUID}`).then(note => {
+  return GET(`note`, `?UUID=${UUID}`).then((note) => {
     return note;
   });
 }
 
 export function deleteNote(UUID) {
-  return DELETE(`note`, `?UUID=${UUID}`).then(response => {
+  return DELETE(`note`, `?UUID=${UUID}`).then((response) => {
     return response;
   });
 }
 
 export function deleteTag(UUID) {
-  return DELETE(`tag`, `?UUID=${UUID}`).then(response => {
+  return DELETE(`tag`, `?UUID=${UUID}`).then((response) => {
     return response;
   });
 }
 
 export function postNote(noteObject) {
   return POST(`note`, { noteObject })
-    .then(data => {
+    .then((data) => {
       return data;
     })
-    .catch(error => console.error(error));
+    .catch((error) => console.error(error));
 }
 
 export function postTag(tagObject) {
   return POST(`tag`, { tagObject })
-    .then(data => {
+    .then((data) => {
       return data;
     })
-    .catch(error => console.error(error));
+    .catch((error) => console.error(error));
 }
 
 async function GET(resource, querystring = null) {
@@ -101,11 +101,11 @@ async function GET(resource, querystring = null) {
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: JWTToken
+      Authorization: JWTToken,
     },
     redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer" // no-referrer, *client
-  }).then(response => response.json()); // parses JSON response into native Javascript objects
+    referrer: "no-referrer", // no-referrer, *client
+  }).then((response) => response.json()); // parses JSON response into native Javascript objects
 }
 
 async function DELETE(resource, querystring = null) {
@@ -124,11 +124,11 @@ async function DELETE(resource, querystring = null) {
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: JWTToken
+      Authorization: JWTToken,
     },
     redirect: "follow", // manual, *follow, error
-    referrer: "no-referrer" // no-referrer, *client
-  }).then(response => response.json()); // parses JSON response into native Javascript objects
+    referrer: "no-referrer", // no-referrer, *client
+  }).then((response) => response.json()); // parses JSON response into native Javascript objects
 }
 
 async function POST(resource, data = {}) {
@@ -144,10 +144,10 @@ async function POST(resource, data = {}) {
     credentials: "same-origin", // include, *same-origin, omit
     headers: {
       "Content-Type": "application/json",
-      Authorization: JWTToken
+      Authorization: JWTToken,
     },
     redirect: "follow", // manual, *follow, error
     referrer: "no-referrer", // no-referrer, *client
-    body: JSON.stringify(data) // body data type must match "Content-Type" header
-  }).then(response => response.json()); // parses JSON response into native Javascript objects
+    body: JSON.stringify(data), // body data type must match "Content-Type" header
+  }).then((response) => response.json()); // parses JSON response into native Javascript objects
 }

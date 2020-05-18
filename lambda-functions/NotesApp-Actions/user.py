@@ -46,7 +46,7 @@ class User():
 
     # puts the tag object in the table
     def put_tag(self, tag_object):
-        if ('UUID' not in tag_object) or tag_object['UUID'] is -1:
+        if ('UUID' not in tag_object) or tag_object['UUID'] == "NEW":
             tag_object['UUID'] = uuid4().hex
         tag_object['UserUUID'] = self.user_uuid
         self.tags_table.put_item(tag_object)
@@ -54,7 +54,7 @@ class User():
 
     # puts the note object in the table
     def put_note(self, note_object):
-        if ('UUID' not in note_object) or note_object['UUID'] is -1:
+        if ('UUID' not in note_object) or note_object['UUID'] == "NEW":
             note_object['UUID'] = uuid4().hex
         note_object['UserUUID'] = self.user_uuid
         self.notes_table.put_item(
@@ -101,5 +101,6 @@ class User():
         for note in notes:
             note['rgb'] = self.generate_relative_note_rgb(note, tag_uuids)
             note_dict[note['UUID']] = note
-
+        note_dict["NEW"] = {'rgb': {'r': 0, 'g': 0, 'b': 0},
+                            'content': "", 'secondaryContent': False}
         return note_dict

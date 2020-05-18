@@ -26,6 +26,7 @@ def lambda_handler(event, context):
         operation = querystring['operation']
 
         return user.get_noteset_by_tag_uuids(tag_uuids, operation)
+
     if (action == "note-GET"):
         return user.get_note(querystring['UUID'], True)
 

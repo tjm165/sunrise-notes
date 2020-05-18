@@ -87,7 +87,7 @@ class AssiciatedTable(Table):
 
     # the associated_items must already exist
     def put_item(self, item, associated_item_uuids=None):
-        if ('UUID' not in item) or item['UUID'] is -1:
+        if ('UUID' not in item) or item['UUID'] == "NEW":
             item['UUID'] = new_uuid()
 
         super().put_item(item)

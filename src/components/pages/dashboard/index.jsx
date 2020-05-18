@@ -9,7 +9,7 @@ import {
   postTag,
   deleteTag,
   NEW_INSTANCE_UUID,
-  NO_INSTANCE_UUID
+  NO_INSTANCE_UUID,
 } from "../../../API";
 
 class SmartDashboard extends Component {
@@ -24,7 +24,7 @@ class SmartDashboard extends Component {
         activeNote: NO_INSTANCE_UUID,
         activeTag: NO_INSTANCE_UUID,
         notes: [],
-        tags: new Set()
+        tags: new Set(),
       },
       isLoading: {
         fetchUserTags: false,
@@ -33,8 +33,8 @@ class SmartDashboard extends Component {
         submitNote: false,
         submitTag: false,
         deleteTag: false,
-        deleteNote: false
-      }
+        deleteNote: false,
+      },
     };
 
     this.functions = {
@@ -51,7 +51,7 @@ class SmartDashboard extends Component {
       deleteNote: this.deleteNote.bind(this),
       setAsActiveNote: this.setAsActiveNote.bind(this),
       submitTag: this.submitTag.bind(this),
-      deleteTag: this.deleteTag.bind(this)
+      deleteTag: this.deleteTag.bind(this),
     };
   }
 
@@ -65,15 +65,15 @@ class SmartDashboard extends Component {
 
   //name?
   fetchUserTags() {
-    this.setState(prevState => ({
-      isLoading: { ...prevState.isLoading, fetchUserTags: true }
+    this.setState((prevState) => ({
+      isLoading: { ...prevState.isLoading, fetchUserTags: true },
     }));
 
-    fetchUserTags().then(tagMap => {
+    fetchUserTags().then((tagMap) => {
       this.setState({ tagMap: tagMap });
 
-      this.setState(prevState => ({
-        isLoading: { ...prevState.isLoading, fetchUserTags: false }
+      this.setState((prevState) => ({
+        isLoading: { ...prevState.isLoading, fetchUserTags: false },
       }));
     });
   }
@@ -96,8 +96,8 @@ class SmartDashboard extends Component {
   }
 
   fetchNoteSet(operation) {
-    this.setState(prevState => ({
-      isLoading: { ...prevState.isLoading, fetchNoteSet: true }
+    this.setState((prevState) => ({
+      isLoading: { ...prevState.isLoading, fetchNoteSet: true },
     }));
 
     var context = this.state.context;
@@ -108,11 +108,11 @@ class SmartDashboard extends Component {
       this.setState({ context: context });
     } else {
       fetchNoteSet(Array.from(tags), operation || this.state.operation).then(
-        notes => {
+        (notes) => {
           context.notes = notes;
           this.setState({ context: context });
-          this.setState(prevState => ({
-            isLoading: { ...prevState.isLoading, fetchNoteSet: false }
+          this.setState((prevState) => ({
+            isLoading: { ...prevState.isLoading, fetchNoteSet: false },
           }));
         }
       );
@@ -122,54 +122,54 @@ class SmartDashboard extends Component {
   setAsActiveNote(noteUUID) {
     console.log(noteUUID);
 
-    this.setState(prevState => ({
-      isLoading: { ...prevState.isLoading, setAsActiveNote: true }
+    this.setState((prevState) => ({
+      isLoading: { ...prevState.isLoading, setAsActiveNote: true },
     }));
 
     if (noteUUID === NO_INSTANCE_UUID) {
-      this.setState(prevState => ({
-        context: { ...prevState.context, activeNote: NO_INSTANCE_UUID }
+      this.setState((prevState) => ({
+        context: { ...prevState.context, activeNote: NO_INSTANCE_UUID },
       }));
     } else if (noteUUID === NEW_INSTANCE_UUID) {
       const note = { UUID: noteUUID };
       note.tagUUIDs = Array.from(this.state.context.tags);
 
-      this.setState(prevState => ({
-        context: { ...prevState.context, activeNote: note }
+      this.setState((prevState) => ({
+        context: { ...prevState.context, activeNote: note },
       }));
     } else {
-      fetchNote(noteUUID).then(note => {
-        this.setState(prevState => ({
-          context: { ...prevState.context, activeNote: note }
+      fetchNote(noteUUID).then((note) => {
+        this.setState((prevState) => ({
+          context: { ...prevState.context, activeNote: note },
         }));
       });
     }
 
-    this.setState(prevState => ({
-      isLoading: { ...prevState.isLoading, setAsActiveNote: false }
+    this.setState((prevState) => ({
+      isLoading: { ...prevState.isLoading, setAsActiveNote: false },
     }));
   }
 
   //this one is going to set the active as a UUID
   setAsActiveTag(tagUUID, newTitle = null) {
     if (tagUUID === NO_INSTANCE_UUID) {
-      this.setState(prevState => ({
-        context: { ...prevState.context, activeTag: NO_INSTANCE_UUID }
+      this.setState((prevState) => ({
+        context: { ...prevState.context, activeTag: NO_INSTANCE_UUID },
       }));
     } else if (tagUUID === NEW_INSTANCE_UUID) {
       const tag = {
         UUID: tagUUID,
         title: newTitle,
-        rgb: { r: 255, g: 105, b: 0 }
+        rgb: { r: 255, g: 105, b: 0 },
       };
 
-      this.setState(prevState => ({
-        context: { ...prevState.context, activeTag: tag }
+      this.setState((prevState) => ({
+        context: { ...prevState.context, activeTag: tag },
       }));
     } else {
       const tag = this.state.tagMap.get(tagUUID);
-      this.setState(prevState => ({
-        context: { ...prevState.context, activeTag: tag }
+      this.setState((prevState) => ({
+        context: { ...prevState.context, activeTag: tag },
       }));
     }
   }
@@ -178,8 +178,8 @@ class SmartDashboard extends Component {
     const noteWasOriginallyOpen =
       this.state.context.activeNote !== NO_INSTANCE_UUID;
 
-    this.setState(prevState => ({
-      isLoading: { ...prevState.isLoading, submitNote: true }
+    this.setState((prevState) => ({
+      isLoading: { ...prevState.isLoading, submitNote: true },
     }));
 
     //speed up the response time
@@ -188,21 +188,21 @@ class SmartDashboard extends Component {
       context["notes"].set(note["UUID"], note);
 
       this.setState({
-        context
+        context,
       });
     }
 
     postNote(note).then(({ UUID }) => {
       note["UUID"] = UUID;
       // there needs to be a cleaner way to set as active note
-      this.setState(prevState => ({
-        isLoading: { ...prevState.isLoading, submitNote: false }
+      this.setState((prevState) => ({
+        isLoading: { ...prevState.isLoading, submitNote: false },
       }));
 
       //if the note being submitted is a new note, or the open note
       if (noteWasOriginallyOpen)
-        this.setState(prevState => ({
-          context: { ...prevState.context, activeNote: note }
+        this.setState((prevState) => ({
+          context: { ...prevState.context, activeNote: note },
         }));
 
       this.fetchNoteSet(this.state.context.tags);
@@ -210,60 +210,60 @@ class SmartDashboard extends Component {
   }
 
   submitTag(tag) {
-    this.setState(prevState => ({
-      isLoading: { ...prevState.isLoading, submitTag: true }
+    this.setState((prevState) => ({
+      isLoading: { ...prevState.isLoading, submitTag: true },
     }));
     postTag(tag, this.state.userUUID).then(({ UUID }) => {
       this.fetchUserTags();
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         context: {
           ...prevState.context,
           activeTag: NO_INSTANCE_UUID,
           activeNote: {
             ...prevState.context.activeNote,
-            tagUUIDs: prevState.context.activeNote.tagUUIDs.concat(UUID)
-          }
-        }
+            tagUUIDs: prevState.context.activeNote.tagUUIDs.concat(UUID),
+          },
+        },
       }));
       this.fetchNoteSet(this.state.context.tags);
 
-      this.setState(prevState => ({
-        isLoading: { ...prevState.isLoading, submitTag: false }
+      this.setState((prevState) => ({
+        isLoading: { ...prevState.isLoading, submitTag: false },
       }));
     });
   }
 
   deleteTag(tagUUID) {
-    this.setState(prevState => ({
-      isLoading: { ...prevState.isLoading, deleteTag: true }
+    this.setState((prevState) => ({
+      isLoading: { ...prevState.isLoading, deleteTag: true },
     }));
 
     const tagMap = this.state.tagMap;
     tagMap.delete(tagUUID);
     deleteTag(tagUUID).then(() => {
-      this.setState(prevState => ({
+      this.setState((prevState) => ({
         context: { ...prevState.context, activeTag: NO_INSTANCE_UUID },
-        tagMap: tagMap
+        tagMap: tagMap,
       }));
 
-      this.setState(prevState => ({
-        isLoading: { ...prevState.isLoading, deleteTag: false }
+      this.setState((prevState) => ({
+        isLoading: { ...prevState.isLoading, deleteTag: false },
       }));
     });
   }
 
   deleteNote(noteUUID) {
-    this.setState(prevState => ({
-      isLoading: { ...prevState.isLoading, deleteNote: true }
+    this.setState((prevState) => ({
+      isLoading: { ...prevState.isLoading, deleteNote: true },
     }));
     const context = this.state.context;
     context.notes.delete(noteUUID);
     deleteNote(noteUUID).then(() => {
-      this.setState(prevState => ({
-        context: { ...prevState.context, activeNote: false }
+      this.setState((prevState) => ({
+        context: { ...prevState.context, activeNote: false },
       }));
-      this.setState(prevState => ({
-        isLoading: { ...prevState.isLoading, deleteNote: false }
+      this.setState((prevState) => ({
+        isLoading: { ...prevState.isLoading, deleteNote: false },
       }));
     });
   }
